@@ -98,9 +98,18 @@ create table ProfesorHistorialSalario(
 );
 
 
+---------DROPS DE LAS TABLAS -------------------
+
+drop table ProfesorHistorialSalario
+drop table Evaluacion
+drop table Periodo
+drop table Material
+drop table GrupoMateria
+drop table Grado
+drop table GrupoHorario
+drop table Grupo 
 
 
---Comentario xd
 
 
 
