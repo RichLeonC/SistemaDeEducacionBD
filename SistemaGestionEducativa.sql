@@ -38,7 +38,7 @@ create table Estudiante(
 	cedulaPadre int not null foreign key references Padre(cedula),
 
 )
----------------------Creacion de tablas-------------------------------------------
+
 
 create table Grupo (
   codigo int not null PRIMARY KEY,
@@ -89,7 +89,7 @@ create table Evaluacion(
 	extraClase float not null
 );
 
-
+--Comentario xd
 
 
 
