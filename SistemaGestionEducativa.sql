@@ -9,16 +9,19 @@ go
 use SistemaGestionEducativa
 go
 
-create table Usuario(
+
+create table Padre(
 	cedula int not null primary key,
 	nombreCompleto varchar(250) not null,
 	sexo varchar(50),
 	fechaNacimiento date not null,
+	conyugeNombre varchar(250),
+	
 
 )
 
-create table Usuario_Ubicacion(
-	cedulaUsuario int not null foreign key references Usuario(cedula),
+create table Padre_Ubicacion(
+	cedula int not null foreign key references Padre(cedula),
 	distrito varchar(250) not null,
 	canton varchar(250) not null,
 	localidad varchar(250),
@@ -26,18 +29,52 @@ create table Usuario_Ubicacion(
 
 )
 
-create table Padre(
-	cedula int not null foreign key references Usuario(cedula),
-	conyugeNombre varchar(250),
+create table Estudiante(
+	cedulaEstudiante int not null primary key,
+	cedulaPadre int not null foreign key references Padre(cedula),
+	nombreCompleto varchar(250) not null,
+	sexo varchar(50),
+	fechaNacimiento date not null,
+
+)
+
+create table Estudiante_Ubicacion(
+	cedula int not null foreign key references Estudiante(cedula),
+	distrito varchar(250) not null,
+	canton varchar(250) not null,
+	localidad varchar(250),
+	provincia varchar(250) not null.
 	
 
 )
 
-create table Estudiante(
-	cedula int not null foreign key references Usuario(cedula),
-	cedulaPadre int not null foreign key references Padre(cedula),
+create table Profesor(
+	cedula int not null primary key,
+	nombreCompleto varchar(250) not null,
+	sexo varchar(50),
+	fechaNacimiento date not null,
+	salario float not null
 
 )
+
+create table Profesor_Ubicacion(
+	cedula int not null foreign key references Profesor(cedula),
+	distrito varchar(250) not null,
+	canton varchar(250) not null,
+	localidad varchar(250),
+	provincia varchar(250) not null.
+	
+
+)
+
+create table Profesor_HistorialSalario(
+	cedula int not null foreign key references Profesor(cedula),
+	inicio date not null,
+	fin date not null,
+	monto float not null
+
+)
+
 
 
 create table Grupo (
