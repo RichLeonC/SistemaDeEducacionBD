@@ -126,7 +126,27 @@ create table Evaluacion(
 	extraClase float not null
 );
 
---Comentario xd
+
+create table ProfesorHistorialSalario(
+	cedulaProfesor int not null, --FK
+	inicio date not null,
+	fin date not null,
+	monto float not null
+);
+
+
+---------DROPS DE LAS TABLAS -------------------
+
+drop table ProfesorHistorialSalario
+drop table Evaluacion
+drop table Periodo
+drop table Material
+drop table GrupoMateria
+drop table Grado
+drop table GrupoHorario
+drop table Grupo 
+
+
 
 
 
