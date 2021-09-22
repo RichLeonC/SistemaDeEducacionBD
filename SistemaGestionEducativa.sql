@@ -89,6 +89,17 @@ create table Evaluacion(
 	extraClase float not null
 );
 
+
+create table ProfesorHistorialSalario(
+	cedulaProfesor int not null, --FK
+	inicio date not null,
+	fin date not null,
+	monto float not null
+);
+
+
+
+
 --Comentario xd
 
 
