@@ -30,7 +30,7 @@ create table Padre_Ubicacion(
 )
 
 create table Estudiante(
-	cedulaEstudiante int not null primary key,
+	cedula int not null primary key,
 	cedulaPadre int not null foreign key references Padre(cedula),
 	nombreCompleto varchar(250) not null,
 	sexo varchar(50),
@@ -100,11 +100,10 @@ create table Grado(
 create table GrupoMateria(
 	codigoGrupo int not null, ---FK
 	nombreMateria varchar(100) not null, ---FK
-	precio int not null
 
 );
 
-create table Material(
+create table Materia(
 	nombre varchar(100) not null PRIMARY KEY,
 	codigoGrupo int not null, ---FK
 
@@ -134,13 +133,46 @@ create table ProfesorHistorialSalario(
 	monto float not null
 );
 
+create table Precio_Materia(
+	nombreMateria varchar(100) foreign key references Materia(nombre),
+	precio int not null primary key
+
+)
+
+create table Matricula(
+	idMatricula int not null primary key,
+	costeMatricula float not null,
+	fechaCreacion date not null,
+	cedulaEstudiante int not null foreign key references Estudiante(cedula),
+	cedulaPadre int not null foreign key references Padre(cedula),
+	numeroGrado int not null foreign key references Grado(numeroGrado),
+	codigoGrupo int not null foreign key references Grupo(codigo)
+
+
+)
+
+create table Cobros(
+	idMatricula int not null foreign key references Matricula(idMatricula),
+	codigoGrupo int not null foreign key references Grupo(codigo),
+	costeMateria int not null foreign key references Precio_Materia(precio),
+	estado varchar(100) not null,
+
+)
+
+create table GestionPagos(
+	idMatricula int not null foreign key references Matricula(idMatricula),
+	cedulaPadre int not null foreign key references Padre(cedula),
+	montoTotal float not null,
+	fechaPago date
+)
+
 
 ---------DROPS DE LAS TABLAS -------------------
 
 drop table ProfesorHistorialSalario
 drop table Evaluacion
 drop table Periodo
-drop table Material
+drop table Materia
 drop table GrupoMateria
 drop table Grado
 drop table GrupoHorario
