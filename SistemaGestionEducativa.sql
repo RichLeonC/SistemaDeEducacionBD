@@ -76,16 +76,22 @@ create table Profesor_HistorialSalario(
 )
 
 
+create table Periodo(
+	numero int not null PRIMARY KEY,
+	anno int not null ,
+	fechaInicio date not null,
+	fechaFinal date not null
+);
 
 create table Grupo (
   codigo int not null PRIMARY KEY,
-  cedulaProfesor int not null,--FK
+  cedulaProfesor int not null foreign key references Profesor(cedula),--FK
   cupo int not null,
-  numeroPeriodo int not null ---FK
+  numeroPeriodo int not null foreign key references Periodo(numero)---FK
 );
 
 create table GrupoHorario(
-	codigoGrupo int not null, ---FK
+	codigoGrupo int not null foreign key references Grupo(codigo), ---FK
 	dias varchar(200) not null,
 	horaInicio time not null,
 	horaFin time not null
@@ -94,31 +100,24 @@ create table GrupoHorario(
 
 create table Grado(
 	numeroGrado int not null PRIMARY KEY,
-	codigoGrupo int not null ---FK
-);
-
-create table GrupoMateria(
-	codigoGrupo int not null, ---FK
-	nombreMateria varchar(100) not null, ---FK
-
+	codigoGrupo int not null foreign key references Grupo(codigo)---FK
 );
 
 create table Materia(
 	nombre varchar(100) not null PRIMARY KEY,
-	codigoGrupo int not null, ---FK
+	codigoGrupo int not null foreign key references Grupo(codigo), ---FK
 
 );
 
+create table GrupoMateria(
+	codigoGrupo int not null foreign key references Grupo(codigo), ---FK
+	nombreMateria varchar(100) not null foreign key references Materia(nombre), ---FK
+	precio int not null
 
-create table Periodo(
-	numero int not null PRIMARY KEY,
-	anno int not null ,
-	fechaInicio date not null,
-	fechaFinal date not null
 );
 
 create table Evaluacion(
-	codigoGrupo int not null,--FK
+	codigoGrupo int not null foreign key references Grupo(codigo),--FK
 	examenes float not null,
 	cotidiano float not null,
 	asistencia float not null,
@@ -127,7 +126,7 @@ create table Evaluacion(
 
 
 create table ProfesorHistorialSalario(
-	cedulaProfesor int not null, --FK
+	cedulaProfesor int not null foreign key references Profesor(cedula), --FK
 	inicio date not null,
 	fin date not null,
 	monto float not null
