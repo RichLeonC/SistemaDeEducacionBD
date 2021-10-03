@@ -25,7 +25,8 @@ create table Padre_Ubicacion(
 	distrito varchar(250) not null,
 	canton varchar(250) not null,
 	localidad varchar(250),
-	provincia varchar(250) not null
+	provincia varchar(250) not null,
+	primary key(cedula)
 
 )
 
@@ -43,7 +44,7 @@ create table Estudiante_Ubicacion(
 	distrito varchar(250) not null,
 	canton varchar(250) not null,
 	localidad varchar(250),
-	provincia varchar(250) not null.
+	provincia varchar(250) not null
 	
 
 )
@@ -54,6 +55,7 @@ create table Profesor(
 	sexo varchar(50),
 	fechaNacimiento date not null,
 	salario float not null
+	
 
 )
 
@@ -62,7 +64,8 @@ create table Profesor_Ubicacion(
 	distrito varchar(250) not null,
 	canton varchar(250) not null,
 	localidad varchar(250),
-	provincia varchar(250) not null.
+	provincia varchar(250) not null,
+	primary key(cedula)
 	
 
 )
@@ -71,7 +74,8 @@ create table Profesor_HistorialSalario(
 	cedula int not null foreign key references Profesor(cedula),
 	inicio date not null,
 	fin date not null,
-	monto float not null
+	monto float not null,
+	primary key(cedula)
 
 )
 
@@ -81,6 +85,7 @@ create table Periodo(
 	anno int not null ,
 	fechaInicio date not null,
 	fechaFinal date not null
+
 );
 
 create table Grupo (
@@ -121,7 +126,8 @@ create table Evaluacion(
 	examenes float not null,
 	cotidiano float not null,
 	asistencia float not null,
-	extraClase float not null
+	extraClase float not null,
+	primary key(codigoGrupo)
 );
 
 
@@ -155,6 +161,7 @@ create table Cobros(
 	codigoGrupo int not null foreign key references Grupo(codigo),
 	costeMateria int not null foreign key references Precio_Materia(precio),
 	estado varchar(100) not null,
+	primary key(idMatricula,codigoGrupo,costeMateria)
 
 )
 
@@ -162,7 +169,8 @@ create table GestionPagos(
 	idMatricula int not null foreign key references Matricula(idMatricula),
 	cedulaPadre int not null foreign key references Padre(cedula),
 	montoTotal float not null,
-	fechaPago date
+	fechaPago date,
+	primary key(idMatricula,cedulaPadre)
 )
 
 
