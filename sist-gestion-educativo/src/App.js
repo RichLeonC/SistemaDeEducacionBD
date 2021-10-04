@@ -8,7 +8,6 @@ class App extends Component{
         return(           
             <div className = "container mt-5">
                 <Registro myText = "Melissa"/> 
-                <Registro myText = "Edad"/>
             </div>
          
         )
