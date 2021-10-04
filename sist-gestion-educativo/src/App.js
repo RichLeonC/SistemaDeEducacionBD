@@ -5,9 +5,9 @@ import Registro from './Componentes/Registro.js';
 
 class App extends Component{
     render(){
-        return(
-            <div>
-                <Registro myText = "Melissa"/>
+        return(           
+            <div className = "container mt-5">
+                <Registro myText = "Melissa"/> 
                 <Registro myText = "Edad"/>
             </div>
          

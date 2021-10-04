@@ -5,13 +5,11 @@ class Registro extends Component{
     render(){
         return(
             <div>
-                <h3 className ="red">
+                <h3>           
                     {this.props.myText}
                 </h3>
                 <input type = "text"/>
-                
-                
-            
+
             </div>
         )
     }
