@@ -1,29 +1,16 @@
 import React,{Component} from 'react';
 import './App.css';
+//Componentes
+import Registro from './Componentes/Registro.js';
 
 class App extends Component{
     render(){
         return(
             <div>
-                <h1>
-                Buenas Tardes
-                </h1>
-                <br/>
-                <label>
-                    hello Richi:
-                    <input type= "text"
-                    
-                    />
-
-                </label>
-                <label>
-                    pitudiEdad:
-                    <input type= "text"
-                    
-                    />
-
-                </label>
+                <Registro myText = "Melissa"/>
+                <Registro myText = "Edad"/>
             </div>
+         
         )
     }
 }
