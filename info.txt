@@ -1,0 +1,15 @@
+IC4301  Bases de Datos l
+
+Semestre 1 2021
+
+Melissa Alguera Castillo 2019056061
+Richard Leon Chinchilla 2019003759
+
+Sistema de Gestion Educativo
+
+4 de Octubre 2021
+
+Estatus: Excelente
+
+
+Link Repositorio GITHUB: https://github.com/RichLeonC/SistemaDeEducacionBD
