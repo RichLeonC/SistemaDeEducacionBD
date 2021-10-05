@@ -11,7 +11,7 @@ class Registro extends Component{
                     <Campo text = "Nombre Completo"/>
                     <div className = "row"/>
                     <br/>
-                    <Campo text = "Edad"/>
+                    <Campo text = "Lugar de residencia"/>
                     <Campo text = "Cedula de Padre"/>
                     
                     <div className = "row"/>
@@ -25,6 +25,26 @@ class Registro extends Component{
                         Agregar
                         </button>
                     </div>
+                    <h7>Fecha de nacimiento  <br/> </h7>
+                   
+                    <div>
+                    <Drops text="Año"/>
+                    <br/>
+                    </div>
+                    
+
+                    <div>
+                    <Drops text="mes" />
+                    <br/>
+                    </div>
+                    
+                    <div>
+                    <Drops text="dia"/>
+                    </div>
+
+                   
+
+
                 </form>
 
                
@@ -76,7 +96,7 @@ class  Drops extends Component{
         return(
     <div className="dropdown">
     <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-    Dropdown button
+    {this.props.text}
     </button>
     <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
     <li><a className="dropdown-item" href="#">Action</a></li>
