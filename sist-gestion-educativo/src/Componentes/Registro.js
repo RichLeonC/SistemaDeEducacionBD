@@ -8,10 +8,21 @@ class Registro extends Component{
                 <h1>Estudiante</h1>     
                 <form className ="row">
                     <Campo text = "Cedula"/>
-                    <Campo text = "Nombre"/>
+                    <Campo text = "Nombre Completo"/>
+                    <div className = "row"/>
+                    <br/>
+                    <Campo text = "Edad"/>
+                    <Campo text = "Cedula de Padre"/>
+                    
+                    <div className = "row"/>
+                    <br/>
+                    <Opcion text = "Masculino"/>
+                    <div className = "row"/>
+                    <br/>
+                    <Opcion text = "Femenino"/>
                     <div className = "col-md-3">
                         <button className = "btn btn-primary">
-                        Enviar
+                        Agregar
                         </button>
                     </div>
                 </form>
@@ -36,6 +47,25 @@ class Campo extends Component{
             </div>
         )
 
+    }
+}
+
+class Opcion extends Component{
+    render(){
+        return(
+            <div className="col-md-3">
+                <div className="form-check">
+                    <input
+                    className ="form-check-input"
+                    type="radio"
+                    name="flexRadioDefult"/>
+                    <label className = "form-chek-label" for="flexRadioDefault1">
+                    {this.props.text}
+                    </label>
+                    
+                </div>
+            </div>
+        )
     }
 }
 
