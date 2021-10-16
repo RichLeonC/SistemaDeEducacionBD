@@ -9,66 +9,53 @@ go
 use SistemaGestionEducativa
 go
 
-
-create table Padre(
+create table Usuario(
 	cedula int not null primary key,
-	nombreCompleto varchar(250) not null,
-	sexo varchar(50),
+	nombre varchar(100) not null,
+	apellido1 varchar(100) not null,
+	apellido2 varchar(100) not null,
+	sexo varchar(20) not null,
 	fechaNacimiento date not null,
-	conyugeNombre varchar(250),
-	
+	rol varchar(20) not null,
+	fechaCreacion date
 
 )
 
-create table Padre_Ubicacion(
-	cedula int not null foreign key references Padre(cedula),
+create table Usuario_Ubicacion(
+	cedula int not null foreign key references Usuario(cedula),
 	distrito varchar(250) not null,
 	canton varchar(250) not null,
 	localidad varchar(250),
 	provincia varchar(250) not null,
+	primary key(cedula)
+
+)
+create table Padre(
+	cedula int not null foreign key references Usuario(cedula),
+	conyugeNombre varchar(250),
+	telefonoConyugue int,
+	profesion varchar(200) not null,
 	primary key(cedula)
 
 )
 
 create table Estudiante(
-	cedula int not null primary key,
+	cedula int not null foreign key references Usuario(cedula),
 	cedulaPadre int not null foreign key references Padre(cedula),
-	nombreCompleto varchar(250) not null,
-	sexo varchar(50),
-	fechaNacimiento date not null,
+	primary key(cedula)
 
 )
 
-create table Estudiante_Ubicacion(
-	cedula int not null foreign key references Estudiante(cedula),
-	distrito varchar(250) not null,
-	canton varchar(250) not null,
-	localidad varchar(250),
-	provincia varchar(250) not null
-	
 
-)
 
 create table Profesor(
-	cedula int not null primary key,
-	nombreCompleto varchar(250) not null,
-	sexo varchar(50),
-	fechaNacimiento date not null,
-	salario float not null
-	
-
-)
-
-create table Profesor_Ubicacion(
-	cedula int not null foreign key references Profesor(cedula),
-	distrito varchar(250) not null,
-	canton varchar(250) not null,
-	localidad varchar(250),
-	provincia varchar(250) not null,
+	cedula int not null foreign key references Usuario(cedula),
+	salario decimal(10,2) not null,
 	primary key(cedula)
 	
 
 )
+
 
 create table Profesor_HistorialSalario(
 	cedula int not null foreign key references Profesor(cedula),
@@ -79,109 +66,112 @@ create table Profesor_HistorialSalario(
 
 )
 
+create table Materia(
+	nombre varchar(100) not null PRIMARY KEY,
+	precio decimal(8,2) ---FK
+
+);
 
 create table Periodo(
-	numero int not null PRIMARY KEY,
-	anno int not null ,
+	numero int not null,
+	año int not null,
 	fechaInicio date not null,
-	fechaFinal date not null
+	fechaFinal date not null,
+	primary key(numero,año)
 
 );
 
 create table Grupo (
-  codigo int not null PRIMARY KEY,
-  cedulaProfesor int not null foreign key references Profesor(cedula),--FK
+  codigoNombre varchar(25) not null,
+  cedulaProfesor int not null foreign key references Profesor(cedula),
   cupo int not null,
-  numeroPeriodo int not null foreign key references Periodo(numero)---FK
+  numeroPeriodo int not null,
+  año int not null,
+  grado int not null,
+  nombreMateria varchar(100) foreign key references Materia(nombre),
+  estado varchar(20) not null,
+  foreign key(numeroPeriodo,año) references Periodo(numero,año),
+  primary key(codigoNombre,numeroPeriodo,año,nombreMateria),
+
 );
 
 create table GrupoHorario(
-	codigoGrupo int not null foreign key references Grupo(codigo), ---FK
+	codigoGrupo varchar(25) not null,
+	numPeriodo int not null,
+	año int not null,
+	nombreMateria varchar(100) not null,
 	dias varchar(200) not null,
 	horaInicio time not null,
-	horaFin time not null
+	horaFin time not null,
+	foreign key(codigoGrupo,numPeriodo,año,nombreMateria) 
+	references Grupo(codigoNombre,numeroPeriodo,año,nombreMateria),
+	primary key(codigoGrupo,numPeriodo,año,nombreMateria)
 );
 
 
-create table Grado(
-	numeroGrado int not null PRIMARY KEY,
-	codigoGrupo int not null foreign key references Grupo(codigo)---FK
-);
-
-create table Materia(
-	nombre varchar(100) not null PRIMARY KEY,
-	codigoGrupo int not null foreign key references Grupo(codigo), ---FK
-
-);
-
-create table GrupoMateria(
-	codigoGrupo int not null foreign key references Grupo(codigo), ---FK
-	nombreMateria varchar(100) not null foreign key references Materia(nombre), ---FK
-	precio int not null
-
-);
 
 create table Evaluacion(
-	codigoGrupo int not null foreign key references Grupo(codigo),--FK
-	examenes float not null,
-	cotidiano float not null,
-	asistencia float not null,
-	extraClase float not null,
-	primary key(codigoGrupo)
+	codigoGrupo varchar(25) not null,
+	numPeriodo int not null,
+	año int not null,
+	nombreMateria varchar(100),
+	descripcion varchar(250) not null,
+	foreign key(codigoGrupo,numPeriodo,año,nombreMateria) 
+	references Grupo(codigoNombre,numeroPeriodo,año,nombreMateria),
+	primary key(codigoGrupo,numPeriodo,año,nombreMateria)
+	
 );
 
 
-create table ProfesorHistorialSalario(
-	cedulaProfesor int not null foreign key references Profesor(cedula), --FK
-	inicio date not null,
-	fin date not null,
-	monto float not null
-);
 
-create table Precio_Materia(
-	nombreMateria varchar(100) foreign key references Materia(nombre),
-	precio int not null primary key
 
-)
 
 create table Matricula(
-	idMatricula int not null primary key,
+	idMatricula varchar(100) not null primary key,
 	costeMatricula float not null,
 	fechaCreacion date not null,
 	cedulaEstudiante int not null foreign key references Estudiante(cedula),
-	cedulaPadre int not null foreign key references Padre(cedula),
-	numeroGrado int not null foreign key references Grado(numeroGrado),
-	codigoGrupo int not null foreign key references Grupo(codigo)
+	codigoGrupo varchar(25) not null,
+	numPeriodo int not null,
+	año int not null,
+	nombreMateria varchar(100),
+	foreign key(codigoGrupo,numPeriodo,año,nombreMateria) 
+	references Grupo(codigoNombre,numeroPeriodo,año,nombreMateria),
 
+
+
+)
+
+create table Matricula_Precio(
+	idMatricula varchar(100) not null  foreign key references Matricula(idMatricula),
+	precio decimal(8,2)
 
 )
 
 create table Cobros(
-	idMatricula int not null foreign key references Matricula(idMatricula),
-	codigoGrupo int not null foreign key references Grupo(codigo),
-	costeMateria int not null foreign key references Precio_Materia(precio),
-	estado varchar(100) not null,
-	primary key(idMatricula,codigoGrupo,costeMateria)
+	consecutivo int not null primary key,
+	--numFactura int foreign key references Factura(numFactura),
+	idMatricula varchar(100) not null  foreign key references Matricula(idMatricula),
+	estado varchar(20)
 
 )
 
-create table GestionPagos(
-	idMatricula int not null foreign key references Matricula(idMatricula),
-	cedulaPadre int not null foreign key references Padre(cedula),
-	montoTotal float not null,
-	fechaPago date,
-	primary key(idMatricula,cedulaPadre)
+create table Factura(
+	numeroFactura int not null primary key,
+	consecutivo int foreign key references Cobros(consecutivo),
+	totalPago decimal(10,2),
+	iva decimal(3,2),
+	fechaPago date
+
 )
 
 
 ---------DROPS DE LAS TABLAS -------------------
 
-drop table ProfesorHistorialSalario
+
 drop table Evaluacion
 drop table Periodo
 drop table Materia
-drop table GrupoMateria
-drop table Grado
 drop table GrupoHorario
 drop table Grupo 
 
