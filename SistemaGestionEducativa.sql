@@ -9,11 +9,13 @@ go
 use SistemaGestionEducativa
 go
 
+
 create table Usuario(
 	cedula int not null primary key,
 	nombre varchar(100) not null,
 	apellido1 varchar(100) not null,
 	apellido2 varchar(100) not null,
+	contraseña varchar(100) not null,
 	sexo varchar(20) not null,
 	fechaNacimiento date not null,
 	rol varchar(20) not null,
@@ -23,18 +25,19 @@ create table Usuario(
 
 create table Usuario_Ubicacion(
 	cedula int not null foreign key references Usuario(cedula),
-	distrito varchar(250) not null,
-	canton varchar(250) not null,
-	localidad varchar(250),
 	provincia varchar(250) not null,
+	canton varchar(250) not null,
+	distrito varchar(250) not null,	
+	localidad varchar(250),
+	
 	primary key(cedula)
 
 )
 create table Padre(
 	cedula int not null foreign key references Usuario(cedula),
+	profesion varchar(200) not null,
 	conyugeNombre varchar(250),
 	telefonoConyugue int,
-	profesion varchar(200) not null,
 	primary key(cedula)
 
 )
@@ -83,23 +86,23 @@ create table Periodo(
 
 create table Grupo (
   codigoNombre varchar(25) not null,
+  nombreMateria varchar(100) foreign key references Materia(nombre),
   cedulaProfesor int not null foreign key references Profesor(cedula),
-  cupo int not null,
   numeroPeriodo int not null,
   año int not null,
   grado int not null,
-  nombreMateria varchar(100) foreign key references Materia(nombre),
+  cupo int not null,
   estado varchar(20) not null,
   foreign key(numeroPeriodo,año) references Periodo(numero,año),
-  primary key(codigoNombre,numeroPeriodo,año,nombreMateria),
+  primary key(codigoNombre,numeroPeriodo,año,nombreMateria)
 
 );
 
-create table GrupoHorario(
+create table Grupo_Horario(
 	codigoGrupo varchar(25) not null,
+    nombreMateria varchar(100) not null,
 	numPeriodo int not null,
 	año int not null,
-	nombreMateria varchar(100) not null,
 	dias varchar(200) not null,
 	horaInicio time not null,
 	horaFin time not null,
@@ -108,6 +111,17 @@ create table GrupoHorario(
 	primary key(codigoGrupo,numPeriodo,año,nombreMateria)
 );
 
+create table Asistencia_Estudiante (
+	cedulaEstudiante int not null foreign key references Estudiante(cedula),
+	codigoGrupo varchar(25) not null,
+    nombreMateria varchar(100) not null,
+	numPeriodo int not null,
+	año int not null,
+	fecha date,
+	asistencia bit,
+	foreign key(codigoGrupo,numPeriodo,año,nombreMateria) 
+	references Grupo(codigoNombre,numeroPeriodo,año,nombreMateria)
+)
 
 
 create table Evaluacion(
@@ -164,6 +178,7 @@ create table Factura(
 	fechaPago date
 
 )
+
 
 
 ---------DROPS DE LAS TABLAS -------------------
