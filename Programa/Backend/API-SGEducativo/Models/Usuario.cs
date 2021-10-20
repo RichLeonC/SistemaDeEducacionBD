@@ -13,13 +13,13 @@ namespace API_SGEducativo.Models
     {
         [Key] 
         public int cedula { get; set; }
-        public String nombre { get; set; }
-        public String apellido1 { get; set; }
-        public String apellido2 { get; set; }
-        public String password { get; set; }
-        public String sexo { get; set; }
+        public string nombre { get; set; }
+        public string apellido1 { get; set; }
+        public string apellido2 { get; set; }
+        public string contraseña { get; set; }
+        public string sexo { get; set; }
         public DateTime fechaNacimiento { get; set; }
-        public String rol { get; set; }
+        public string rol { get; set; }
         public DateTime fechaCreacion { get; set; }
     }
 }

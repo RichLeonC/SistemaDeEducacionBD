@@ -28,6 +28,7 @@ namespace API_SGEducativo.Controller
             return await _context.usuarios.ToListAsync();
         }
 
+
         // GET: api/Usuarios/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Usuario>> GetUsuario(int id)
@@ -88,6 +89,7 @@ namespace API_SGEducativo.Controller
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUsuario(int id)
         {
+           
             var usuario = await _context.usuarios.FindAsync(id);
             if (usuario == null)
             {
@@ -100,13 +102,13 @@ namespace API_SGEducativo.Controller
             return NoContent();
         }
 
-        [HttpGet("{cedula}/{password}")]
-        public ActionResult<List<Usuario>> GetIniciarSesion(int cedula,String password)
+        [HttpGet("{cedula}/{contraseña}")]
+        public ActionResult<List<Usuario>> GetIniciarSesion(int cedula,string contraseña)
         {
             
             var usuario = _context.usuarios.Where(usuario=>usuario.cedula.Equals(cedula) && 
-            usuario.password.Equals(password)).ToList(); //Utilizamos LINQ para buscar el usuario
-
+            usuario.contraseña.Equals(contraseña)).ToList(); //Utilizamos LINQ para buscar el usuario
+            
             if (usuario == null)
             {
                 return NotFound();
