@@ -2,7 +2,7 @@
 
 import React,{Component} from 'react';
 import './App.css';
-import Login from './Componentes/Login.js';
+import Login from './Componentes/Login/Login.js';
 //Componentes
 
 
