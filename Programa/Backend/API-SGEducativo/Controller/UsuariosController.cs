@@ -103,10 +103,19 @@ namespace API_SGEducativo.Controller
         }
 
         [HttpGet("{cedula}/{contraseña}")]
-        public ActionResult<List<Usuario>> GetIniciarSesion(int cedula,string contraseña)
+        public ActionResult<List<Usuario>> GetIniciarSesion(string cedula,string contraseña)
         {
+            int c = 0;
+            try
+            {
+                c = (int)Int64.Parse(cedula);
+            }
+            catch(Exception e)
+            {
+                return NotFound();
+            }
             
-            var usuario = _context.usuarios.Where(usuario=>usuario.cedula.Equals(cedula) && 
+            var usuario = _context.usuarios.Where(usuario=>usuario.cedula.Equals(c) && 
             usuario.contraseña.Equals(contraseña)).ToList(); //Utilizamos LINQ para buscar el usuario
             
             if (usuario == null)
