@@ -2,14 +2,15 @@
 
 import React,{Component} from 'react';
 import './App.css';
+import Login from './Componentes/Login.js';
 //Componentes
-import Registro from './Componentes/Registro.js';
+
 
 class App extends Component{
     render(){
         return(           
-            <div className = "container mt-5">
-                <Registro/> 
+            <div className = "container mt-5">              
+            <Login/>
             </div>
          
         )
