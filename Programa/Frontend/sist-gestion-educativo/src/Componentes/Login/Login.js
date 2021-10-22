@@ -52,8 +52,12 @@ function Login(props){
                 cookies.set("rol",respuesta.rol,{path: "/"});
                 cookies.set("fechaCreacion",respuesta.fechaCreacion,{path: "/"});
                 alert("Bienvenido: "+respuesta.nombre+" "+respuesta.apellido1)
-                props.history.push("/Estudiantes");
-
+                if(respuesta.rol == ("Profesor")){
+                    props.history.push("/Profesores");
+                }
+                else  if(respuesta.rol == ("Estudiante")){
+                    props.history.push("/Estudiantes");
+                }
             }
             else{
                 alert("El usuario o contraseña no son correctoss");
