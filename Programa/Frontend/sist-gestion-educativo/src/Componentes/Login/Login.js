@@ -12,7 +12,7 @@ import axios from 'axios';
 
 
 
-function Login(){
+function Login(props){
     //Conexion con el backend
     const baseUrl = "https://localhost:44329/api/Usuarios";
     const cookies = new Cookies();
@@ -34,7 +34,7 @@ function Login(){
     //Metodo para iniciar sesion
     const iniciarSesion=async()=>{
         
-        await axios.get(baseUrl+`/${form.cedula}/${md5(form.contraseña)}`)       
+        await axios.get(baseUrl+`/${form.cedula}/${md5(form.contraseña)}`)  //Crea la peticion http mediante la URL (se dirige a UsuariosControlador en el backend) 
         .then(response=>{ //En caso de que sea correcta
             return response.data;
         }).then(response=>{
@@ -42,6 +42,18 @@ function Login(){
             if(response.length>0){
                 var respuesta=response[0];
                 console.log(respuesta);
+                cookies.set("cedula",respuesta.cedula,{path: "/"});
+                cookies.set("nombre",respuesta.nombre,{path: "/"});
+                cookies.set("apellido1",respuesta.apellido1 ,{path: "/"});
+                cookies.set("apellido2",respuesta.apellido2,{path: "/"});
+                cookies.set("contraseña",respuesta.contraseña,{path: "/"});
+                cookies.set("sexo",respuesta.sexo,{path: "/"});
+                cookies.set("fechaNacimiento",respuesta.fechaNacimiento,{path: "/"});
+                cookies.set("rol",respuesta.rol,{path: "/"});
+                cookies.set("fechaCreacion",respuesta.fechaCreacion,{path: "/"});
+                alert("Bienvenido: "+respuesta.nombre+" "+respuesta.apellido1)
+                props.history.push("/Estudiantes");
+
             }
             else{
                 alert("El usuario o contraseña no son correctoss");

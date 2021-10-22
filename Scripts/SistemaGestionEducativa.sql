@@ -180,7 +180,9 @@ create table Factura(
 )
 
 insert into Usuario values(118180009,'Richard','Leon','Chinchilla','0192023a7bbd73250516f069df18b500','Masculino',
-'2001/7/29','admin','2021/10/19')
+'2001/7/29','Profesor','2021/10/19')
+
+
 
 ---------DROPS DE LAS TABLAS -------------------
 
