@@ -65,7 +65,7 @@ const SideBar = (props) => {
             <NavIcon to ="#">
                  <AiIcons.AiOutlineClose  onClick ={showSidebar} />
             </NavIcon> 
-            {SideBarData.map((item, index) => {
+            {props.datos.map((item, index) => {
                 return <SubMenu item = {item} key = {index}/>
 
             })}
