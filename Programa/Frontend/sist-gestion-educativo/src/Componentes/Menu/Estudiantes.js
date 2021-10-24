@@ -5,6 +5,7 @@ import SideBar from '../Navegation/Sidebar.js';
 import  {BrowserRouter as Router, Switch , Route} from 'react-router-dom';
 import PaginaPrincipal from '../PagEstu/PaginaPrincipal.js';
 import {SideBarData} from '../Navegation/SidebarData.js';
+import Login from '../Login/Login.js';
 
 function Estudiantes(){
   const cookies = new Cookies();
@@ -12,7 +13,9 @@ function Estudiantes(){
         <Router>
             <SideBar datos= {SideBarData} nombre = 'Estudiantes'/>
             <Switch>
-                <Router path = '/paginaprincipal' exact Component= {PaginaPrincipal}/>
+               
+                <Route path = '/opcionesEstudiante' exact Component= {PaginaPrincipal}/>
+               
             </Switch>
         </Router>
     )

@@ -7,6 +7,7 @@ import { SideBarData } from './SidebarData';
 import SubMenu from './SubMenu';
 
 import PropTypes from 'prop-types';
+import { Icon } from '@material-ui/core';
 
 const Nav = styled.div `
 background : #15171c;
@@ -52,7 +53,7 @@ const SideBar = (props) => {
 
     return (<>
        <Nav>
-           
+       
            <NavIcon to ="#">
             <FaIcons.FaBars onClick = {showSidebar}  />
 
