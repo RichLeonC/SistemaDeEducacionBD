@@ -12,6 +12,7 @@ height : 80px;
 display: flex;
 justify-content : flex-start;
 align-items: center;
+
 `;
 
 const NavIcon = styled (Link) ` 
@@ -21,19 +22,21 @@ const NavIcon = styled (Link) `
     display: flex;
     justify-content : flex-start;
     align-items: center;
+    
 
 `;
 
 const SideBarNav = styled.nav`
-background : #15171c;
-width: 250px;
-height : 100vh;
-display: flex;
-justify-content : center;
-position: fixed;
-left: $ {({siderbar})  => (sidebar ? '0' : '-100%')};
-transition: 350ms;
-z-index: 10;
+  background: #15171c;
+  width: 250px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
+  transition: 350ms;
+  z-index: 10;
 `;
 
 const SidebarWrap = styled.div`
@@ -48,7 +51,9 @@ const SideBar = () => {
     return (<>
        <Nav>
            <NavIcon to ="#">
-            <FaIcons.FaBars onClick = {showSidebar} />
+            <FaIcons.FaBars onClick = {showSidebar}  />
+
+            <h2  >Estudiantes </h2 >
            </NavIcon>
        </Nav>
         <SideBarNav sidebar= {sidebar}>
