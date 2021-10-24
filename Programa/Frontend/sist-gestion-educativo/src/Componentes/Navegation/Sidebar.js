@@ -6,6 +6,8 @@ import styled from 'styled-components';
 import { SideBarData } from './SidebarData';
 import SubMenu from './SubMenu';
 
+import PropTypes from 'prop-types';
+
 const Nav = styled.div `
 background : #15171c;
 height : 80px;
@@ -43,17 +45,19 @@ const SidebarWrap = styled.div`
     width: 100%;
 `;
 
-const SideBar = () => {
+const SideBar = (props) => {
     const [sidebar, setSidebar] = useState(false);
 
     const showSidebar = ()=> setSidebar(!sidebar);
 
     return (<>
        <Nav>
+           
            <NavIcon to ="#">
             <FaIcons.FaBars onClick = {showSidebar}  />
 
-            <h2  >Estudiantes </h2 >
+            <h2 >Estudiantes </h2 >
+            
            </NavIcon>
        </Nav>
         <SideBarNav sidebar= {sidebar}>
@@ -65,6 +69,7 @@ const SideBar = () => {
                 return <SubMenu item = {item} key = {index}/>
 
             })}
+            
             </SidebarWrap>
         </SideBarNav>
 
