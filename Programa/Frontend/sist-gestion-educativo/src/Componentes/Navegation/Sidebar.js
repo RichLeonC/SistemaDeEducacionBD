@@ -56,7 +56,7 @@ const SideBar = (props) => {
            <NavIcon to ="#">
             <FaIcons.FaBars onClick = {showSidebar}  />
 
-            <h2 >Estudiantes </h2 >
+            <h2 >{props.nombre}</h2 >
             
            </NavIcon>
        </Nav>

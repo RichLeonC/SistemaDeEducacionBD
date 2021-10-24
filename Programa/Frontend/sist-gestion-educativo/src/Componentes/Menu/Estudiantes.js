@@ -10,7 +10,7 @@ function Estudiantes(){
   const cookies = new Cookies();
     return(
         <Router>
-            <SideBar datos= {SideBarData} />
+            <SideBar datos= {SideBarData} nombre = 'Estudiantes'/>
             <Switch>
                 <Router path = '/paginaprincipal' exact Component= {PaginaPrincipal}/>
             </Switch>
