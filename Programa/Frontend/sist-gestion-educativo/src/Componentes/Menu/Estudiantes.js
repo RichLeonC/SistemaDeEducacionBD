@@ -11,7 +11,7 @@ function Estudiantes(){
         <Router>
             <SideBar/>
             <Switch>
-                <Router path = '/paginaprincipal' exact Component= {PaginaPrincipal}/>
+                <Router path = '/PaginaPrincipal' exact component= {PaginaPrincipal}/>
             </Switch>
         </Router>
     )
