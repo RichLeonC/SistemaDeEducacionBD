@@ -6,6 +6,7 @@ import Login from '../Componentes/Login/Login.js';
 import Estudiantes from '../Componentes/Menu/Estudiantes.js';
 import Profesores from "../Componentes/Menu/Profesores.js";
 import {BrowserRouter,Switch,Route} from 'react-router-dom';
+import PaginaPrincipal from '../Componentes/PagEstu/PaginaPrincipal';
 //Componentes
 
 
@@ -18,6 +19,9 @@ class App extends Component{
                 <Route exact path="/" component={Login}/>
                 <Route exact path="/Estudiantes" component={Estudiantes}/>
                 <Route exact path="/Profesores" component={Profesores}/>
+                <Route exact path = '/PaginaPrincipal' component= {PaginaPrincipal}/>
+                <Route exact path = '/opcionesEstudiante' component= {PaginaPrincipal}/>
+               
             </Switch>
             </BrowserRouter>
          

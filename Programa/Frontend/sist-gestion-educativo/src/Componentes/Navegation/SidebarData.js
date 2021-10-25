@@ -16,7 +16,7 @@ export const SideBarData = [
         subNav: [
             {
                 title: 'Informacion del Estudiante',
-                path: '/Opciones/Estudiate',
+                path: '/Opciones/Estudiante',
                 icon: <IoIcons.IoIosPaper/>, 
             
             },
@@ -40,7 +40,7 @@ export const SideBarData = [
         subNav: [
             {
                 title: 'Cursos Aprobados',
-                path: '/CursosAprobados/Estudiate',
+                path: '/CursosAprobados/Estudiante',
                 icon: <IoIcons.IoIosPaper/>, 
             
             },

@@ -2,11 +2,16 @@ import React from "react";
 
 const PaginaPrincipal = () =>{
     return(
-
-            <h1>Son las 12:19 am xd </h1>
-       
-
-
+        <div>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <h1>PORQUE NO FUNCIONAA </h1>
+        </div>
+            
     )
 
 
