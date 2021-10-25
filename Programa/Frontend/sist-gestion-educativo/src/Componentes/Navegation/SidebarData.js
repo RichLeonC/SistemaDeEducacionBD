@@ -3,6 +3,7 @@ import React from "react";
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
+import * as BiIcons from "react-icons/bi";
 import * as RiIcons from 'react-icons/ri';
 import * as MdIcons from 'react-icons/md';
 export const SideBarData = [
@@ -58,6 +59,13 @@ export const SideBarData = [
         title: 'Matriculas',
         path: '/opcionesMatriculas',
         icon: <AiIcons.AiFillCopy/>, 
+        
+    },
+
+    {
+        title: 'Cerrar sesión',
+        path: '/',
+        icon: <BiIcons.BiLogOut/>, 
         
     }
 

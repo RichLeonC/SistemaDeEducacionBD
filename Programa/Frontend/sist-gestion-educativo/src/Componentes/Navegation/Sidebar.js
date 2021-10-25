@@ -6,6 +6,9 @@ import styled from 'styled-components';
 import { SideBarData } from './SidebarData';
 import SubMenu from './SubMenu';
 
+import PropTypes from 'prop-types';
+import { Icon } from '@material-ui/core';
+
 const Nav = styled.div `
 background : #15171c;
 height : 80px;
@@ -43,17 +46,19 @@ const SidebarWrap = styled.div`
     width: 100%;
 `;
 
-const SideBar = () => {
+const SideBar = (props) => {
     const [sidebar, setSidebar] = useState(false);
 
     const showSidebar = ()=> setSidebar(!sidebar);
 
     return (<>
        <Nav>
+       
            <NavIcon to ="#">
             <FaIcons.FaBars onClick = {showSidebar}  />
 
-            <h2  >Estudiantes </h2 >
+            <h2 >{props.nombre}</h2 >
+            
            </NavIcon>
        </Nav>
         <SideBarNav sidebar= {sidebar}>
@@ -61,10 +66,11 @@ const SideBar = () => {
             <NavIcon to ="#">
                  <AiIcons.AiOutlineClose  onClick ={showSidebar} />
             </NavIcon> 
-            {SideBarData.map((item, index) => {
+            {props.datos.map((item, index) => {
                 return <SubMenu item = {item} key = {index}/>
 
             })}
+            
             </SidebarWrap>
         </SideBarNav>
 
