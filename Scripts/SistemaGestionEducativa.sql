@@ -15,7 +15,7 @@ create table Usuario(
 	nombre varchar(100) not null,
 	apellido1 varchar(100) not null,
 	apellido2 varchar(100) not null,
-	contrase�a varchar(100) not null,
+	clave varchar(100) not null,
 	sexo varchar(20) not null,
 	fechaNacimiento date not null,
 	rol varchar(20) not null,
@@ -77,10 +77,10 @@ create table Materia(
 
 create table Periodo(
 	numero int not null,
-	a�o int not null,
+	anno int not null,
 	fechaInicio date not null,
 	fechaFinal date not null,
-	primary key(numero,a�o)
+	primary key(numero,anno)
 
 );
 
@@ -89,12 +89,12 @@ create table Grupo (
   nombreMateria varchar(100) foreign key references Materia(nombre),
   cedulaProfesor int not null foreign key references Profesor(cedula),
   numeroPeriodo int not null,
-  a�o int not null,
+  anno int not null,
   grado int not null,
   cupo int not null,
   estado varchar(20) not null,
-  foreign key(numeroPeriodo,a�o) references Periodo(numero,a�o),
-  primary key(codigoNombre,numeroPeriodo,a�o,nombreMateria)
+  foreign key(numeroPeriodo,anno) references Periodo(numero,anno),
+  primary key(codigoNombre,numeroPeriodo,anno,nombreMateria)
 
 );
 
@@ -102,13 +102,13 @@ create table Grupo_Horario(
 	codigoGrupo varchar(25) not null,
     nombreMateria varchar(100) not null,
 	numPeriodo int not null,
-	a�o int not null,
+	anno int not null,
 	dias varchar(200) not null,
 	horaInicio time not null,
 	horaFin time not null,
-	foreign key(codigoGrupo,numPeriodo,a�o,nombreMateria) 
-	references Grupo(codigoNombre,numeroPeriodo,a�o,nombreMateria),
-	primary key(codigoGrupo,numPeriodo,a�o,nombreMateria)
+	foreign key(codigoGrupo,numPeriodo,anno,nombreMateria) 
+	references Grupo(codigoNombre,numeroPeriodo,anno,nombreMateria),
+	primary key(codigoGrupo,numPeriodo,anno,nombreMateria)
 );
 
 create table Asistencia_Estudiante (
@@ -116,23 +116,23 @@ create table Asistencia_Estudiante (
 	codigoGrupo varchar(25) not null,
     nombreMateria varchar(100) not null,
 	numPeriodo int not null,
-	a�o int not null,
+	anno int not null,
 	fecha date,
 	asistencia bit,
-	foreign key(codigoGrupo,numPeriodo,a�o,nombreMateria) 
-	references Grupo(codigoNombre,numeroPeriodo,a�o,nombreMateria)
+	foreign key(codigoGrupo,numPeriodo,anno,nombreMateria) 
+	references Grupo(codigoNombre,numeroPeriodo,anno,nombreMateria)
 )
 
 
 create table Evaluacion(
 	codigoGrupo varchar(25) not null,
 	numPeriodo int not null,
-	a�o int not null,
+	anno int not null,
 	nombreMateria varchar(100),
 	descripcion varchar(250) not null,
-	foreign key(codigoGrupo,numPeriodo,a�o,nombreMateria) 
-	references Grupo(codigoNombre,numeroPeriodo,a�o,nombreMateria),
-	primary key(codigoGrupo,numPeriodo,a�o,nombreMateria)
+	foreign key(codigoGrupo,numPeriodo,anno,nombreMateria) 
+	references Grupo(codigoNombre,numeroPeriodo,anno,nombreMateria),
+	primary key(codigoGrupo,numPeriodo,anno,nombreMateria)
 	
 );
 
@@ -147,10 +147,10 @@ create table Matricula(
 	cedulaEstudiante int not null foreign key references Estudiante(cedula),
 	codigoGrupo varchar(25) not null,
 	numPeriodo int not null,
-	a�o int not null,
+	anno int not null,
 	nombreMateria varchar(100),
-	foreign key(codigoGrupo,numPeriodo,a�o,nombreMateria) 
-	references Grupo(codigoNombre,numeroPeriodo,a�o,nombreMateria),
+	foreign key(codigoGrupo,numPeriodo,anno,nombreMateria) 
+	references Grupo(codigoNombre,numeroPeriodo,anno,nombreMateria),
 
 
 
