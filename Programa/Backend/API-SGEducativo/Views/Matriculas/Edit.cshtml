@@ -1,0 +1,64 @@
+﻿@model API_SGEducativo.Models.Matricula
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Matricula</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="idMatricula" />
+            <div class="form-group">
+                <label asp-for="costeMatricula" class="control-label"></label>
+                <input asp-for="costeMatricula" class="form-control" />
+                <span asp-validation-for="costeMatricula" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fechaCreacion" class="control-label"></label>
+                <input asp-for="fechaCreacion" class="form-control" />
+                <span asp-validation-for="fechaCreacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="cedulaEstudiante" class="control-label"></label>
+                <input asp-for="cedulaEstudiante" class="form-control" />
+                <span asp-validation-for="cedulaEstudiante" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="codigoGrupo" class="control-label"></label>
+                <input asp-for="codigoGrupo" class="form-control" />
+                <span asp-validation-for="codigoGrupo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="numPeriodo" class="control-label"></label>
+                <input asp-for="numPeriodo" class="form-control" />
+                <span asp-validation-for="numPeriodo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="anno" class="control-label"></label>
+                <input asp-for="anno" class="form-control" />
+                <span asp-validation-for="anno" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="nombreMateria" class="control-label"></label>
+                <input asp-for="nombreMateria" class="form-control" />
+                <span asp-validation-for="nombreMateria" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

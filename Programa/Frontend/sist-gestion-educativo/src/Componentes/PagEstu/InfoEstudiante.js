@@ -6,7 +6,7 @@ import Cookies from 'universal-cookie';
 export default function InfoEstudiante() {
     const cookies = new Cookies();
     return (
-        <Table className="mt-5"striped bordered hover variant="dark">
+        <Table className="mt-5 offset-md-1 table table-hover"striped bordered hover variant="light">
             <thead>
                 <tr>
                 <th>Cédula</th>

@@ -16,6 +16,7 @@ namespace API_SGEducativo.Context
 
        }
       public DbSet<Usuario> usuarios { get; set; }
+      public DbSet<Matricula> Matricula { get; set; }
 
         
     }

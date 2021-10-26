@@ -1,0 +1,71 @@
+﻿@model IEnumerable<API_SGEducativo.Models.Matricula>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.costeMatricula)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fechaCreacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cedulaEstudiante)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.codigoGrupo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.numPeriodo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.anno)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombreMateria)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.costeMatricula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fechaCreacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cedulaEstudiante)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.codigoGrupo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.numPeriodo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.anno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombreMateria)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.idMatricula">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.idMatricula">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.idMatricula">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
