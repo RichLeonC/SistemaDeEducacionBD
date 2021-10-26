@@ -30,25 +30,19 @@ namespace API_SGEducativo.Controller
 
 
         // GET: api/Usuarios/5
-        [HttpGet("{id}", Name ="GetUsuario")]
+        [HttpGet("{cedula}", Name ="GetUsuario")]
         public ActionResult GetUsuario(int cedula)
         {
             try
             {
-                var usuario = _context.usuarios.FirstOrDefault(e=>e.cedula==cedula);
-
-                if (usuario == null)
-                {
-                    return NotFound();
-                }
-
-                return Ok(usuario);
+                var usuario = _context.usuarios.FirstOrDefault(e => e.cedula == cedula); //Busca el usuario
+                return Ok(cedula);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                return NotFound();
+                return BadRequest(e.Message);
             }
-            
+
         }
 
         // PUT: api/Usuarios/5

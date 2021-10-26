@@ -36,18 +36,18 @@ namespace API_SGEducativo.Controller
         }
 
         // GET api/<MatriculasController>/5
-        [HttpGet("{id}",Name ="GetMatricula")] //Devuelve solo un registro
+        [HttpGet("{idMatricula}",Name ="GetMatricula")] //Devuelve solo un registro
         public ActionResult Get(int idMatricula)
         {
             try
             {
                 var matricula = _context.Matricula.FirstOrDefault(e => e.idMatricula==idMatricula);
-                Ok(matricula);
+                return Ok(matricula);
             }catch(Exception e)
             {
                 return BadRequest(e.Message);
             }
-            return BadRequest();
+           
         }
 
         // POST api/<MatriculasController>
@@ -66,29 +66,35 @@ namespace API_SGEducativo.Controller
         }
 
         // PUT api/<MatriculasController>/5
-        [HttpPut("{id}")]
-        public ActionResult Put(int idMatricula, [FromBody] Matricula matricula)
+        [HttpPut("{idMatricula}")]
+        public ActionResult Put(int idMatricula, [FromBody]Matricula matricula)
         {
-
+            
             try
             {
+               
                 if (matricula.idMatricula == idMatricula)
                 {
+                    
                     _context.Entry(matricula).State = EntityState.Modified; //Realiza los cambios
                     _context.SaveChanges(); //Guarda los cambios
                     return CreatedAtRoute("GetMatricula", new { idMatricula = matricula.idMatricula }, matricula);
+                }
+                else
+                {
+                    return BadRequest("No entre");
                 }
             }
 
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest("Catch");
             }
-            return BadRequest();
+            
         }
 
         // DELETE api/<MatriculasController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{idMatricula}")]
         public ActionResult Delete(int idMatricula)
         {
 
