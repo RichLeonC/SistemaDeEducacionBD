@@ -70,8 +70,9 @@ const SideBar = (props) => {
                 return <SubMenu item = {item} key = {index}/>
 
             })}
-            
+             
             </SidebarWrap>
+            
         </SideBarNav>
 
        </>

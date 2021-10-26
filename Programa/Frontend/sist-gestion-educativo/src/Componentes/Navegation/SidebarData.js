@@ -8,15 +8,15 @@ import * as RiIcons from 'react-icons/ri';
 import * as MdIcons from 'react-icons/md';
 export const SideBarData = [
     {
-        title: 'Pantalla Principal',
-        path: '/opcionesEstudiante',
+        title: 'Principal',
+        path: '/Principal',
         icon: <AiIcons.AiFillHome/>, 
         iconClosed: <AiIcons.AiFillCaretDown/>,
         iconOpened :<AiIcons.AiFillCaretUp/>,
         subNav: [
             {
-                title: 'Informacion del Estudiante',
-                path: '/Opciones/Estudiante',
+                title: 'Información del Estudiante',
+                path: '/Principal/info',
                 icon: <IoIcons.IoIosPaper/>, 
             
             },

@@ -181,9 +181,79 @@ create table Factura(
 
 insert into Usuario values(118180009,'Richard','Leon','Chinchilla','0192023a7bbd73250516f069df18b500','Masculino',
 '2001/7/29','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(118180009,'San José','Desamparados','Gravilias','Villa Nueva');
+insert into Profesor values(118180009,605000)
+insert into Profesor_HistorialSalario values(118180009,'2008/10/10','2020/11/5',482000)
 
-insert into Usuario values(1010,'Melissa','Alguera','Castillo','0192023a7bbd73250516f069df18b500','Masculino',
-'2001/7/29','Estudiante','2021/10/19')
+insert into Usuario values(110100005,'Eduardo','Camavinga','Arias','242a7df6497824b3e47e062856610a7a','Masculino',
+'1980/4/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(110100005,'San José','Santa Ana','Pozos','La esquinita');
+insert into Profesor values(110100005,815000)
+insert into Profesor_HistorialSalario values(110100005,'2012/10/10','2019/4/7',536000)
+
+insert into Usuario values(302302414,'Claudia','Poll','Retana','242a7df6497824b3e47e062856610a7a','Femenino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(302302414,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(302302414,942320)
+insert into Profesor_HistorialSalario values(302302414,'2001/10/10','2013/4/7',601000)
+
+
+insert into Usuario values(114140008,'Francisco','Paredes','Mora','242b9ab779ee5a9b937d300817d96144','Masculino',
+'1975/5/5','Padre','2021/10/25')
+insert into Usuario_Ubicacion values(114140008,'San José','Desamparados','San Miguel','Centro');
+insert into Padre values(114140008,'Mecanico','Hanna',88705025);
+
+insert into Usuario values(429847293,'Mauricio','Aviles','Carmeno','242b9ab779ee5a9b937d300817d96144','Masculino',
+'1985/6/16','Padre','2021/10/25')
+insert into Usuario_Ubicacion values(429847293,'San José','Desamparados','San Miguel','Centro');
+insert into Padre values(429847293,'Programador','Carolina',85134560);
+
+insert into Usuario values(1010,'Melissa','Alguera','Castillo','0192023a7bbd73250516f069df18b500','Femenino',
+'2000/10/25','Estudiante','2021/10/19')
+insert into Usuario_Ubicacion values(1010,'San José','Desamparados','San Miguel','Centro');
+insert into Estudiante values(1010,114140008);
+
+insert into Usuario values(122543102,'Adrian','Herrera','Segura','0192023a7bbd73250516f069df18b500','Masculino',
+'2002/11/9','Estudiante','2021/10/19')
+insert into Usuario_Ubicacion values(122543102,'San José','San Sebastian','Calle Blanco','Residencial MegaSuper');
+insert into Estudiante values(122543102,429847293);
+
+
+insert into Materia values('Español',25000);
+insert into Materia values('Matemáticas',45000);
+insert into Materia values('Estudios Sociales',15000);
+insert into Materia values('Biología',34000);
+insert into Materia values('Química',34000);
+insert into Materia values('Fisica Elemental',34000);
+
+
+insert into Periodo values(1,2020,'2020/2/2','2020/4/28');
+insert into Periodo values(2,2020,'2020/4/30','2020/7/28');
+insert into Periodo values(3,2020,'2020/8/1','2020/10/28');
+
+insert into Periodo values(1,2021,'2020/2/2','2020/4/28');
+insert into Periodo values(2,2021,'2020/4/30','2020/7/28');
+insert into Periodo values(3,2021,'2020/8/1','2020/10/28');
+
+insert into Grupo values('Matemáticas-A1','Matemáticas',118180009,1,2020,5,30,'Abierto')
+insert into Grupo values('Biología-A1','Biología',118180009,1,2020,5,30,'Abierto')
+insert into Grupo values('Español-C1','Español',302302414,2,2021,3,25,'Abierto')
+insert into Grupo values('Química-B1','Química',110100005,3,2021,4,25,'Abierto')
+
+
+insert into Grupo_Horario values('Matemáticas-A1','Matemáticas',1,2020,
+'Martes y Jueves','15:00','16:50');
+insert into Grupo_Horario values('Biología-A1','Biología',1,2020,
+'Viernes','13:00','16:50');
+insert into Grupo_Horario values('Español-C1','Español',2,2021,
+'Lunes y Miercoles','8:00','11:25');
+insert into Grupo_Horario values('Química-B1','Química',3,2021,
+'Lunes y Miercoles','13:00','15:30');
+
+insert into Evaluacion values('Matemáticas-A1',1,2020,'Matemáticas','Examenes 90%, Tareas 10%')
+insert into Evaluacion values('Biología-A1',1,2020,'Biología','Examenes 60%, Tareas 20%, Cotidiano 20%')
+insert into Evaluacion values('Español-C1',2,2021,'Español','Examenes 60%, Tareas 20%, Comunicación 20%')
+insert into Evaluacion values('Química-B1',3,2021,'Química','Examenes 80%, Tareas 10%')
 
 
 ---------DROPS DE LAS TABLAS -------------------

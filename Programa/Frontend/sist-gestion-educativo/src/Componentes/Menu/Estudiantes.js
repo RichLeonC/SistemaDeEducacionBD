@@ -6,15 +6,22 @@ import  {BrowserRouter, Switch , Route} from 'react-router-dom';
 import PaginaPrincipal from '../PagEstu/PaginaPrincipal.js';
 import {SideBarData} from '../Navegation/SidebarData.js';
 import Login from '../Login/Login.js';
+import InfoEstudiante from '../PagEstu/InfoEstudiante.js';
+
+function refreshPage(){
+    window.location.reload();
+}
 
 function Estudiantes(){
   const cookies = new Cookies();
+  
     return(
         <BrowserRouter>
             <SideBar datos= {SideBarData} nombre = 'Estudiantes'/>
             <Switch>
-                <Route exact path = '/PaginaPrincipal' component= {PaginaPrincipal}/>
-                <Route exact path = '/opcionesEstudiante' component= {PaginaPrincipal}/>
+
+                <Route exact path = '/Principal/info' component= {InfoEstudiante}/>
+              
                 <Route exact path = '/' component = {Login}/>
                
             </Switch>

@@ -30,17 +30,25 @@ namespace API_SGEducativo.Controller
 
 
         // GET: api/Usuarios/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Usuario>> GetUsuario(int id)
+        [HttpGet("{id}", Name ="GetUsuario")]
+        public ActionResult GetUsuario(int cedula)
         {
-            var usuario = await _context.usuarios.FindAsync(id);
+            try
+            {
+                var usuario = _context.usuarios.FirstOrDefault(e=>e.cedula==cedula);
 
-            if (usuario == null)
+                if (usuario == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(usuario);
+            }
+            catch(Exception e)
             {
                 return NotFound();
             }
-
-            return usuario;
+            
         }
 
         // PUT: api/Usuarios/5
