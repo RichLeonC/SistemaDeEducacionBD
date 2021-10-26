@@ -19,7 +19,7 @@ function Login(props){
      //Determinamos un estado para setear los atributos
     const [form,setForm] = useState({
     cedula:'',
-    contraseña:''
+    clave:''
     });
 
     //Metodo para capturar lo escrito en los campos del login
@@ -34,7 +34,7 @@ function Login(props){
     //Metodo para iniciar sesion
     const iniciarSesion=async()=>{
         
-        await axios.get(baseUrl+`/${form.cedula}/${md5(form.contraseña)}`)  //Crea la peticion http mediante la URL (se dirige a UsuariosControlador en el backend) 
+        await axios.get(baseUrl+`/${form.cedula}/${md5(form.clave)}`)  //Crea la peticion http mediante la URL (se dirige a UsuariosControlador en el backend) 
         .then(response=>{ //En caso de que sea correcta
             return response.data;
         }).then(response=>{
@@ -46,7 +46,7 @@ function Login(props){
                 cookies.set("nombre",respuesta.nombre,{path: "/"});
                 cookies.set("apellido1",respuesta.apellido1 ,{path: "/"});
                 cookies.set("apellido2",respuesta.apellido2,{path: "/"});
-                cookies.set("contraseña",respuesta.contraseña,{path: "/"});
+                cookies.set("contraseña",respuesta.clave,{path: "/"});
                 cookies.set("sexo",respuesta.sexo,{path: "/"});
                 cookies.set("fechaNacimiento",respuesta.fechaNacimiento,{path: "/"});
                 cookies.set("rol",respuesta.rol,{path: "/"});
@@ -86,7 +86,7 @@ function Login(props){
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         
-                        <Form.Control type="password" name="contraseña" placeholder="Contraseña" onChange={handleChange} />
+                        <Form.Control type="password" name="clave" placeholder="Contraseña" onChange={handleChange} />
                     </Form.Group>
                     <Button  variant="primary  w-100" onClick={()=>iniciarSesion()}>
                         Ingresar

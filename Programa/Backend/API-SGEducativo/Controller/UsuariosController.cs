@@ -110,8 +110,8 @@ namespace API_SGEducativo.Controller
             return NoContent();
         }
 
-        [HttpGet("{cedula}/{contraseña}")]
-        public ActionResult<List<Usuario>> GetIniciarSesion(string cedula,string contraseña)
+        [HttpGet("{cedula}/{clave}")]
+        public ActionResult<List<Usuario>> GetIniciarSesion(string cedula,string clave)
         {
             int c = 0;
             try
@@ -124,7 +124,7 @@ namespace API_SGEducativo.Controller
             }
             
             var usuario = _context.usuarios.Where(usuario=>usuario.cedula.Equals(c) && 
-            usuario.contraseña.Equals(contraseña)).ToList(); //Utilizamos LINQ para buscar el usuario
+            usuario.clave.Equals(clave)).ToList(); //Utilizamos LINQ para buscar el usuario
             
             if (usuario == null)
             {

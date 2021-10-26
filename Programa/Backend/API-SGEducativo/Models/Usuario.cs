@@ -16,7 +16,7 @@ namespace API_SGEducativo.Models
         public string nombre { get; set; }
         public string apellido1 { get; set; }
         public string apellido2 { get; set; }
-        public string contraseña { get; set; }
+        public string clave { get; set; }
         public string sexo { get; set; }
         public DateTime fechaNacimiento { get; set; }
         public string rol { get; set; }
