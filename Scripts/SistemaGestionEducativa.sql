@@ -141,7 +141,7 @@ create table Evaluacion(
 
 
 create table Matricula(
-	idMatricula varchar(100) not null primary key,
+	idMatricula int not null IDENTITY(5000,1) primary key,
 	costeMatricula float not null,
 	fechaCreacion date not null,
 	cedulaEstudiante int not null foreign key references Estudiante(cedula),
@@ -150,22 +150,21 @@ create table Matricula(
 	anno int not null,
 	nombreMateria varchar(100),
 	foreign key(codigoGrupo,numPeriodo,anno,nombreMateria) 
-	references Grupo(codigoNombre,numeroPeriodo,anno,nombreMateria),
-
-
+	references Grupo(codigoNombre,numeroPeriodo,anno,nombreMateria)
 
 )
 
+
 create table Matricula_Precio(
-	idMatricula varchar(100) not null  foreign key references Matricula(idMatricula),
+	idMatricula int not null foreign key references Matricula(idMatricula),
 	precio decimal(8,2)
 
 )
 
 create table Cobros(
-	consecutivo int not null primary key,
+	consecutivo int not null IDENTITY(1,1) primary key,
 	--numFactura int foreign key references Factura(numFactura),
-	idMatricula varchar(100) not null  foreign key references Matricula(idMatricula),
+	idMatricula int not null foreign key references Matricula(idMatricula),
 	estado varchar(20)
 
 )
@@ -254,6 +253,9 @@ insert into Evaluacion values('Matemáticas-A1',1,2020,'Matemáticas','Examenes 
 insert into Evaluacion values('Biología-A1',1,2020,'Biología','Examenes 60%, Tareas 20%, Cotidiano 20%')
 insert into Evaluacion values('Español-C1',2,2021,'Español','Examenes 60%, Tareas 20%, Comunicación 20%')
 insert into Evaluacion values('Química-B1',3,2021,'Química','Examenes 80%, Tareas 10%')
+
+
+
 
 
 ---------DROPS DE LAS TABLAS -------------------
