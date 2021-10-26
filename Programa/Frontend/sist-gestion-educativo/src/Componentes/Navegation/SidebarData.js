@@ -8,7 +8,7 @@ import * as RiIcons from 'react-icons/ri';
 import * as MdIcons from 'react-icons/md';
 export const SideBarData = [
     {
-        title: 'Principal',
+        title: 'Información General',
         path: '/Principal',
         icon: <AiIcons.AiFillHome/>, 
         iconClosed: <AiIcons.AiFillCaretDown/>,
@@ -60,14 +60,8 @@ export const SideBarData = [
         path: '/opcionesMatriculas',
         icon: <AiIcons.AiFillCopy/>, 
         
-    },
-
-    {
-        title: 'Cerrar sesión',
-        path: '/',
-        icon: <BiIcons.BiLogOut/>, 
-        
     }
 
+ 
 
 ]

@@ -5,6 +5,11 @@ import Cookies from 'universal-cookie';
 
 export default function InfoEstudiante() {
     const cookies = new Cookies();
+
+ 
+
+
+
     return (
         <Table className="mt-5"striped bordered hover variant="dark">
             <thead>

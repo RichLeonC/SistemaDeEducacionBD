@@ -19,8 +19,7 @@ class App extends Component{
                 <Route exact path="/" component={Login}/>
                 <Route exact path="/Estudiantes" component={Estudiantes}/>
                 <Route exact path="/Profesores" component={Profesores}/>
-                <Route exact path = '/PaginaPrincipal' component= {PaginaPrincipal}/>
-                <Route exact path = '/opcionesEstudiante' component= {PaginaPrincipal}/>
+             
                
             </Switch>
             </BrowserRouter>

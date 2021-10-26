@@ -5,9 +5,9 @@ import * as AiIcons from 'react-icons/ai';
 import styled from 'styled-components';
 import { SideBarData } from './SidebarData';
 import SubMenu from './SubMenu';
-
-import PropTypes from 'prop-types';
-import { Icon } from '@material-ui/core';
+import * as BiIcons from 'react-icons/bi'
+import Button from '@material-ui/core/Button';
+import Cookies from 'universal-cookie';
 
 const Nav = styled.div `
 background : #15171c;
@@ -46,35 +46,57 @@ const SidebarWrap = styled.div`
     width: 100%;
 `;
 
-const SideBar = (props) => {
+const SideBar = () => {
     const [sidebar, setSidebar] = useState(false);
 
     const showSidebar = ()=> setSidebar(!sidebar);
 
+
+    const cookies = new Cookies();
+
+    const cerrarSesion=()=> {
+        cookies.remove('cedula', {path: '/'});
+        cookies.remove('nombre', {path: '/'});
+        cookies.remove('apellido1', {path: '/'});
+        cookies.remove('apellido2', {path: '/'});
+        cookies.remove('sexo', {path: '/'});
+        cookies.remove('fechaNacimiento', {path: '/'});
+        this.props.history.push('./');
+    }
+
     return (<>
        <Nav>
-       
            <NavIcon to ="#">
             <FaIcons.FaBars onClick = {showSidebar}  />
-
-            <h2 >{props.nombre}</h2 >
-            
+           
            </NavIcon>
+           
+           <Button className='offset-md-9'
+           variant= "contained"
+           href='/'
+           color= "primary"
+           startIcon = {<BiIcons.BiLogOut/>}
+           size= 'medium'
+           align= 'right'
+           onClick={()=>cerrarSesion()}
+           >Cerrar Sesión</Button>
+
+           
+         
        </Nav>
         <SideBarNav sidebar= {sidebar}>
             <SidebarWrap>
             <NavIcon to ="#">
                  <AiIcons.AiOutlineClose  onClick ={showSidebar} />
+                 
             </NavIcon> 
-            {props.datos.map((item, index) => {
+            {SideBarData.map((item, index) => {
                 return <SubMenu item = {item} key = {index}/>
 
             })}
-             
             </SidebarWrap>
-            
         </SideBarNav>
-
+           
        </>
     );
 };
