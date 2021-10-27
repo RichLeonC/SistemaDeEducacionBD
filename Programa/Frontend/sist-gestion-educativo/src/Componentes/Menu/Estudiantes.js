@@ -8,6 +8,7 @@ import {SideBarData} from '../Navegation/SidebarData.js';
 import Login from '../Login/Login.js';
 import InfoEstudiante from '../PagEstu/InfoEstudiante.js';
 import Matricula from '../PagEstu/Matricula.js';
+import GruposMatriculados from '../PagEstu/GruposMatriculados.js';
 //import Calendar from 'react-calendar';
 
 function refreshPage(){
@@ -33,6 +34,7 @@ function Estudiantes(){
               
                 <Route exact path = '/PaginaPrincipal' component = {PaginaPrincipal}/>
                 <Route exact path = '/Matriculas' component = {Matricula}/>
+                <Route exact path = '/Grupos' component = {GruposMatriculados}/>
                
             </Switch>
         </BrowserRouter>
