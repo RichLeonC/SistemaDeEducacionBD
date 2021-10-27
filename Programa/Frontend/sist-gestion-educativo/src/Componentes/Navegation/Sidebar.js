@@ -46,7 +46,7 @@ const SidebarWrap = styled.div`
     width: 100%;
 `;
 
-const SideBar = () => {
+const SideBar = (props) => {
     const [sidebar, setSidebar] = useState(false);
 
     const showSidebar = ()=> setSidebar(!sidebar);
@@ -90,7 +90,7 @@ const SideBar = () => {
                  <AiIcons.AiOutlineClose  onClick ={showSidebar} />
                  
             </NavIcon> 
-            {SideBarData.map((item, index) => {
+            {props.datos.map((item, index) => {
                 return <SubMenu item = {item} key = {index}/>
 
             })}

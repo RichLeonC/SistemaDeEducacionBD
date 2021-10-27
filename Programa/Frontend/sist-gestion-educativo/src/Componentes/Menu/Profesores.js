@@ -3,16 +3,30 @@ import React,{Component} from 'react';
 import Cookies from 'universal-cookie';
 import { sbDataProfesor } from '../Navegation/SbDataProfesor';
 import SideBar from '../Navegation/Sidebar.js';
-import  {BrowserRouter as Router, Switch , Route} from 'react-router-dom';
+import  {BrowserRouter, Switch , Route} from 'react-router-dom';
+import PrincipalProfesor from '../PagProfesor/PrincipalProfesor.js';
+import PagGrupoMateria from '../PagProfesor/PagGrupoMateria.js';
 
 function Profesores(){
   const cookies = new Cookies();
     return(
-       
-        <SideBar datos= {sbDataProfesor} nombre = 'Profesores'/>
+      <div>
+      <BrowserRouter>
+          <SideBar datos= {sbDataProfesor} nombre = 'Profesores'/>
+          <Switch>
+
+              <Route exact path = '/PrincipalProfesor' component= {PrincipalProfesor}/>
+              <Route exact path = '/PagGrupoMateria' component= {PagGrupoMateria}/>
+             
+             
+          </Switch>
+      </BrowserRouter>
+      </div>
+      
        
     )
     
 }
+
 
 export default Profesores;
