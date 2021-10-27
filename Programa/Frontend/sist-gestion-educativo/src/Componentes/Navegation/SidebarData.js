@@ -57,7 +57,7 @@ export const SideBarData = [
     },
     {
         title: 'Matriculas',
-        path: '/opcionesMatriculas',
+        path: '/Matriculas',
         icon: <AiIcons.AiFillCopy/>, 
         
     }
