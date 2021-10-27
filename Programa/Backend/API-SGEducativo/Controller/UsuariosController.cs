@@ -36,7 +36,7 @@ namespace API_SGEducativo.Controller
             try
             {
                 var usuario = _context.usuarios.FirstOrDefault(e => e.cedula == cedula); //Busca el usuario
-                return Ok(cedula);
+                return Ok(usuario);
             }
             catch (Exception e)
             {

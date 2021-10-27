@@ -10,11 +10,11 @@ import PaginaPrincipal from '../Componentes/PagEstu/PaginaPrincipal';
 //Componentes
 
 
-class App extends Component{
-    render(){
-        return(           
-            
-            <BrowserRouter>
+export default function Routes() {
+    const baseUrl = "https://localhost:44329/api/Usuarios";
+    return (
+
+        <BrowserRouter>
             <Switch>
                 <Route exact path="/" component={Login}/>
                 <Route exact path="/Estudiantes" component={Estudiantes}/>
@@ -23,11 +23,8 @@ class App extends Component{
                
             </Switch>
             </BrowserRouter>
-         
-        )
-    }
+    )
 }
 
-export default App;
 
 //prueba 
