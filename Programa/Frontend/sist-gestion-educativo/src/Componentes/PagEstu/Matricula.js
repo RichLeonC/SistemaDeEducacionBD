@@ -8,8 +8,8 @@ import { FloatingLabel } from 'react-bootstrap';
 export default function Matricula() {
     const baseUrl = "https://localhost:44329/api/matriculas";
     const baseUrlGrupos = "https://localhost:44329/api/Grupos";
-    const [data,setData] = useState([]);
-    const [dataG,setDataG] = useState([]);
+    const [data,setData] = useState([]); //Estado para las matriculas
+    const [dataG,setDataG] = useState([]); //Estado para los grupos
     const [modalInsertar,setModalInsertar] = useState(false);
     const [matriculaSeleccionada,setMatriculaSeleccionada] = useState({
         idMatricula: '',
@@ -34,13 +34,18 @@ export default function Matricula() {
         console.log(matriculaSeleccionada);
     }
 
+    const handlerOpcion = e=>{
+        const opcion = e.target.value;
+        console.log(opcion);
+    }
+
     const abrirCerrarModalInsertar=()=>{ //Cambia el estado del modal (abierto o cerrado)
 
         setModalInsertar(!modalInsertar);
 
     }
     
-    const peticionGet = async()=>{ //Realiza peticiones Get al backend
+    const peticionGet = async()=>{ //Realiza peticiones Get al backend Matriculas
         await axios.get(baseUrl)
         .then(response=>{
             setData(response.data);
@@ -49,7 +54,7 @@ export default function Matricula() {
         })
     }
 
-    const peticionGetG = async()=>{ //Realiza peticiones Get al backend
+    const peticionGetG = async()=>{ //Realiza peticiones Get al backend Grupos
         await axios.get(baseUrlGrupos)
         .then(response=>{
             setDataG(response.data);
@@ -125,16 +130,23 @@ export default function Matricula() {
 
                       <ModalBody>
                           <Form>
+                             
                             
                             <FloatingLabel controlId="floatingSelect" label="Código de grupo">
-
-                                <select id="role" name="role" class="form-control" name="codigoGrupo" onChange={handleChange}>
-                                    <option selected disabled>A</option>
-                                     <option value='2'>A</option>
-                                     <option value='2'>A</option>
-                                </select>     
+                                <select id="role" name="grupos" class="form-control" onChange={handlerOpcion}>
+                                    <option selected disabled>Opciones</option>
+                                     
+                                     {
+                                  dataG.map((item,i)=>(
+                                      
+                                    <option key={"grupo"+i} value={i}>{item.codigoNombre}</option>
+                                    
+                                  ))
+                              }
+                                </select> 
+                                   
                             </FloatingLabel>
-                              
+                            
                           </Form>
                       </ModalBody>
                       <br/>
