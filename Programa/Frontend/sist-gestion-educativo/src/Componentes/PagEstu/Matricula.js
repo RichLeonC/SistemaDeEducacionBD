@@ -7,7 +7,9 @@ import { FloatingLabel } from 'react-bootstrap';
 
 export default function Matricula() {
     const baseUrl = "https://localhost:44329/api/matriculas";
+    const baseUrlGrupos = "https://localhost:44329/api/Grupos";
     const [data,setData] = useState([]);
+    const [dataG,setDataG] = useState([]);
     const [modalInsertar,setModalInsertar] = useState(false);
     const [matriculaSeleccionada,setMatriculaSeleccionada] = useState({
         idMatricula: '',
@@ -33,9 +35,9 @@ export default function Matricula() {
     }
 
     const abrirCerrarModalInsertar=()=>{ //Cambia el estado del modal (abierto o cerrado)
-        console.log("Me estan dando click");
+
         setModalInsertar(!modalInsertar);
-        console.log(modalInsertar);
+
     }
     
     const peticionGet = async()=>{ //Realiza peticiones Get al backend
@@ -46,6 +48,17 @@ export default function Matricula() {
             console.log(error);
         })
     }
+
+    const peticionGetG = async()=>{ //Realiza peticiones Get al backend
+        await axios.get(baseUrlGrupos)
+        .then(response=>{
+            setDataG(response.data);
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+
+
 
     const peticionPost=async()=>{ //Realiza peticiones post al backend
         matriculaSeleccionada.idMatricula = parseInt(matriculaSeleccionada.idMatricula);
@@ -61,6 +74,8 @@ export default function Matricula() {
 
     useEffect(() => { //Hace efecto la peticion
         peticionGet();
+        peticionGetG();
+
         
     }, [])
     return (
@@ -110,7 +125,7 @@ export default function Matricula() {
 
                       <ModalBody>
                           <Form>
-
+                            
                             <FloatingLabel controlId="floatingSelect" label="Código de grupo">
 
                                 <select id="role" name="role" class="form-control" name="codigoGrupo" onChange={handleChange}>
