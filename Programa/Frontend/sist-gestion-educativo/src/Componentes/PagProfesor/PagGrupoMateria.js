@@ -3,14 +3,19 @@ import React,{Component,useState,useEffect} from 'react';
 import axios from 'axios';
 import { ModalHeader,Modal,ModalBody,Button,Form,Select} from 'reactstrap'
 import { FloatingLabel } from 'react-bootstrap';
+import Cookies from 'universal-cookie';
 
 
 export default function PagGrupoMateria() {
     const baseUrl = "https://localhost:44307/api/Grupos";
     const [data,setData] = useState([]);
+    const cookies = new Cookies();
+
+    var cedula = cookies.get("cedula");
+
 
     const peticionGet = async()=>{ //Realiza peticiones Get al backend
-        await axios.get(baseUrl)
+        await axios.get(baseUrl+`/${cedula}`)
         .then(response=>{
             setData(response.data);
         }).catch(error=>{
