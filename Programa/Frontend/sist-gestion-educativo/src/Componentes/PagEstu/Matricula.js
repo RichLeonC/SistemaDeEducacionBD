@@ -10,16 +10,17 @@ export default function Matricula() {
     const baseUrlGrupos = "https://localhost:44329/api/Grupos";
     const [data,setData] = useState([]); //Estado para las matriculas
     const [dataG,setDataG] = useState([]); //Estado para los grupos
+    const [grupoSeleccionado,setGrupoSeleccionado] = useState([]);
     const [modalInsertar,setModalInsertar] = useState(false);
     const [matriculaSeleccionada,setMatriculaSeleccionada] = useState({
         idMatricula: '',
-      //  costeMatricula='',
-      //  fechaCreacion:'',
-      //  cedulaEstudiante:'',
+        costeMatricula:'5000',
+        fechaCreacion:'2021/4/4',
+        cedulaEstudiante:'1010',
         codigoGrupo:'',
-      //  numPeriodo:'',
-      //  anno:'',
-      //  nombreMateria:''
+        numPeriodo:'',
+        anno:'',
+        nombreMateria:''
 
 
 
@@ -34,9 +35,12 @@ export default function Matricula() {
         console.log(matriculaSeleccionada);
     }
 
-    const handlerOpcion = e=>{
+    const handlerOpcion = e=>{ //Guarda el grupo selecionado en el estado
         const opcion = e.target.value;
+        setGrupoSeleccionado(opcion);
         console.log(opcion);
+     
+        
     }
 
     const abrirCerrarModalInsertar=()=>{ //Cambia el estado del modal (abierto o cerrado)
@@ -66,8 +70,12 @@ export default function Matricula() {
 
 
     const peticionPost=async()=>{ //Realiza peticiones post al backend
+        
+
+
         matriculaSeleccionada.idMatricula = parseInt(matriculaSeleccionada.idMatricula);
         delete matriculaSeleccionada.idMatricula; //Lo eliminamos porque se genera de forma autoincrementable
+        
         await axios.post(baseUrl,matriculaSeleccionada) //Realizamos la peticion post, el matriculaSeleccionada se pasa como BODY
         .then(response=>{
             setData(data.concat(response.data)); //Agregamos al estado lo que responda la API
@@ -77,6 +85,9 @@ export default function Matricula() {
         })
     }
 
+    const gruposPermitidos = dataG.filter(grupo=>grupo.estado == ("Abierto")); //Filtra los grupos
+    const grupoEscogido = gruposPermitidos.filter(grupo=>grupo.codigoNombre == (grupoSeleccionado));
+    
     useEffect(() => { //Hace efecto la peticion
         peticionGet();
         peticionGetG();
@@ -129,24 +140,26 @@ export default function Matricula() {
                       <ModalHeader>Realizar matricula</ModalHeader>
 
                       <ModalBody>
-                          <Form>
-                             
-                            
+                          <Form>                       
                             <FloatingLabel controlId="floatingSelect" label="Código de grupo">
-                                <select id="role" name="grupos" class="form-control" onChange={handlerOpcion}>
-                                    <option selected disabled>Opciones</option>
+                                <select id="role" name="grupos" className="form-control" onChange={handlerOpcion}>
+                                    <option value ={-1} defaultValue disabled>Opciones</option>
                                      
-                                     {
-                                  dataG.map((item,i)=>(
-                                      
-                                    <option key={"grupo"+i} value={i}>{item.codigoNombre}</option>
+                                {
+                                  gruposPermitidos.map((item,i)=>(
+                                    
+                                    <option key={"grupo"+i} values={item.codigoNombre}>{item.codigoNombre}</option>
                                     
                                   ))
-                              }
+                                }
                                 </select> 
                                    
                             </FloatingLabel>
-                            
+                            {
+                                grupoEscogido.map(grupo=>(
+                                    <label>{grupo.numeroPeriodo}</label>
+                                ))
+                            }
                           </Form>
                       </ModalBody>
                       <br/>
