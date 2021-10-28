@@ -45,6 +45,7 @@ create table Padre(
 create table Estudiante(
 	cedula int not null foreign key references Usuario(cedula),
 	cedulaPadre int not null foreign key references Padre(cedula),
+	grado int not null,
 	primary key(cedula)
 
 )
@@ -210,12 +211,12 @@ insert into Padre values(429847293,'Programador','Carolina',85134560);
 insert into Usuario values(1010,'Melissa','Alguera','Castillo','0192023a7bbd73250516f069df18b500','Femenino',
 '2000/10/25','Estudiante','2021/10/19')
 insert into Usuario_Ubicacion values(1010,'San José','Desamparados','San Miguel','Centro');
-insert into Estudiante values(1010,114140008);
+insert into Estudiante values(1010,114140008,1);
 
 insert into Usuario values(122543102,'Adrian','Herrera','Segura','0192023a7bbd73250516f069df18b500','Masculino',
 '2002/11/9','Estudiante','2021/10/19')
 insert into Usuario_Ubicacion values(122543102,'San José','San Sebastian','Calle Blanco','Residencial MegaSuper');
-insert into Estudiante values(122543102,429847293);
+insert into Estudiante values(122543102,429847293,1);
 
 
 insert into Materia values('Español',25000);
