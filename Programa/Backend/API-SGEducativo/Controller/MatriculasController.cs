@@ -56,7 +56,6 @@ namespace API_SGEducativo.Controller
         {
             try
             {
-                
                 _context.Matricula.Add(matricula); //Agrega la matricula
                 _context.SaveChanges(); //Guarda los cambios
                 return CreatedAtRoute("GetMatricula", new { idMatricula = matricula.idMatricula }, matricula);
