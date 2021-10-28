@@ -38,6 +38,22 @@ namespace API_SGEducativo.Controller
         }
 
 
+        // GET: api/<GruposController>
+        [HttpGet("{cedula}")]
+        public ActionResult<List<Grupo>> GetGrupo(int cedula)
+        {
+            try
+            {
+                var profesor = _context.Profesor.FirstOrDefault(e => e.cedula == cedula);
+                var grupo = _context.Grupo.Where(grupo => grupo.cedulaProfesor.Equals(profesor.cedula)).ToList();
+                return grupo;
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         // GET api/<GruposController>/5
         [HttpGet("{codigoNombre}/ {nombreMateria}/{numeroPeriodo}/{anno}", Name = "GetGrupo")] //Devuelve solo un registro
         public ActionResult Get(int numeroPeriodo, int anno, string codigoNombre, string nombreMateria)
