@@ -1,4 +1,4 @@
-﻿using API_SGEducativo.Context;
+﻿ using API_SGEducativo.Context;
 using API_SGEducativo.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -44,8 +44,8 @@ namespace API_SGEducativo.Controller
         {
             try
             {
-                var profesor = _context.Profesor.FirstOrDefault(e => e.cedula == cedula);
-                var grupo = _context.Grupo.Where(grupo => grupo.cedulaProfesor.Equals(profesor.cedula)).ToList();
+               
+                var grupo = _context.Grupo.Where(grupo => grupo.cedulaProfesor.Equals(cedula)).ToList();
                 return grupo;
             }
             catch (Exception e)
