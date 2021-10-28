@@ -28,7 +28,10 @@ namespace API_SGEducativo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(); //Indicamos que estamos utilizando cors
+            services.AddCors(c=>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            }); //Indicamos que estamos utilizando cors
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -42,9 +45,11 @@ namespace API_SGEducativo
         {
             app.UseCors(options => //Este metodo permite que El localhost 3000 pueda realizar request Http
             {
-                options.WithOrigins("http://localhost:3000/");
+               // options.WithOrigins("http://localhost:3000/");
+                options.WithOrigins("http://localhost:3001/");
                 options.AllowAnyMethod();
                 options.AllowAnyHeader();
+                options.AllowAnyOrigin();
             });
             if (env.IsDevelopment())
             {

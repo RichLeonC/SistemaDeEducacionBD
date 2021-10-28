@@ -54,6 +54,8 @@ namespace API_SGEducativo.Controller
         [HttpPost] //AGREGAR
         public ActionResult Post([FromBody] Matricula matricula)
         {
+            Console.WriteLine(matricula);
+            Console.WriteLine("Holaaa");
             try
             {
                 _context.Matricula.Add(matricula); //Agrega la matricula

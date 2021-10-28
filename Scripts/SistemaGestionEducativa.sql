@@ -250,6 +250,7 @@ insert into Evaluacion values('Biología-A1',1,2020,'Biología','Examenes 60%, T
 insert into Evaluacion values('Español-C1',2,2021,'Español','Examenes 60%, Tareas 20%, Comunicación 20%')
 insert into Evaluacion values('Química-B1',3,2021,'Química','Examenes 80%, Tareas 10%')
 
+insert into Matricula values(5000,'2021/5/5',1010,'Matemáticas-A1',1,2020,'Matemáticas');
 
 
 
