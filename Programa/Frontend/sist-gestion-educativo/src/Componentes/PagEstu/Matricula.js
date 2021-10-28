@@ -3,20 +3,24 @@ import React,{Component,useState,useEffect} from 'react';
 import axios from 'axios';
 import { ModalHeader,Modal,ModalBody,Button,Form,Select} from 'reactstrap'
 import { FloatingLabel } from 'react-bootstrap';
+import Cookies from 'universal-cookie';
+
 
 
 export default function Matricula() {
+
     const baseUrl = "https://localhost:44329/api/matriculas";
     const baseUrlGrupos = "https://localhost:44329/api/Grupos";
+    const cookies = new Cookies();
     const [data,setData] = useState([]); //Estado para las matriculas
     const [dataG,setDataG] = useState([]); //Estado para los grupos
-    const [grupoSeleccionado,setGrupoSeleccionado] = useState([]);
-    const [modalInsertar,setModalInsertar] = useState(false);
-    const [matriculaSeleccionada,setMatriculaSeleccionada] = useState({
+    const [grupoSeleccionado,setGrupoSeleccionado] = useState([]); //Estado para el codigo de grupo que se escoje en select
+    const [modalInsertar,setModalInsertar] = useState(false); //Estado para el modal (la ventana de insertar)
+    const [matriculaSeleccionada,setMatriculaSeleccionada] = useState({ //Estado para guardar la info de la matricula
         idMatricula: '',
-        costeMatricula:'5000',
-        fechaCreacion:'2021/4/4',
-        cedulaEstudiante:'1010',
+        costeMatricula: 5000,
+        fechaCreacion:"2021-10-28T00:00:00",
+        cedulaEstudiante: cookies.get("cedula"),
         codigoGrupo:'',
         numPeriodo:'',
         anno:'',
@@ -70,10 +74,15 @@ export default function Matricula() {
 
 
     const peticionPost=async()=>{ //Realiza peticiones post al backend
-        
-
-
+        var iterator = grupoEscogido.values();
+        for(let grupo of iterator){
+            matriculaSeleccionada.codigoGrupo = grupo.codigoNombre;
+            matriculaSeleccionada.numPeriodo = parseInt(grupo.numeroPeriodo);
+            matriculaSeleccionada.anno = parseInt(grupo.anno);
+            matriculaSeleccionada.nombreMateria = grupo.nombreMateria;
+        }
         matriculaSeleccionada.idMatricula = parseInt(matriculaSeleccionada.idMatricula);
+        
         delete matriculaSeleccionada.idMatricula; //Lo eliminamos porque se genera de forma autoincrementable
         
         await axios.post(baseUrl,matriculaSeleccionada) //Realizamos la peticion post, el matriculaSeleccionada se pasa como BODY
@@ -86,7 +95,7 @@ export default function Matricula() {
     }
 
     const gruposPermitidos = dataG.filter(grupo=>grupo.estado == ("Abierto")); //Filtra los grupos
-    const grupoEscogido = gruposPermitidos.filter(grupo=>grupo.codigoNombre == (grupoSeleccionado));
+    const grupoEscogido = gruposPermitidos.filter(grupo=>grupo.codigoNombre == (grupoSeleccionado)); //Escogemos el grupo marcado
     
     useEffect(() => { //Hace efecto la peticion
         peticionGet();
@@ -155,11 +164,7 @@ export default function Matricula() {
                                 </select> 
                                    
                             </FloatingLabel>
-                            {
-                                grupoEscogido.map(grupo=>(
-                                    <label>{grupo.numeroPeriodo}</label>
-                                ))
-                            }
+                           
                           </Form>
                       </ModalBody>
                       <br/>
