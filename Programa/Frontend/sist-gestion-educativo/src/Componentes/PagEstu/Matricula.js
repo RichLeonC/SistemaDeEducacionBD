@@ -115,7 +115,7 @@ export default function Matricula() {
 
                                 <select id="role" name="role" class="form-control" name="codigoGrupo" onChange={handleChange}>
                                     <option selected disabled>A</option>
-                                     <option value='1'>A</option>
+                                     <option value='2'>A</option>
                                      <option value='2'>A</option>
                                 </select>     
                             </FloatingLabel>
