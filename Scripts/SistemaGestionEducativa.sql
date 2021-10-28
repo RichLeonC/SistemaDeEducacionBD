@@ -156,11 +156,6 @@ create table Matricula(
 )
 
 
-create table Matricula_Precio(
-	idMatricula int not null foreign key references Matricula(idMatricula),
-	precio decimal(8,2)
-
-)
 
 create table Cobros(
 	consecutivo int not null IDENTITY(1,1) primary key,
