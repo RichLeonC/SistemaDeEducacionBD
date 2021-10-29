@@ -1,7 +1,7 @@
 import React,{Component,useState,useEffect} from 'react';
 
 import axios from 'axios';
-import { ModalHeader,Modal,ModalBody,Button,Form,Select} from 'reactstrap'
+import { ModalHeader,Modal,ModalBody,Button,Form,Select,ModalFooter} from 'reactstrap'
 import { FloatingLabel } from 'react-bootstrap';
 import Cookies from 'universal-cookie';
 
@@ -16,6 +16,7 @@ export default function Matricula() {
     const [dataG,setDataG] = useState([]); //Estado para los grupos
     const [grupoSeleccionado,setGrupoSeleccionado] = useState([]); //Estado para el codigo de grupo que se escoje en select
     const [modalInsertar,setModalInsertar] = useState(false); //Estado para el modal (la ventana de insertar)
+    const [modalEliminar,setModalEliminar] = useState(false);
     const [matriculaSeleccionada,setMatriculaSeleccionada] = useState({ //Estado para guardar la info de la matricula
         idMatricula: '',
         costeMatricula: 5000,
@@ -30,15 +31,7 @@ export default function Matricula() {
 
     })
 
-    const handleChange=e=>{ //Gurdamos lo que el usuario digita en los inputs
-        const {name,value}=e.target;
-        setMatriculaSeleccionada({
-            ...matriculaSeleccionada,
-            [name]:value
-        });
-        console.log(matriculaSeleccionada);
-    }
-
+   
     const handlerOpcion = e=>{ //Guarda el grupo selecionado en el estado
         const opcion = e.target.value;
         setGrupoSeleccionado(opcion);
@@ -47,9 +40,16 @@ export default function Matricula() {
         
     }
 
-    const abrirCerrarModalInsertar=()=>{ //Cambia el estado del modal (abierto o cerrado)
+
+    const abrirCerrarModalInsertar=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
 
         setModalInsertar(!modalInsertar);
+
+    }
+
+    const abrirCerrarModalEliminar=()=>{ //Cambia el estado del modal de eliminar(abierto o cerrado)
+
+        setModalEliminar(!modalEliminar);
 
     }
     
@@ -94,9 +94,25 @@ export default function Matricula() {
         })
     }
 
+    const peticionDelete=async()=>{
+        await axios.delete(baseUrl+"/"+matriculaSeleccionada.idMatricula)
+        .then(response=>{
+            setData(data.filter(matricula=>matricula.idMatricula!==response.data)); //Guarda en el estado, los que no se eliminaron
+            abrirCerrarModalEliminar();
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+
     const gruposPermitidos = dataG.filter(grupo=>grupo.estado == ("Abierto")); //Filtra los grupos
     const grupoEscogido = gruposPermitidos.filter(grupo=>grupo.codigoNombre == (grupoSeleccionado)); //Escogemos el grupo marcado
     
+    const seleccionarMatricula=(matricula,caso)=>{
+        setMatriculaSeleccionada(matricula);
+        (caso=="Eliminar")&&
+        abrirCerrarModalEliminar();
+    }
+
     useEffect(() => { //Hace efecto la peticion
         peticionGet();
         peticionGetG();
@@ -135,7 +151,8 @@ export default function Matricula() {
                         <td>{matricula.anno}</td>
                         <td>{matricula.nombreMateria}</td>
                         <td>
-                            <button className="btn btn-danger">Eliminar</button>{" "}
+                            <button className="btn btn-danger" onClick={()=>seleccionarMatricula(matricula,"Eliminar")}
+                            >Eliminar</button>{" "}
                         </td>
                      </tr>  
                       ))}
@@ -152,24 +169,39 @@ export default function Matricula() {
                           <Form>                       
                             <FloatingLabel controlId="floatingSelect" label="Código de grupo">
                                 <select id="role" name="grupos" className="form-control" onChange={handlerOpcion}>
-                                    <option value ={-1} defaultValue disabled>Opciones</option>
+                                    <option value ={-1} selected disabled>Opciones</option>
                                      
                                 {
                                   gruposPermitidos.map((item,i)=>(
                                     
-                                    <option key={"grupo"+i} values={item.codigoNombre}>{item.codigoNombre}</option>
+                                    <option key={"grupo"+i} value={item.codigoNombre}>{item.codigoNombre}</option>
                                     
                                   ))
                                 }
                                 </select> 
                                    
                             </FloatingLabel>
-                           
+                              
                           </Form>
                       </ModalBody>
-                      <br/>
-                      <Button className="btn btn-primary"size="sm" onClick={()=>peticionPost()}>Insertar</Button>
-                      <Button className="btn btn-danger" size="sm" onClick={()=>abrirCerrarModalInsertar()}>Cancelar</Button>
+
+                      <ModalFooter>
+                        <Button className="btn btn-primary"size="sm" onClick={()=>peticionPost()}>Insertar</Button>
+                        <Button className="btn btn-danger" size="sm" onClick={()=>abrirCerrarModalInsertar()}
+                        >Cancelar</Button>
+                      </ModalFooter>
+            </Modal>
+
+            <Modal isOpen={modalEliminar}>
+
+                <ModalBody>
+                   ¿Estás seguro que deseas eliminar la matricula  {matriculaSeleccionada.idMatricula}?     
+                </ModalBody>
+                <ModalFooter>
+                    <Button className="btn btn-danger"size="sm" onClick={()=>peticionDelete()}>Sí</Button>
+                    <Button className="btn btn-secondary" size="sm" onClick={()=>abrirCerrarModalEliminar()}
+                    >No</Button>
+                </ModalFooter>
             </Modal>
   
     </div>
