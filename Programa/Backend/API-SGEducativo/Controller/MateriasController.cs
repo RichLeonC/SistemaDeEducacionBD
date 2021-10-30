@@ -1,4 +1,5 @@
 ﻿using API_SGEducativo.Context;
+using API_SGEducativo.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -22,34 +23,79 @@ namespace API_SGEducativo.Controller
 
         // GET: api/<MateriasController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                return Ok(_context.Materia.ToList());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // GET api/<MateriasController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{nombre}",Name="GetMateria")]
+        public ActionResult Get(string nombre)
         {
-            return "value";
+            try
+            {
+                var materia = _context.Materia.FirstOrDefault(e => e.nombre == nombre);
+                return Ok(materia);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // POST api/<MateriasController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Post([FromBody] Materia materia)
         {
+
+            try
+            {
+                _context.Materia.Add(materia); //Agrega la matricula
+                _context.SaveChanges(); //Guarda los cambios
+                return Ok(materia.nombre);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // PUT api/<MateriasController>/5
-        [HttpPut("{id}")]
+        [HttpPut("{nombre}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
         // DELETE api/<MateriasController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{nombre}")]
+        public ActionResult Delete(string nombre)
         {
+            try
+            {
+                var materia = _context.Materia.FirstOrDefault(e => e.nombre == nombre);
+                if (materia != null)
+                {
+                    _context.Materia.Remove(materia);
+                    _context.SaveChanges();
+                    return Ok(nombre);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
         }
     }
 }

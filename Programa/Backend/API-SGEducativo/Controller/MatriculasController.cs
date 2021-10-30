@@ -41,7 +41,7 @@ namespace API_SGEducativo.Controller
         {
             try
             {
-                var matricula = _context.Matricula.FirstOrDefault(e => e.idMatricula==idMatricula);
+                var matricula = _context.Matricula.FirstOrDefault(e => e.idMatricula==idMatricula); //LINQ
                 return Ok(matricula);
             }catch(Exception e)
             {
@@ -54,8 +54,7 @@ namespace API_SGEducativo.Controller
         [HttpPost] //AGREGAR
         public ActionResult Post([FromBody] Matricula matricula)
         {
-            Console.WriteLine(matricula);
-            Console.WriteLine("Holaaa");
+            
             try
             {
                 _context.Matricula.Add(matricula); //Agrega la matricula
