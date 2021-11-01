@@ -11,9 +11,11 @@ export default function Matricula() {
 
     const baseUrl = "https://localhost:44329/api/matriculas";
     const baseUrlGrupos = "https://localhost:44329/api/Grupos";
+    const baseUrlMaterias= "https://localhost:44329/api/materias";
     const cookies = new Cookies();
     const [data,setData] = useState([]); //Estado para las matriculas
     const [dataG,setDataG] = useState([]); //Estado para los grupos
+    const [dataMateria,setDataMateria] = useState([]);//Estado para las materias
     const [grupoSeleccionado,setGrupoSeleccionado] = useState([]); //Estado para el codigo de grupo que se escoje en select
     const [modalInsertar,setModalInsertar] = useState(false); //Estado para el modal (la ventana de insertar)
     const [modalEliminar,setModalEliminar] = useState(false);
@@ -71,9 +73,19 @@ export default function Matricula() {
         })
     }
 
+    const peticionGetMaterias = async()=>{ //Realiza peticiones Get al backend Materias
+        await axios.get(baseUrlMaterias)
+        .then(response=>{
+            setDataMateria(response.data);
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+
 
 
     const peticionPost=async()=>{ //Realiza peticiones post al backend
+        matriculaSeleccionada.costeMatricula = 5000;
         var iterator = grupoEscogido.values();
         for(let grupo of iterator){
             matriculaSeleccionada.codigoGrupo = grupo.codigoNombre;
@@ -81,7 +93,16 @@ export default function Matricula() {
             matriculaSeleccionada.anno = parseInt(grupo.anno);
             matriculaSeleccionada.nombreMateria = grupo.nombreMateria;
         }
-        matriculaSeleccionada.idMatricula = parseInt(matriculaSeleccionada.idMatricula);
+        const materiaCorrespondiente = dataMateria.filter(materia=>materia.nombre == (matriculaSeleccionada.nombreMateria));
+        iterator = materiaCorrespondiente.values();
+        for(let materia of iterator){
+            
+             console.log("Materia: "+materia.precio);
+             matriculaSeleccionada.costeMatricula = (matriculaSeleccionada.costeMatricula+materia.precio);
+            console.log("Matricula: "+matriculaSeleccionada.costeMatricula);
+        }
+
+   
         
         delete matriculaSeleccionada.idMatricula; //Lo eliminamos porque se genera de forma autoincrementable
         
@@ -107,6 +128,7 @@ export default function Matricula() {
     const gruposPermitidos = dataG.filter(grupo=>grupo.estado == ("Abierto")); //Filtra los grupos
     const grupoEscogido = gruposPermitidos.filter(grupo=>grupo.codigoNombre == (grupoSeleccionado)); //Escogemos el grupo marcado
     
+    
     const seleccionarMatricula=(matricula,caso)=>{
         setMatriculaSeleccionada(matricula);
         (caso=="Eliminar")&&
@@ -116,6 +138,7 @@ export default function Matricula() {
     useEffect(() => { //Hace efecto la peticion
         peticionGet();
         peticionGetG();
+        peticionGetMaterias();
 
         
     }, [])
