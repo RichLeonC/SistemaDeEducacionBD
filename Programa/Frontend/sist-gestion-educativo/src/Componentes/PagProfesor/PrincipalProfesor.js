@@ -10,7 +10,7 @@ export default function PrincipalProfesor() {
 
 
 
-    return (
+    return (// metodo que despliega la tabla que muestra los datos del profesor 
         <Table className="mt-5 offset-md-1 table table-hover"striped bordered hover variant="light">
             <thead>
                 <tr>
