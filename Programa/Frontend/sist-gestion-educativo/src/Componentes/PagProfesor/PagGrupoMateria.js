@@ -1,9 +1,9 @@
 import React,{Component,useState,useEffect} from 'react';
-
 import axios from 'axios';
 import { ModalHeader,Modal,ModalBody,Button,Form,Select} from 'reactstrap'
 import { FloatingLabel } from 'react-bootstrap';
 import Cookies from 'universal-cookie';
+import Button1 from '@material-ui/core/Button';
 
 
 export default function PagGrupoMateria() {
@@ -11,7 +11,7 @@ export default function PagGrupoMateria() {
     const [data,setData] = useState([]);
     const cookies = new Cookies();
 
-    var cedula = cookies.get("cedula");
+    var cedula = cookies.get("cedula");// toma la cedula del profesor que haya iniciado sesión. 
 
 
     const peticionGet = async()=>{ //Realiza peticiones Get al backend
@@ -31,7 +31,7 @@ export default function PagGrupoMateria() {
 
     
 
-    return (
+    return (//Metodo que despliega la tabla de los grupos asignados al profesor que inició seseión
    
         <div className="d-flex">
                 <div className = "col-sm-8">
@@ -64,7 +64,7 @@ export default function PagGrupoMateria() {
                             <td>{grupo.cupo}</td>
                             <td>{grupo.estado}</td>
                             <td>
-                                <button className="btn btn-primary">Asistencia</button>{" "}
+                                <Button1 className="btn btn-primary" href='/PagAsistencia'>Asistencia</Button1>{" "}
                             </td>
                             <td>
                                 <button className="btn btn-primary">Evaluación</button>{" "}
