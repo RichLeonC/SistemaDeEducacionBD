@@ -230,8 +230,8 @@ insert into Periodo values(1,2021,'2020/2/2','2020/4/28');
 insert into Periodo values(2,2021,'2020/4/30','2020/7/28');
 insert into Periodo values(3,2021,'2020/8/1','2020/10/28');
 
-insert into Grupo values('Matemáticas-A1','Matemáticas',118180009,1,2020,5,30,'Abierto')
-insert into Grupo values('Biología-A1','Biología',118180009,1,2020,5,30,'Abierto')
+insert into Grupo values('Matemáticas-A1','Matemáticas',118180009,1,2020,1,30,'Abierto')
+insert into Grupo values('Biología-A1','Biología',118180009,1,2020,1,30,'Abierto')
 insert into Grupo values('Español-C1','Español',302302414,2,2021,3,25,'Abierto')
 insert into Grupo values('Química-B1','Química',110100005,3,2021,4,25,'Abierto')
 

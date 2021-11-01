@@ -12,10 +12,12 @@ export default function Matricula() {
     const baseUrl = "https://localhost:44329/api/matriculas";
     const baseUrlGrupos = "https://localhost:44329/api/Grupos";
     const baseUrlMaterias= "https://localhost:44329/api/materias";
+    const baseUrlEstudiantes = "https://localhost:44329/api/estudiantes";
     const cookies = new Cookies();
     const [data,setData] = useState([]); //Estado para las matriculas
     const [dataG,setDataG] = useState([]); //Estado para los grupos
     const [dataMateria,setDataMateria] = useState([]);//Estado para las materias
+    const [dataEstudiante,setDataEstudiante] = useState([]);//Estado para el estudiante actual
     const [grupoSeleccionado,setGrupoSeleccionado] = useState([]); //Estado para el codigo de grupo que se escoje en select
     const [modalInsertar,setModalInsertar] = useState(false); //Estado para el modal (la ventana de insertar)
     const [modalEliminar,setModalEliminar] = useState(false);
@@ -82,7 +84,14 @@ export default function Matricula() {
         })
     }
 
-
+    const peticionGetEstudiante = async()=>{ //Realiza peticiones Get al backend Materias
+        await axios.get(baseUrlEstudiantes+"/"+cookies.get("cedula"))
+        .then(response=>{
+            setDataEstudiante(response.data);
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
 
     const peticionPost=async()=>{ //Realiza peticiones post al backend
         matriculaSeleccionada.costeMatricula = 5000;
@@ -97,9 +106,8 @@ export default function Matricula() {
         iterator = materiaCorrespondiente.values();
         for(let materia of iterator){
             
-             console.log("Materia: "+materia.precio);
              matriculaSeleccionada.costeMatricula = (matriculaSeleccionada.costeMatricula+materia.precio);
-            console.log("Matricula: "+matriculaSeleccionada.costeMatricula);
+            
         }
 
    
@@ -125,7 +133,7 @@ export default function Matricula() {
         })
     }
 
-    const gruposPermitidos = dataG.filter(grupo=>grupo.estado == ("Abierto")); //Filtra los grupos
+    const gruposPermitidos = dataG.filter(grupo=>grupo.estado == ("Abierto") && grupo.grado == (dataEstudiante.grado)); //Filtra los grupos
     const grupoEscogido = gruposPermitidos.filter(grupo=>grupo.codigoNombre == (grupoSeleccionado)); //Escogemos el grupo marcado
     
     
@@ -139,6 +147,7 @@ export default function Matricula() {
         peticionGet();
         peticionGetG();
         peticionGetMaterias();
+        peticionGetEstudiante();
 
         
     }, [])
