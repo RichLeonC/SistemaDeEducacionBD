@@ -1,47 +1,57 @@
 import React,{Component,useState,useEffect} from 'react';
 
 import axios from 'axios';
-import { ModalHeader,Modal,ModalBody,Button,Form,Select} from 'reactstrap'
+import { ModalHeader,Modal,ModalBody,Button,Form,Select,ModalFooter} from 'reactstrap'
 import { FloatingLabel } from 'react-bootstrap';
+import Cookies from 'universal-cookie';
+
 
 
 export default function Matricula() {
+
     const baseUrl = "https://localhost:44329/api/matriculas";
     const baseUrlGrupos = "https://localhost:44329/api/Grupos";
+    const baseUrlMaterias= "https://localhost:44329/api/materias";
+    const cookies = new Cookies();
     const [data,setData] = useState([]); //Estado para las matriculas
     const [dataG,setDataG] = useState([]); //Estado para los grupos
-    const [modalInsertar,setModalInsertar] = useState(false);
-    const [matriculaSeleccionada,setMatriculaSeleccionada] = useState({
+    const [dataMateria,setDataMateria] = useState([]);//Estado para las materias
+    const [grupoSeleccionado,setGrupoSeleccionado] = useState([]); //Estado para el codigo de grupo que se escoje en select
+    const [modalInsertar,setModalInsertar] = useState(false); //Estado para el modal (la ventana de insertar)
+    const [modalEliminar,setModalEliminar] = useState(false);
+    const [matriculaSeleccionada,setMatriculaSeleccionada] = useState({ //Estado para guardar la info de la matricula
         idMatricula: '',
-      //  costeMatricula='',
-      //  fechaCreacion:'',
-      //  cedulaEstudiante:'',
+        costeMatricula: 5000,
+        fechaCreacion:"2021-10-28T00:00:00",
+        cedulaEstudiante: cookies.get("cedula"),
         codigoGrupo:'',
-      //  numPeriodo:'',
-      //  anno:'',
-      //  nombreMateria:''
+        numPeriodo:'',
+        anno:'',
+        nombreMateria:''
 
 
 
     })
 
-    const handleChange=e=>{ //Gurdamos lo que el usuario digita en los inputs
-        const {name,value}=e.target;
-        setMatriculaSeleccionada({
-            ...matriculaSeleccionada,
-            [name]:value
-        });
-        console.log(matriculaSeleccionada);
-    }
-
-    const handlerOpcion = e=>{
+   
+    const handlerOpcion = e=>{ //Guarda el grupo selecionado en el estado
         const opcion = e.target.value;
+        setGrupoSeleccionado(opcion);
         console.log(opcion);
+     
+        
     }
 
-    const abrirCerrarModalInsertar=()=>{ //Cambia el estado del modal (abierto o cerrado)
+
+    const abrirCerrarModalInsertar=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
 
         setModalInsertar(!modalInsertar);
+
+    }
+
+    const abrirCerrarModalEliminar=()=>{ //Cambia el estado del modal de eliminar(abierto o cerrado)
+
+        setModalEliminar(!modalEliminar);
 
     }
     
@@ -63,11 +73,39 @@ export default function Matricula() {
         })
     }
 
+    const peticionGetMaterias = async()=>{ //Realiza peticiones Get al backend Materias
+        await axios.get(baseUrlMaterias)
+        .then(response=>{
+            setDataMateria(response.data);
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+
 
 
     const peticionPost=async()=>{ //Realiza peticiones post al backend
-        matriculaSeleccionada.idMatricula = parseInt(matriculaSeleccionada.idMatricula);
+        matriculaSeleccionada.costeMatricula = 5000;
+        var iterator = grupoEscogido.values();
+        for(let grupo of iterator){
+            matriculaSeleccionada.codigoGrupo = grupo.codigoNombre;
+            matriculaSeleccionada.numPeriodo = parseInt(grupo.numeroPeriodo);
+            matriculaSeleccionada.anno = parseInt(grupo.anno);
+            matriculaSeleccionada.nombreMateria = grupo.nombreMateria;
+        }
+        const materiaCorrespondiente = dataMateria.filter(materia=>materia.nombre == (matriculaSeleccionada.nombreMateria));
+        iterator = materiaCorrespondiente.values();
+        for(let materia of iterator){
+            
+             console.log("Materia: "+materia.precio);
+             matriculaSeleccionada.costeMatricula = (matriculaSeleccionada.costeMatricula+materia.precio);
+            console.log("Matricula: "+matriculaSeleccionada.costeMatricula);
+        }
+
+   
+        
         delete matriculaSeleccionada.idMatricula; //Lo eliminamos porque se genera de forma autoincrementable
+        
         await axios.post(baseUrl,matriculaSeleccionada) //Realizamos la peticion post, el matriculaSeleccionada se pasa como BODY
         .then(response=>{
             setData(data.concat(response.data)); //Agregamos al estado lo que responda la API
@@ -77,9 +115,30 @@ export default function Matricula() {
         })
     }
 
+    const peticionDelete=async()=>{
+        await axios.delete(baseUrl+"/"+matriculaSeleccionada.idMatricula)
+        .then(response=>{
+            setData(data.filter(matricula=>matricula.idMatricula!==response.data)); //Guarda en el estado, los que no se eliminaron
+            abrirCerrarModalEliminar();
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+
+    const gruposPermitidos = dataG.filter(grupo=>grupo.estado == ("Abierto")); //Filtra los grupos
+    const grupoEscogido = gruposPermitidos.filter(grupo=>grupo.codigoNombre == (grupoSeleccionado)); //Escogemos el grupo marcado
+    
+    
+    const seleccionarMatricula=(matricula,caso)=>{
+        setMatriculaSeleccionada(matricula);
+        (caso=="Eliminar")&&
+        abrirCerrarModalEliminar();
+    }
+
     useEffect(() => { //Hace efecto la peticion
         peticionGet();
         peticionGetG();
+        peticionGetMaterias();
 
         
     }, [])
@@ -115,7 +174,8 @@ export default function Matricula() {
                         <td>{matricula.anno}</td>
                         <td>{matricula.nombreMateria}</td>
                         <td>
-                            <button className="btn btn-danger">Eliminar</button>{" "}
+                            <button className="btn btn-danger" onClick={()=>seleccionarMatricula(matricula,"Eliminar")}
+                            >Eliminar</button>{" "}
                         </td>
                      </tr>  
                       ))}
@@ -129,29 +189,42 @@ export default function Matricula() {
                       <ModalHeader>Realizar matricula</ModalHeader>
 
                       <ModalBody>
-                          <Form>
-                             
-                            
+                          <Form>                       
                             <FloatingLabel controlId="floatingSelect" label="Código de grupo">
-                                <select id="role" name="grupos" class="form-control" onChange={handlerOpcion}>
-                                    <option selected disabled>Opciones</option>
+                                <select id="role" name="grupos" className="form-control" onChange={handlerOpcion}>
+                                    <option value ={-1} selected disabled>Opciones</option>
                                      
-                                     {
-                                  dataG.map((item,i)=>(
-                                      
-                                    <option key={"grupo"+i} value={i}>{item.codigoNombre}</option>
+                                {
+                                  gruposPermitidos.map((item,i)=>(
+                                    
+                                    <option key={"grupo"+i} value={item.codigoNombre}>{item.codigoNombre}</option>
                                     
                                   ))
-                              }
+                                }
                                 </select> 
                                    
                             </FloatingLabel>
-                            
+                              
                           </Form>
                       </ModalBody>
-                      <br/>
-                      <Button className="btn btn-primary"size="sm" onClick={()=>peticionPost()}>Insertar</Button>
-                      <Button className="btn btn-danger" size="sm" onClick={()=>abrirCerrarModalInsertar()}>Cancelar</Button>
+
+                      <ModalFooter>
+                        <Button className="btn btn-primary"size="sm" onClick={()=>peticionPost()}>Insertar</Button>
+                        <Button className="btn btn-danger" size="sm" onClick={()=>abrirCerrarModalInsertar()}
+                        >Cancelar</Button>
+                      </ModalFooter>
+            </Modal>
+
+            <Modal isOpen={modalEliminar}>
+
+                <ModalBody>
+                   ¿Estás seguro que deseas eliminar la matricula  {matriculaSeleccionada.idMatricula}?     
+                </ModalBody>
+                <ModalFooter>
+                    <Button className="btn btn-danger"size="sm" onClick={()=>peticionDelete()}>Sí</Button>
+                    <Button className="btn btn-secondary" size="sm" onClick={()=>abrirCerrarModalEliminar()}
+                    >No</Button>
+                </ModalFooter>
             </Modal>
   
     </div>
