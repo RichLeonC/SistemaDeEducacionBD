@@ -1,5 +1,7 @@
 ﻿using API_SGEducativo.Context;
+using API_SGEducativo.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,34 +24,99 @@ namespace API_SGEducativo.Controller
 
         // GET: api/<EstudiantesController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                return Ok(_context.Estudiante.ToList());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // GET api/<EstudiantesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{cedula}")]
+        public ActionResult Get(int cedula)
         {
-            return "value";
+            try
+            {
+                var estudiante = _context.Estudiante.FirstOrDefault(e => e.cedula == cedula);
+                return Ok(estudiante);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // POST api/<EstudiantesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Post([FromBody] Estudiante estudiante)
         {
+
+            try
+            {
+                _context.Estudiante.Add(estudiante); //Agrega la matricula
+                _context.SaveChanges(); //Guarda los cambios
+                return Ok(estudiante.cedula);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // PUT api/<EstudiantesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{cedula}")]
+        public ActionResult Put(int cedula, [FromBody] Estudiante estudiante)
         {
+            try
+            {
+
+                if (estudiante.cedula == cedula)
+                {
+
+                    _context.Entry(estudiante).State = EntityState.Modified; //Realiza los cambios
+                    _context.SaveChanges(); //Guarda los cambios
+                    return Ok(cedula);
+                }
+                else
+                {
+                    return BadRequest("No entre");
+                }
+            }
+
+            catch (Exception e)
+            {
+                return BadRequest("Catch");
+            }
         }
 
         // DELETE api/<EstudiantesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{cedula}")]
+        public ActionResult Delete(int cedula)
         {
+
+            try
+            {
+                var estudiante = _context.Estudiante.FirstOrDefault(e => e.cedula == cedula);
+                if (estudiante != null)
+                {
+                    _context.Estudiante.Remove(estudiante);
+                    _context.SaveChanges();
+                    return Ok(cedula);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }
