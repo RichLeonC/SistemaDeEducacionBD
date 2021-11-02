@@ -98,12 +98,49 @@ export default function GruposMatriculados() {
                             <button className="btn btn-primary"
                             >Ver horario</button>{" "}
                         </td>
+                        <td>
+                            <button className="btn btn-warning"
+                            >Ver evaluación</button>{" "}
+                        </td>
                      </tr>  
                       ))}
                                                  
                     </tbody>
                   </table>
             </div>
+
+            <Modal isOpen={modalFiltro}>
+                      <ModalHeader>Filtrar Grupos</ModalHeader>
+
+                      <ModalBody>
+                          <Form>                       
+                            <FloatingLabel controlId="floatingSelect" label="Período">
+                                <select id="role" name="periodos" className="form-control">
+                                    <option value ={-1} selected disabled>Opciones</option>
+                                     
+                                </select> 
+                                <br/>
+                            </FloatingLabel>
+
+                            <FloatingLabel controlId="floatingSelect" label="Año">
+                                <select id="role" name="annos" className="form-control">
+                                    <option value ={-1} selected disabled>Opciones</option>
+                                     
+                                </select> 
+                                   
+                            </FloatingLabel>
+                              
+                          </Form>
+                      </ModalBody>
+
+                      <ModalFooter>
+                        <Button className="btn btn-primary"size="sm">Aceptar</Button>
+                        <Button className="btn btn-danger" size="sm" onClick={()=>abrirCerrarModalFiltro()}
+                        >Cancelar</Button>
+                      </ModalFooter>
+            </Modal>
+
+           
            
         </div>
     )
