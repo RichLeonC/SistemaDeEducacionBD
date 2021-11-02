@@ -22,7 +22,7 @@ export const SideBarData = [
             },
             {
                 title: 'Grupos',
-                path: '/Opciones/Grupos',
+                path: '/Grupos',
                 icon: <IoIcons.IoIosPaper/>, 
               
 

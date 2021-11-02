@@ -247,7 +247,7 @@ insert into Grupo_Horario values('Biología-A1','Biología',1,2020,
 'Viernes','13:00','16:50');
 insert into Grupo_Horario values('Español-C1','Español',2,2021,
 'Lunes y Miercoles','8:00','11:25');
-insert into Grupo_Horario values('Química-B1','Química',3,2021,
+insert into Grupo_Horario values('Química-B1','Química',1,2021,
 'Lunes y Miercoles','13:00','15:30');
 
 insert into Evaluacion values('Matemáticas-A1',1,2020,'Matemáticas','Examenes 90%, Tareas 10%')
