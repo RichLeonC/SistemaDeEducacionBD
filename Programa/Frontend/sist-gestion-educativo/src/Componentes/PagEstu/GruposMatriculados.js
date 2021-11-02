@@ -115,7 +115,7 @@ export default function GruposMatriculados() {
                       <ModalBody>
                           <Form>                       
                             <FloatingLabel controlId="floatingSelect" label="Período">
-                                <select id="role" name="periodos" className="form-control">
+                                <select id="rol" name="periodos" className="form-control">
                                     <option value ={-1} selected disabled>Opciones</option>
                                      
                                 </select> 
