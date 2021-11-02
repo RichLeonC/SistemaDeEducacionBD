@@ -200,7 +200,7 @@ export default function Matricula() {
                       <ModalBody>
                           <Form>                       
                             <FloatingLabel controlId="floatingSelect" label="Código de grupo">
-                                <select id="role" name="grupos" className="form-control" onChange={handlerOpcion}>
+                                <select id="rol" name="grupos" className="form-control" onChange={handlerOpcion}>
                                     <option value ={-1} selected disabled>Opciones</option>
                                      
                                 {
