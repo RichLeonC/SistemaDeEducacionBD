@@ -6,7 +6,7 @@ import SideBar from '../Navegation/Sidebar.js';
 import  {BrowserRouter, Switch , Route} from 'react-router-dom';
 import PrincipalProfesor from '../PagProfesor/PrincipalProfesor.js';
 import PagGrupoMateria from '../PagProfesor/PagGrupoMateria.js';
-import PagAsistencia from '../PagProfesor/PagAsistencia';
+import PagAsistencia from '../PagProfesor/PagAsistencia.js';
 
 
 function Profesores(){

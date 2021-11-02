@@ -2,13 +2,17 @@ import React,{Component,useState,useEffect} from 'react';
 import axios from 'axios';
 import { ModalHeader,Modal,ModalBody,Button,Form,Select} from 'reactstrap'
 import { FloatingLabel } from 'react-bootstrap';
+import { useHistory } from "react-router-dom";
 import Cookies from 'universal-cookie';
-import Button1 from '@material-ui/core/Button';
+import {Link} from 'react-router-dom';
+import PagAsistencia from './PagAsistencia';
+
 
 
 export default function PagGrupoMateria() {
     const baseUrl = "https://localhost:44307/api/Grupos";
     const [data,setData] = useState([]);
+    
     const cookies = new Cookies();
 
     var cedula = cookies.get("cedula");// toma la cedula del profesor que haya iniciado sesión. 
@@ -29,6 +33,16 @@ export default function PagGrupoMateria() {
         
     }, [])
 
+    const history = useHistory();
+
+    const PasarPag=(grupo)=> {
+        <PagAsistencia datos = {grupo}/>
+        let path = '/PagAsistencia'; 
+        history.push(path);
+
+    }
+
+ 
     
 
     return (//Metodo que despliega la tabla de los grupos asignados al profesor que inició seseión
@@ -64,10 +78,10 @@ export default function PagGrupoMateria() {
                             <td>{grupo.cupo}</td>
                             <td>{grupo.estado}</td>
                             <td>
-                                <Button1 className="btn btn-primary" href='/PagAsistencia'>Asistencia</Button1>{" "}
+                                <Button className="btn btn-primary" onClick={()=>PasarPag(grupo)} >Asistencia</Button>
                             </td>
                             <td>
-                                <button className="btn btn-primary">Evaluación</button>{" "}
+                                <button className="btn btn-primary">Evaluación</button>
                             </td>
                          </tr>  
                           ))}
