@@ -113,7 +113,7 @@ create table Grupo_Horario(
 );
 
 create table Asistencia_Estudiante (
-	cedulaEstudiante int not null foreign key references Estudiante(cedula)primary key,
+	cedulaEstudiante int not null foreign key references Estudiante(cedula),
 	codigoGrupo varchar(25) not null,
     nombreMateria varchar(100) not null,
 	numPeriodo int not null,
@@ -121,7 +121,8 @@ create table Asistencia_Estudiante (
 	fecha date,
 	asistencia bit,
 	foreign key(codigoGrupo,numPeriodo,anno,nombreMateria) 
-	references Grupo(codigoNombre,numeroPeriodo,anno,nombreMateria)
+	references Grupo(codigoNombre,numeroPeriodo,anno,nombreMateria),
+	primary key(cedulaEstudiante,codigoGrupo,nombreMateria,numPeriodo,anno)
 )
 
 
@@ -137,7 +138,19 @@ create table Evaluacion(
 	
 );
 
+create table Evaluacion_Estudiante(
+	cedulaEstudiante int not null foreign key references Estudiante(cedula),
+	codigoGrupo varchar(25) not null,
+    nombreMateria varchar(100) not null,
+	numPeriodo int not null,
+	anno int not null,
+	notaObtenida float not null,
+	estado varchar(20) not null,
+	foreign key(codigoGrupo,numPeriodo,anno,nombreMateria) 
+	references Grupo(codigoNombre,numeroPeriodo,anno,nombreMateria),
+	primary key(cedulaEstudiante,codigoGrupo,nombreMateria,numPeriodo,anno)
 
+)
 
 
 
@@ -261,7 +274,8 @@ insert into Evaluacion values('Química-B1',3,2021,'Química','Examenes 80%, Tar
 
 
 
-
+insert into Evaluacion_Estudiante values(1010,'Matemáticas-A1','Matemáticas',1,2020,70,'Aprobado')
+insert into Evaluacion_Estudiante values(1010,'Biología-A1','Biología',1,2020,60,'Reprobado')
 
 ---------DROPS DE LAS TABLAS -------------------
 
