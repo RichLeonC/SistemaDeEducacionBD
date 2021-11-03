@@ -56,7 +56,7 @@ namespace API_SGEducativo.Controller
 
         // GET api/<GruposController>/5
         [HttpGet("{codigoNombre}/ {nombreMateria}/{numeroPeriodo}/{anno}", Name = "GetGrupo")] //Devuelve solo un registro
-        public ActionResult Get(int numeroPeriodo, int anno, string codigoNombre, string nombreMateria)
+        public ActionResult Get(string codigoNombre, string nombreMateria, int numeroPeriodo, int anno)
         {
             try
             {
@@ -90,14 +90,14 @@ namespace API_SGEducativo.Controller
 
         // PUT api/<GruposController>/5
         [HttpPut("{codigoNombre}/ {nombreMateria}/{numeroPeriodo}/{anno}")]
-        public ActionResult Put(int numeroPeriodo, int anno, string codigoNombre, string nombreMateria, [FromBody] Grupo grupo)
+        public ActionResult Put(string codigoNombre, string nombreMateria, int numeroPeriodo, int anno, [FromBody] Grupo grupo)
         {
 
             try
             {
 
-                if (numeroPeriodo == numeroPeriodo && anno == anno
-                && codigoNombre == codigoNombre && nombreMateria == nombreMateria)
+                if (grupo.numeroPeriodo == numeroPeriodo && grupo.anno == anno
+                && grupo.codigoNombre == codigoNombre && grupo.nombreMateria == nombreMateria)
                 {
 
                     _context.Entry(grupo).State = EntityState.Modified; //Realiza los cambios
@@ -125,7 +125,7 @@ namespace API_SGEducativo.Controller
 
         // DELETE api/<GruposController>/5
         [HttpDelete("{codigoNombre}/ {nombreMateria}/{numeroPeriodo}/{anno}")]
-        public ActionResult Delete(int numeroPeriodo, int anno, string codigoNombre, string nombreMateria)
+        public ActionResult Delete(string codigoNombre, string nombreMateria, int numeroPeriodo, int anno)
         {
 
             try

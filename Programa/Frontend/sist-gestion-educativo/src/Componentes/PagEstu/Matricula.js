@@ -109,8 +109,6 @@ export default function Matricula() {
              matriculaSeleccionada.costeMatricula = (matriculaSeleccionada.costeMatricula+materia.precio);
             
         }
-
-   
         
         delete matriculaSeleccionada.idMatricula; //Lo eliminamos porque se genera de forma autoincrementable
         
