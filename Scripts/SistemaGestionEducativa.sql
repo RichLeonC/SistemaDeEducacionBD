@@ -137,7 +137,18 @@ create table Evaluacion(
 	
 );
 
+create table Evaluacion_Estudiante(
+	cedulaEstudiante int not null foreign key references Estudiante(cedula)primary key,
+	codigoGrupo varchar(25) not null,
+    nombreMateria varchar(100) not null,
+	numPeriodo int not null,
+	anno int not null,
+	notaObtenida float not null,
+	estado varchar(20) not null,
+	foreign key(codigoGrupo,numPeriodo,anno,nombreMateria) 
+	references Grupo(codigoNombre,numeroPeriodo,anno,nombreMateria)
 
+)
 
 
 
