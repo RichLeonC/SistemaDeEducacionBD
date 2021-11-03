@@ -8,13 +8,15 @@ import { Card,ListGroup,Table} from 'react-bootstrap';
 export default function PagAsistencia(props) {
     const cookies = new Cookies();
     const baseUrlMatriculas = "https://localhost:44307/api/matriculas";
-    const baseUrlUsuarios =  "https://localhost:44307/api/Usuarios";
+    const baseUrlUsuarios =  "https://localhost:44329/api/estudiantes";
     const baseUrlGrupos = "https://localhost:44307/api/Grupos";
     const [matriculas,setData] = useState([]); //Estado para las matriculas
     const [dataE,setDataE] = useState([]); //Estado para los estudiantes
     const [grupodisponibles, setGrupo]= useState([]);
     const [grupoSeleccionado,setGrupoSeleccionado] = useState([]);
+    const [estudiantesMatriculados,setDataEstudiante] = useState([]);
     var cedula = cookies.get("cedula");// toma la cedula del profesor que haya iniciado sesión. 
+    
   
         
 
@@ -32,13 +34,25 @@ export default function PagAsistencia(props) {
     
 
     
-    const peticionGetM = async()=>{ //Realiza peticiones Get al backend estudiantes
-        await axios.get(baseUrlMatriculas)    
+    const peticionGetM = async()=>{ //Realiza peticiones Get al backend materia
+        await axios.get(baseUrlMatriculas+`/${grupoSeleccionado}`)    
         .then(response=>{
             setData(response.data);
         }).catch(error=>{
             console.log(error);
         })
+    }
+
+    const estudiantesM = ()=>{
+       var iterator = dataE.values();
+        for (let matriculas of iterator ){
+
+            setDataEstudiante(dataE.filter(estudiante => estudiante.cedula == matriculas.cedulaEstudiante));
+
+        }
+
+
+
     }
 
 
@@ -54,6 +68,9 @@ export default function PagAsistencia(props) {
             console.log(error);
         })
     }
+
+
+
 
     useEffect(() => { //Hace efecto la peticion
        
@@ -76,7 +93,8 @@ export default function PagAsistencia(props) {
      
         
     }
-
+     
+    
     
      
 
@@ -118,16 +136,16 @@ export default function PagAsistencia(props) {
                 </tr>
             </thead>
             <tbody>
-           
-                <tr>
-                <td></td>
+           {estudiantesMatriculados.map(estudiante =>(
+               <tr key ={estudiante.cedula}>
+                <td>{estudiante.cedula}</td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td> <Checkbox/></td>
                
                 </tr>
-            
+           ))}
             </tbody>
         </Table>
     )
