@@ -175,7 +175,7 @@ create table Factura(
 )
 
 insert into Matricula values(5000,'2001/10/10',1010,'Español-C1', 2, 2021,'Español')
-
+insert into Matricula values(5000,'2021/5/5',1010,'Matemáticas-A1',1,2020,'Matemáticas');
 
 
 
@@ -239,6 +239,8 @@ insert into Grupo values('Matemáticas-A1','Matemáticas',118180009,1,2020,1,30,
 insert into Grupo values('Biología-A1','Biología',118180009,1,2020,1,30,'Abierto')
 insert into Grupo values('Español-C1','Español',302302414,2,2021,1,25,'Abierto')
 insert into Grupo values('Química-B1','Química',110100005,3,2021,1,25,'Abierto')
+insert into Grupo values('Español-C1','Español',302302414,2,2021,1,25,'Abierto')
+insert into Grupo values('Química-B1','Química',110100005,3,2021,1,25,'Abierto')
 
 
 insert into Grupo_Horario values('Matemáticas-A1','Matemáticas',1,2020,
@@ -255,7 +257,8 @@ insert into Evaluacion values('Biología-A1',1,2020,'Biología','Examenes 60%, T
 insert into Evaluacion values('Español-C1',2,2021,'Español','Examenes 60%, Tareas 20%, Comunicación 20%')
 insert into Evaluacion values('Química-B1',3,2021,'Química','Examenes 80%, Tareas 10%')
 
-insert into Matricula values(5000,'2021/5/5',1010,'Matemáticas-A1',1,2020,'Matemáticas');
+
+
 
 
 

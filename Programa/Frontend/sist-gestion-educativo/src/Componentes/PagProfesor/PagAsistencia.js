@@ -1,29 +1,42 @@
 import React,{Component,useState,useEffect} from 'react';
 import axios from 'axios';
-import { ModalHeader,Modal,ModalBody,Button,Form,Select} from 'reactstrap'
+import { ModalHeader,Modal,ModalBody,Button,Form,Select,ModalFooter} from 'reactstrap'
 import { FloatingLabel } from 'react-bootstrap';
 import Cookies from 'universal-cookie';
 import { Card,ListGroup,Table} from 'react-bootstrap';
 
-export default function PagAsistencia(props) {
+export default function PagAsistencia() {
     const cookies = new Cookies();
     const baseUrlMatriculas = "https://localhost:44307/api/matriculas";
-    const baseUrlUsuarios =  "https://localhost:44329/api/estudiantes";
+    const baseUrlEstudiantes =  "https://localhost:44307/api/estudiantes";
     const baseUrlGrupos = "https://localhost:44307/api/Grupos";
-    const [matriculas,setData] = useState([]); //Estado para las matriculas
-    const [dataE,setDataE] = useState([]); //Estado para los estudiantes
-    const [grupodisponibles, setGrupo]= useState([]);
-    const [grupoSeleccionado,setGrupoSeleccionado] = useState([]);
-    const [estudiantesMatriculados,setDataEstudiante] = useState([]);
-    var cedula = cookies.get("cedula");// toma la cedula del profesor que haya iniciado sesión. 
-    
+    const baseUrlUsuarios =  "https://localhost:44307/api/Usuarios";
+    const [matriculas,setMatricula] = useState([]); //Estado para las matriculas
+    const [estudiantes,setEstudiante] = useState([]); //Estado para los estudiantes
+    const [gruposProfesor,setgruposProfesor] = useState([]); //Estado para los grupos que posee el profesor
+    const [usuarios,setUsuarios] = useState([]); //Estado para los grupos que posee el profesor
+    const [modalGrupo,setModalGrupos] = useState(false); //Estado para el modal (la ventana de grupo)
+    const [grupoSeleccionado,setGrupoSeleccionado] = useState([]); //Estado para el codigo de grupo que se escoje en select
   
-        
+    
+    const cokies = new Cookies();
+    var cedula = cokies.get("cedula");// toma la cedula del profesor que haya iniciado sesión. 
 
-    const peticionGetG = async()=>{ //Realiza peticiones Get al backend
+
+    
+    const peticionGetGrupos = async()=>{ //Realiza peticiones Get al backend de los grupos
         await axios.get(baseUrlGrupos+`/${cedula}`)
         .then(response=>{
-            setGrupo(response.data);
+            setgruposProfesor(response.data);
+         }).catch(error=>{
+            console.log(error);
+         })
+    }
+
+    const peticionGetMatricula= async()=>{ //Realiza peticiones Get al backend de las matriculas
+        await axios.get(baseUrlMatriculas+`/${grupoSeleccionado}`+ "/2")
+        .then(response=>{
+            setMatricula(response.data);
         }).catch(error=>{
             console.log(error);
         })
@@ -31,61 +44,33 @@ export default function PagAsistencia(props) {
 
    
 
-    
-
-    
-    const peticionGetM = async()=>{ //Realiza peticiones Get al backend materia
-        await axios.get(baseUrlMatriculas+`/${grupoSeleccionado}`)    
+    const peticionGetEstudiantes = async()=>{ //Realiza peticiones Get al backend de los estudiantes
+        await axios.get(baseUrlEstudiantes)
         .then(response=>{
-            setData(response.data);
+            setEstudiante(response.data);
         }).catch(error=>{
             console.log(error);
         })
     }
 
-    const estudiantesM = ()=>{
-       var iterator = dataE.values();
-        for (let matriculas of iterator ){
-
-            setDataEstudiante(dataE.filter(estudiante => estudiante.cedula == matriculas.cedulaEstudiante));
-
-        }
-
-
-
-    }
-
-
-
-
-
-
-    const peticionGetE = async()=>{ //Realiza peticiones Get al backend estudiantes
-        await axios.get(baseUrlUsuarios)    
+    
+    const peticionGetUsuarios = async()=>{ //Realiza peticiones Get al backend de los estudiantes
+        await axios.get(baseUrlUsuarios)
         .then(response=>{
-            setDataE(response.data);
+            setUsuarios(response.data);
         }).catch(error=>{
             console.log(error);
         })
     }
 
 
+    const abrirCerrarModalGrupos=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
 
+        setModalGrupos(!modalGrupo);
+        peticionGetGrupos();
 
-    useEffect(() => { //Hace efecto la peticion
-       
-        peticionGetE();
-        peticionGetM();
-        peticionGetG();
-        
-    }, [])
+    }
 
-    const Checkbox = props => (
-        <input type="checkbox" {...props} />)
-      
-    const state = { checked: false }
-    const handleCheckboxChange = event => this.setState({ checked: event.target.checked })
- 
     const handlerOpcion = e=>{ //Guarda el grupo selecionado en el estado
         const opcion = e.target.value;
         setGrupoSeleccionado(opcion);
@@ -93,61 +78,108 @@ export default function PagAsistencia(props) {
      
         
     }
-     
-    
-    
-     
+
+    const Checkbox = props => (
+        <input type="checkbox" {...props} />
+      )
 
 
-    return (// metodo que despliega la tabla que muestra los datos del profesor 
+    const filtrarEstudiantes=()=>{
+        peticionGetMatricula();
+        peticionGetEstudiantes();
+        peticionGetUsuarios();
+        setEstudiante(estudiantes.filter(unEstudiantes=> unEstudiantes.cedula == matriculas.cedulaEstudiante))
+        console.log(estudiantes);
+        setUsuarios(usuarios.filter(usu => usu.cedula == matriculas.cedulaEstudiante));
+
+    }
+
+    const mostrarLista= ()=>{
+        filtrarEstudiantes();
+        abrirCerrarModalGrupos();
+    }
+
+    useEffect(() => { //Hace efecto la peticion
+        peticionGetUsuarios();
+      
+
+        
+    }, [])
+
+    return (
         <div>
-        <Form>                       
-        <FloatingLabel controlId="floatingSelect" label="Código de grupo">
-            <select id="rol" name="grupos" className="form-control" onChange={handlerOpcion}>
-                <option value ={-1} selected disabled>Opciones</option>
+             <button onClick={()=>abrirCerrarModalGrupos()} className=" offset-md-0 btn btn-success">Grupos</button>
+                <table className="table table-hover mt-5 offset-md-0" >
+                    <thead>
+                        <tr>
+                            <th>Cedula Estudiante</th>
+                            <th>Nombre</th>
+                            <th>Apellido 1</th>
+                            <th>Apellido 2</th>
+                            <th>Asistencia</th>
+                          
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {
+                      usuarios.map(unEs=>(
+                        <tr  key ={unEs.cedula}>
+                        <td>{unEs.cedula}</td>
+                        <td>{unEs.nombre}</td>
+                        <td>{unEs.apellido1}</td>
+                        <td>{unEs.apellido2}</td>
+                        <td>
+                            <Checkbox></Checkbox>
+                        </td>
+                     </tr>  
+                      
+                     ))}                        
+                    </tbody>
+                  </table>
+
+            
+            
+            <Modal isOpen={modalGrupo}>
+                      <ModalHeader>Grupos Abiertos</ModalHeader>
+
+                      <ModalBody>
+                        <Form>                       
+                            <FloatingLabel controlId="floatingSelect" label="Código de grupo">
+                        <select id="rol" name="grupos" className="form-control" onChange={handlerOpcion}>
+                        <option value ={-1} selected disabled>Opciones</option>
                  
-            {
-              grupodisponibles.map((item,i)=>(
+                         {
+                              gruposProfesor.map((item,i)=>(
                 
-                <option key={"grupo"+i} value={item.codigoNombre}>{item.codigoNombre}</option>
+                             <option key={"grupo"+i} value={item.codigoNombre}>{item.codigoNombre}</option>
                 
-              ))
-            }
-            </select> 
+                                  ))
+                        }
+                         </select> 
                
-        </FloatingLabel>
+                            </FloatingLabel>
           
-      </Form>
+                        </Form>
+
+                      </ModalBody> 
+
+                      <ModalFooter>
+                        <Button className="btn btn-primary"size="sm" onClick={()=>mostrarLista()}>Aceptar</Button>
+                        <Button className="btn btn-danger" size="sm" onClick={()=>abrirCerrarModalGrupos()}
+                        >Cancelar</Button>
+                      </ModalFooter>
+            </Modal>
 
 
 
 
 
 
-        <Table className="mt-5 offset-md-0 table table-hover"striped bordered hover variant="light">
-            <thead>
-                <tr>
-                <th>Cédula</th>
-                <th>Nombre</th>
-                <th>Apellido1</th>
-                <th>Apellido2</th>
-                <th>Asistencia</th>
-             
-                </tr>
-            </thead>
-            <tbody>
-           {estudiantesMatriculados.map(estudiante =>(
-               <tr key ={estudiante.cedula}>
-                <td>{estudiante.cedula}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td> <Checkbox/></td>
-               
-                </tr>
-           ))}
-            </tbody>
-        </Table>
+
+        </div>
+
+
     )
-    </div>
-    )}
+  
+    
+}
