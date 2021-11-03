@@ -12,6 +12,8 @@ import PagAsistencia from './PagAsistencia';
 export default function PagGrupoMateria() {
     const baseUrl = "https://localhost:44307/api/Grupos";
     const [data,setData] = useState([]);
+    const [Ugrupo, setGrupo] = useState([]);
+
     
     const cookies = new Cookies();
 
@@ -36,13 +38,13 @@ export default function PagGrupoMateria() {
     const history = useHistory();
 
     const PasarPag=(grupo)=> {
-        <PagAsistencia datos = {grupo}/>
         let path = '/PagAsistencia'; 
         history.push(path);
+      
 
     }
 
- 
+    
     
 
     return (//Metodo que despliega la tabla de los grupos asignados al profesor que inició seseión
@@ -62,8 +64,7 @@ export default function PagGrupoMateria() {
                                 <th>Grado</th>
                                 <th>Cupo</th>
                                 <th>Estado</th>
-                                <th>Asistencia</th>
-                                <th>Evaluación</th>
+                             
                             </tr>
                         </thead>
                         <tbody>
@@ -77,12 +78,8 @@ export default function PagGrupoMateria() {
                             <td>{grupo.grado}</td>
                             <td>{grupo.cupo}</td>
                             <td>{grupo.estado}</td>
-                            <td>
-                                <Button className="btn btn-primary" onClick={()=>PasarPag(grupo)} >Asistencia</Button>
-                            </td>
-                            <td>
-                                <button className="btn btn-primary">Evaluación</button>
-                            </td>
+                           
+                            
                          </tr>  
                           ))}
                                                      

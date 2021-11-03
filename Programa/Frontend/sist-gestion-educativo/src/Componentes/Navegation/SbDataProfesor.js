@@ -21,6 +21,13 @@ export const sbDataProfesor = [
         icon: <BiIcons.BiGroup/>, 
         iconClosed: <AiIcons.AiFillCaretDown/>,
         iconOpened :<AiIcons.AiFillCaretUp/>,
+    },
+    {
+        title: 'Asistencia',
+        path: '/PagAsistencia',
+        icon: <BiIcons.BiGroup/>, 
+        iconClosed: <AiIcons.AiFillCaretDown/>,
+        iconOpened :<AiIcons.AiFillCaretUp/>,
     }
 
 
