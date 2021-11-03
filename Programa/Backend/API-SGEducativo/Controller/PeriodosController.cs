@@ -21,9 +21,16 @@ namespace API_SGEducativo.Controller
         }
         // GET: api/<PeriodosController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                return Ok(_context.Periodo.ToList());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // GET api/<PeriodosController>/5
