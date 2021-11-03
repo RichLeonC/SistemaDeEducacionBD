@@ -58,7 +58,7 @@ export default function Matricula() {
     }
     
     const peticionGet = async()=>{ //Realiza peticiones Get al backend Matriculas
-        await axios.get(baseUrl)
+        await axios.get(baseUrl+"/"+cookies.get("cedula")+"/1")
         .then(response=>{
             setData(response.data);
         }).catch(error=>{
@@ -172,7 +172,8 @@ export default function Matricula() {
                         </tr>
                     </thead>
                     <tbody>
-                      {data.map(matricula=>(
+                      {
+                      data.map(matricula=>(
                         <tr key ={matricula.idMatricula}>
                         <td>{matricula.idMatricula}</td>
                         <td>{matricula.costeMatricula} </td>

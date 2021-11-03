@@ -3,17 +3,18 @@ import axios from 'axios';
 import { ModalHeader,Modal,ModalBody,Button,Form,Select,ModalFooter} from 'reactstrap'
 import { FloatingLabel } from 'react-bootstrap';
 import Cookies from 'universal-cookie';
-import Matricula from './Matricula';
+
 
 
 export default function GruposMatriculados() {
     const cookies = new Cookies();
     const baseUrl = "https://localhost:44329/api/grupos";
     const baseUrlMatriculas = "https://localhost:44329/api/matriculas";
+    const baseUrlPeriodos = "https://localhost:44329/api/periodos";
 
     const [dataGrupos,setDataGrupos] = useState([]); //Estado para los grupos
     const [dataMatriculas,setDataMatriculas] = useState([]);
-    const [dataGruposFiltrados,setDataGruposFiltrados] = useState([]); 
+    const [dataPeriodos,setDataPeriodos] = useState([]);
 
     const [modalFiltro,setModalFiltro] = useState(false);
     const [modalHorario,setModalHorario] = useState(false);
@@ -47,18 +48,50 @@ export default function GruposMatriculados() {
         })
     }
 
+    const peticionGetPeriodos = async()=>{ //Realiza peticiones Get al backend Periodos
+        await axios.get(baseUrlPeriodos)
+        .then(response=>{
+            setDataPeriodos(response.data);
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+
     const matriculasFiltradas = dataMatriculas.filter(matricula=>matricula.cedulaEstudiante == cookies.get("cedula"));
     
     
     const gruposEstudiante = dataGrupos.filter(grupo=>matriculasFiltradas.find(m=>m.codigoGrupo==grupo.codigoNombre));
-    console.log(gruposEstudiante);
 
-    
-    
+
+
+    function filtroNumerosPeriodo(){ //Omite los numeros de periodo duplicados
+        let filtradosP = [];
+        
+        for(let periodo of dataPeriodos){
+            if(!filtradosP.includes(periodo.numero)){
+                filtradosP.push(periodo.numero);
+            }
+            
+        }
+        return filtradosP;
+
+    }
+
+    function filtroAnnosPeriodo(){ //Omite los numeros de año duplicados
+        let filtradosA = [];
+
+        for(let periodo of dataPeriodos){
+            if(!filtradosA.includes(periodo.anno)){
+                filtradosA.push(periodo.anno);
+            }
+            
+        }
+        return filtradosA;
+    }
     useEffect(() => { //Hace efecto la peticion
         peticionGetGrupos();  
         peticionGetMatriculas();
-
+        peticionGetPeriodos();
         
     }, [])
 
@@ -117,7 +150,11 @@ export default function GruposMatriculados() {
                             <FloatingLabel controlId="floatingSelect" label="Período">
                                 <select id="rol" name="periodos" className="form-control">
                                     <option value ={-1} selected disabled>Opciones</option>
-                                     
+                                     {
+                                         filtroNumerosPeriodo().map((item,i)=>(
+                                            <option key={"periodo"+i} value={item}>{item}</option>
+                                         ))
+                                     }
                                 </select> 
                                 <br/>
                             </FloatingLabel>
@@ -125,7 +162,11 @@ export default function GruposMatriculados() {
                             <FloatingLabel controlId="floatingSelect" label="Año">
                                 <select id="role" name="annos" className="form-control">
                                     <option value ={-1} selected disabled>Opciones</option>
-                                     
+                                     {
+                                         filtroAnnosPeriodo().map((item,i)=>(
+                                             <option key={"anno"+i} value={item}>{item}</option>
+                                         ))
+                                     }
                                 </select> 
                                    
                             </FloatingLabel>

@@ -50,19 +50,19 @@ namespace API_SGEducativo.Controller
            
         }
         // GET api/<MatriculasController>/5
-        [HttpGet("{cedulaEstudiante}")] //Devuelve solo un registro
-        public ActionResult GetMatriculasEstudiante(int cedulaEstudiante)
+        [HttpGet("{cedula}/1")]
+        public ActionResult<List<Matricula>> GetMatricula(int cedula)
         {
             try
             {
-                var matriculas = _context.Matricula.Where(e => e.cedulaEstudiante == cedulaEstudiante).ToList(); //LINQ
-                return Ok(matriculas);
+
+                var matricula = _context.Matricula.Where(matricula => matricula.cedulaEstudiante.Equals(cedula)).ToList();
+                return matricula;
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-
         }
 
         // POST api/<MatriculasController>

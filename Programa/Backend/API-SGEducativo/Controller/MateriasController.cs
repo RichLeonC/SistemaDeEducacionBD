@@ -74,7 +74,7 @@ namespace API_SGEducativo.Controller
         }
 
         // DELETE api/<MateriasController>/5
-        [HttpDelete("{nombre}")]
+        [HttpDelete("{nombre}/2")]
         public ActionResult Delete(string nombre)
         {
             try
