@@ -1,5 +1,7 @@
 ﻿using API_SGEducativo.Context;
+using API_SGEducativo.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,34 +24,104 @@ namespace API_SGEducativo.Controller
 
         // GET: api/<EvaluacionesController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                return Ok(_context.Evaluacion.ToList());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // GET api/<EvaluacionesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{codigoGrupo}/{nombreMateria}/{numPeriodo}/{anno}", Name = "GetGrupoEvaluacion")] //Devuelve solo un registro
+        public ActionResult Get(string codigoGrupo, string nombreMateria, int numPeriodo, int anno)
         {
-            return "value";
+            try
+            {
+                var evaluacion = _context.Evaluacion.FirstOrDefault(e => e.numPeriodo == numPeriodo && e.anno == anno
+                && e.codigoGrupo == codigoGrupo && e.nombreMateria == nombreMateria);
+                return Ok(evaluacion);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
         }
 
         // POST api/<EvaluacionesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Post([FromBody] Evaluacion evaluacion)
         {
+            try
+            {
+                _context.Evaluacion.Add(evaluacion); //Agrega la matricula
+                _context.SaveChanges(); //Guarda los cambios
+                return Ok(evaluacion);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // PUT api/<EvaluacionesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{codigoGrupo}/{nombreMateria}/{numPeriodo}/{anno}")]
+        public ActionResult Put(string codigoGrupo, string nombreMateria, int numPeriodo, int anno, [FromBody] Evaluacion evaluacion)
         {
+
+            try
+            {
+
+                if (evaluacion.numPeriodo == numPeriodo && evaluacion.anno == anno
+                && evaluacion.codigoGrupo == codigoGrupo && evaluacion.nombreMateria == nombreMateria)
+                {
+
+                    _context.Entry(evaluacion).State = EntityState.Modified; //Realiza los cambios
+                    _context.SaveChanges(); //Guarda los cambios
+                    return Ok(evaluacion);
+                }
+                else
+                {
+                    return BadRequest("No entre");
+                }
+            }
+
+            catch (Exception e)
+            {
+                return BadRequest("Catch");
+            }
+
         }
 
         // DELETE api/<EvaluacionesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{codigoGrupo}/ {nombreMateria}/{numeroPeriodo}/{anno}")]
+        public ActionResult Delete(string codigoGrupo, string nombreMateria, int numPeriodo, int anno)
         {
+
+            try
+            {
+                var evaluacion = _context.Evaluacion.FirstOrDefault(e => e.numPeriodo == numPeriodo && e.anno == anno
+              && e.codigoGrupo == codigoGrupo && e.nombreMateria == nombreMateria);
+                if (evaluacion != null)
+                {
+                    _context.Evaluacion.Remove(evaluacion);
+                    _context.SaveChanges();
+                    return Ok(codigoGrupo);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

@@ -15,19 +15,45 @@ export default function GruposMatriculados() {
     const [dataGrupos,setDataGrupos] = useState([]); //Estado para los grupos
     const [dataMatriculas,setDataMatriculas] = useState([]);
     const [dataPeriodos,setDataPeriodos] = useState([]);
+    const [numSeleccionado, setNumSeleccionado] = useState([]);
+    const [annoSeleccionado, setAnnoSeleccionado] = useState([]);
+    const [grupoSeleccionado,setGrupoSeleccionado] = useState([]);
 
-    const [modalFiltro,setModalFiltro] = useState(false);
+    const [modalFiltro,setModalFiltro] = useState(false); 
     const [modalHorario,setModalHorario] = useState(false);
+    const [modalEvaluacion,setModalEvaluacion] = useState(false);
 
     const abrirCerrarModalFiltro=()=>{ //Cambia el estado del modal de filtro (abierto o cerrado)
 
         setModalFiltro(!modalFiltro);
+        if(modalFiltro == false){
+            peticionGetGrupos();
+        }
     }
+    
 
     const abrirCerrarModalHorario=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
 
         setModalHorario(!modalHorario);
 
+    }
+
+    const abrirCerrarModalEvaluacion=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
+
+        setModalEvaluacion(!modalEvaluacion);
+
+    }
+
+    const handlerOpcionNum=e=>{  //Handler para guardar en el estado el numero de periodo escogidp
+        const opcion = e.target.value;
+        setNumSeleccionado(opcion);
+        console.log(opcion);
+    }
+
+    const handlerOpcionAnno=e=>{  //Handler para guardar en el estado el numero de periodo escogidp
+        const opcion = e.target.value;
+        setAnnoSeleccionado(opcion);
+        console.log(opcion);
     }
 
     const peticionGetGrupos = async()=>{ //Realiza peticiones Get al backend Grupos
@@ -88,6 +114,20 @@ export default function GruposMatriculados() {
         }
         return filtradosA;
     }
+
+    const gruposFiltrados=()=>{
+        abrirCerrarModalFiltro();
+        setDataGrupos(dataGrupos.filter(grupo=>grupo.numeroPeriodo == numSeleccionado && grupo.anno == annoSeleccionado));
+    }
+
+    const seleccionarGrupo=(grupo,caso)=>{
+        setGrupoSeleccionado(grupo);
+   
+        (caso == "horario")?
+            abrirCerrarModalHorario():abrirCerrarModalEvaluacion();
+        
+    }
+
     useEffect(() => { //Hace efecto la peticion
         peticionGetGrupos();  
         peticionGetMatriculas();
@@ -128,11 +168,11 @@ export default function GruposMatriculados() {
                         <td>{grupo.cupo}</td>
                         <td>{grupo.estado}</td>
                         <td>
-                            <button className="btn btn-primary"
+                            <button className="btn btn-primary" onClick={()=>seleccionarGrupo(grupo,"horario")}
                             >Ver horario</button>{" "}
                         </td>
                         <td>
-                            <button className="btn btn-warning"
+                            <button className="btn btn-warning" onClick={()=>seleccionarGrupo(grupo,"evaluacion")}
                             >Ver evaluación</button>{" "}
                         </td>
                      </tr>  
@@ -148,7 +188,7 @@ export default function GruposMatriculados() {
                       <ModalBody>
                           <Form>                       
                             <FloatingLabel controlId="floatingSelect" label="Período">
-                                <select id="rol" name="periodos" className="form-control">
+                                <select id="rol" name="periodos" className="form-control" onChange={handlerOpcionNum}>
                                     <option value ={-1} selected disabled>Opciones</option>
                                      {
                                          filtroNumerosPeriodo().map((item,i)=>(
@@ -160,7 +200,7 @@ export default function GruposMatriculados() {
                             </FloatingLabel>
 
                             <FloatingLabel controlId="floatingSelect" label="Año">
-                                <select id="role" name="annos" className="form-control">
+                                <select id="role" name="annos" className="form-control" onChange={handlerOpcionAnno}>
                                     <option value ={-1} selected disabled>Opciones</option>
                                      {
                                          filtroAnnosPeriodo().map((item,i)=>(
@@ -175,13 +215,39 @@ export default function GruposMatriculados() {
                       </ModalBody>
 
                       <ModalFooter>
-                        <Button className="btn btn-primary"size="sm">Aceptar</Button>
+                        <Button className="btn btn-primary"size="sm" onClick={()=>gruposFiltrados()}>Aceptar</Button>
                         <Button className="btn btn-danger" size="sm" onClick={()=>abrirCerrarModalFiltro()}
                         >Cancelar</Button>
                       </ModalFooter>
             </Modal>
+            <Modal isOpen={modalHorario}>
+                      <ModalHeader>Horario</ModalHeader>
 
-           
+                      <ModalBody>
+                          <Form>                       
+                            
+                              
+                          </Form>
+                      </ModalBody>
+
+                      <ModalFooter>
+                        <Button className="btn btn-primary"size="sm" onClick={()=>abrirCerrarModalHorario()}>Aceptar</Button>
+                      </ModalFooter>
+            </Modal>
+            <Modal isOpen={modalEvaluacion}>
+                      <ModalHeader>Evaluación</ModalHeader>
+
+                      <ModalBody>
+                          <Form>                       
+                            
+                              
+                          </Form>
+                      </ModalBody>
+
+                      <ModalFooter>
+                        <Button className="btn btn-primary"size="sm" onClick={()=>abrirCerrarModalEvaluacion()}>Aceptar</Button>
+                      </ModalFooter>
+            </Modal>
            
         </div>
     )
