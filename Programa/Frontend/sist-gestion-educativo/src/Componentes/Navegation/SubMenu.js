@@ -16,7 +16,7 @@ display: flex;
   text-decoration: none;
   font-size: 18px;
   &:hover {
-    background: #252831;
+    background: #61608E;
     border-left: 4px solid #6C63FF;
     cursor: pointer;
   }
@@ -27,7 +27,7 @@ margin-left: 16px;
 `;
 
 const DropdownLink = styled(Link)`
-background: #414757;
+background: #8C61FB;
 height: 60px;
 padding-left: 3rem;
 display: flex;
@@ -36,7 +36,7 @@ text-decoration: none;
 color: #f5f5f5;
 font-size: 18px;
 &:hover {
-  background: #252831;
+  background: #61608E;
   cursor: pointer;
 }
 `;

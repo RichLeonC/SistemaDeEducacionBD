@@ -4,6 +4,7 @@ import { ModalHeader,Modal,ModalBody,Button,Form,Select,ModalFooter} from 'react
 import { FloatingLabel } from 'react-bootstrap';
 import Cookies from 'universal-cookie';
 import { Card,ListGroup,Table} from 'react-bootstrap';
+import { RiFilterOffLine } from 'react-icons/ri';
 
 export default function PagAsistencia() {
     const cookies = new Cookies();
@@ -16,9 +17,22 @@ export default function PagAsistencia() {
     const [gruposProfesor,setgruposProfesor] = useState([]); //Estado para los grupos que posee el profesor
     const [usuarios,setUsuarios] = useState([]); //Estado para los grupos que posee el profesor
     const [modalGrupo,setModalGrupos] = useState(false); //Estado para el modal (la ventana de grupo)
+    const [modalAsistencia,setModalAsistencia] = useState(false); //Estado para el modal (la ventana de grupo)
     const [grupoSeleccionado,setGrupoSeleccionado] = useState([]); //Estado para el codigo de grupo que se escoje en select
-  
+    const [estudiantesF, setEstudiantesF]= useState([]);
+    const [presente, setPresente] = useState ([]);
     
+    const [guardarAsistencia,setGuardarAsistencia] = useState({ //Estado para guardar la info de la matricula
+        cedulaEstudiante: '',
+        codigoGrupo: '',
+        nombreMateria: '',
+        anno: '',
+        fechaAsistencia:"2021-10-28T00:00:00",
+        asistencia: '',
+    })
+
+    const asiste = ["Si", "No"];
+   
     const cokies = new Cookies();
     var cedula = cokies.get("cedula");// toma la cedula del profesor que haya iniciado sesión. 
 
@@ -64,11 +78,28 @@ export default function PagAsistencia() {
     }
 
 
-    const abrirCerrarModalGrupos=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
+  
 
+    const abrirModalGrupos=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
         setModalGrupos(!modalGrupo);
         peticionGetGrupos();
+        if (modalGrupo==false){
+            setEstudiantesF([]); 
 
+        }
+    }
+
+
+    const cerrarModalGrupos=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
+        setModalGrupos(!modalGrupo);
+       
+    }
+
+
+    const abrirCerrarModalAistencia=(estudiante)=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
+
+        setModalAsistencia(!modalAsistencia);
+       
     }
 
     const handlerOpcion = e=>{ //Guarda el grupo selecionado en el estado
@@ -79,37 +110,49 @@ export default function PagAsistencia() {
         
     }
 
-    const Checkbox = props => (
-        <input type="checkbox" {...props} />
-      )
+    
+    const handlerOpcion1 = e=>{ //Guarda el grupo selecionado en el estado
+        const opcion = e.target.value;
+        setPresente(opcion);
+        console.log(opcion);
+     
+        
+    }
+   
+  
 
-
-    const filtrarEstudiantes=()=>{
+    const filtrarEstudiantes=()=>{ 
         peticionGetMatricula();
         peticionGetEstudiantes();
         peticionGetUsuarios();
-        setEstudiante(estudiantes.filter(unEstudiantes=> unEstudiantes.cedula == matriculas.cedulaEstudiante))
-        console.log(estudiantes);
-        setUsuarios(usuarios.filter(usu => usu.cedula == matriculas.cedulaEstudiante));
-
+        setEstudiante(estudiantes.filter(unEstudiantes=> unEstudiantes.cedula == matriculas.cedulaEstudiante)) 
+        setEstudiantesF(usuarios.filter(usu=> estudiantes.find(estudiante=> estudiante.cedula == usu.cedula)));
     }
 
+    
+
     const mostrarLista= ()=>{
+        console.log(grupoSeleccionado);
         filtrarEstudiantes();
-        abrirCerrarModalGrupos();
+        cerrarModalGrupos();
     }
 
     useEffect(() => { //Hace efecto la peticion
         peticionGetUsuarios();
-      
-
         
     }, [])
 
+
+    const guardarPresentacia =()=>{
+        
+
+    }
+
+
     return (
-        <div>
-             <button onClick={()=>abrirCerrarModalGrupos()} className=" offset-md-0 btn btn-success">Grupos</button>
-                <table className="table table-hover mt-5 offset-md-0" >
+        <div className= "col-sm-8">
+             <button onClick={()=>abrirModalGrupos()} className=" met-5 offset-md-3 btn btn-success">Grupos</button>
+                <table className="table table-hover mt-5 offset-md-3" >
                     <thead>
                         <tr>
                             <th>Cedula Estudiante</th>
@@ -122,18 +165,21 @@ export default function PagAsistencia() {
                     </thead>
                     <tbody>
                     {
-                      usuarios.map(unEs=>(
+                      estudiantesF.map(unEs=>(
                         <tr  key ={unEs.cedula}>
                         <td>{unEs.cedula}</td>
                         <td>{unEs.nombre}</td>
                         <td>{unEs.apellido1}</td>
                         <td>{unEs.apellido2}</td>
                         <td>
-                            <Checkbox></Checkbox>
-                        </td>
+             
+                        <button className="btn btn-primary" onClick={()=>abrirCerrarModalAistencia()}>Asistencia</button>
+                        </td>      
+                        
                      </tr>  
+
                       
-                     ))}                        
+                     ))}                  
                     </tbody>
                   </table>
 
@@ -165,17 +211,50 @@ export default function PagAsistencia() {
 
                       <ModalFooter>
                         <Button className="btn btn-primary"size="sm" onClick={()=>mostrarLista()}>Aceptar</Button>
-                        <Button className="btn btn-danger" size="sm" onClick={()=>abrirCerrarModalGrupos()}
+                        <Button className="btn btn-danger" size="sm" onClick={()=>cerrarModalGrupos()}
                         >Cancelar</Button>
                       </ModalFooter>
             </Modal>
+            
+            <Modal isOpen={modalAsistencia}>
+                      <ModalHeader>Asistencia</ModalHeader>
+
+                      <ModalBody>
+                        <Form>                       
+                            <FloatingLabel controlId="floatingSelect" label="Presente">
+                        <select id="rol" name="asistencia" className="form-control" onChange={handlerOpcion1}>
+                        <option value ={-1} selected disabled>Asistencia</option>
+                 
+                         {
+                              asiste.map((item,i)=>(
+                
+                             <option key={"asistencia"+i} value={item}>{item}</option>
+                
+                                  ))
+                        }
+                         </select> 
+               
+                            </FloatingLabel>
+          
+                        </Form>
+
+                      </ModalBody> 
+
+                      <ModalFooter>
+                        <Button className="btn btn-primary"size="sm" onClick={()=>guardarPresentacia()}>Aceptar</Button>
+                        <Button className="btn btn-danger" size="sm" onClick={()=>abrirCerrarModalAistencia()}
+                        >Cancelar</Button>
+                      </ModalFooter>
+            </Modal>
+            
 
 
 
 
 
-
-
+            <br/>
+            <button  className=" met-5 offset-md-11 btn btn-success">Guardar</button>
+            
         </div>
 
 
