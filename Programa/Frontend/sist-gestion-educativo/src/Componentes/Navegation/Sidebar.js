@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import Cookies from 'universal-cookie';
 
 const Nav = styled.div `
-background : #6C63FF;
+background :#6C63FF;
 height : 80px;
 display: flex;
 justify-content : flex-start;
