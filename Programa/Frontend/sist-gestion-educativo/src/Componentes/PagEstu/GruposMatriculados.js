@@ -1,4 +1,4 @@
-import React,{Component,useState,useEffect} from 'react';
+import React,{useState,useEffect} from 'react';
 import axios from 'axios';
 import { ModalHeader,Modal,ModalBody,Button,Form,Select,ModalFooter} from 'reactstrap'
 import { FloatingLabel } from 'react-bootstrap';
@@ -11,10 +11,17 @@ export default function GruposMatriculados() {
     const baseUrl = "https://localhost:44329/api/grupos";
     const baseUrlMatriculas = "https://localhost:44329/api/matriculas";
     const baseUrlPeriodos = "https://localhost:44329/api/periodos";
+    const baseUrlHorarios = "https://localhost:44329/api/Grupo_Horarios";
+    const baseUrlEvaluaciones = "https://localhost:44329/api/Evaluaciones";
+    
 
     const [dataGrupos,setDataGrupos] = useState([]); //Estado para los grupos
     const [dataMatriculas,setDataMatriculas] = useState([]);
     const [dataPeriodos,setDataPeriodos] = useState([]);
+    const [dataHorarios,setDataHorarios] = useState([]);
+    const [horariosFiltrados,setHorariosFiltrados] = useState([]);
+    const [dataEvaluaciones,setDataEvaluaciones] = useState([]);
+    const [evaluacionesFiltradas,setEvaluacionesFiltradas] = useState([]);
     const [numSeleccionado, setNumSeleccionado] = useState([]);
     const [annoSeleccionado, setAnnoSeleccionado] = useState([]);
     const [grupoSeleccionado,setGrupoSeleccionado] = useState([]);
@@ -83,6 +90,25 @@ export default function GruposMatriculados() {
         })
     }
 
+    const peticionGetHorarios = async()=>{ //Realiza peticiones Get al backend Grupo_Horarios
+        await axios.get(baseUrlHorarios)
+        .then(response=>{
+            setDataHorarios(response.data);
+            
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+
+    const peticionGetEvaluaciones = async()=>{ //Realiza peticiones Get al backend Evaluaciones_Estudiante
+        await axios.get(baseUrlEvaluaciones)
+        .then(response=>{
+            setDataEvaluaciones(response.data);
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+
     const matriculasFiltradas = dataMatriculas.filter(matricula=>matricula.cedulaEstudiante == cookies.get("cedula"));
     
     
@@ -122,7 +148,12 @@ export default function GruposMatriculados() {
 
     const seleccionarGrupo=(grupo,caso)=>{
         setGrupoSeleccionado(grupo);
-   
+        console.log(grupoSeleccionado);
+        console.log(dataHorarios);
+        setHorariosFiltrados(dataHorarios.filter(horario=>horario.codigoGrupo==grupo.codigoNombre));
+        setEvaluacionesFiltradas(dataEvaluaciones.filter(evaluacion=>evaluacion.codigoGrupo==grupo.codigoNombre));
+        console.log(dataHorarios);
+        console.log(evaluacionesFiltradas);
         (caso == "horario")?
             abrirCerrarModalHorario():abrirCerrarModalEvaluacion();
         
@@ -132,6 +163,8 @@ export default function GruposMatriculados() {
         peticionGetGrupos();  
         peticionGetMatriculas();
         peticionGetPeriodos();
+        peticionGetHorarios();
+        peticionGetEvaluaciones();
         
     }, [])
 
@@ -224,10 +257,18 @@ export default function GruposMatriculados() {
                       <ModalHeader>Horario</ModalHeader>
 
                       <ModalBody>
-                          <Form>                       
-                            
+                                             
+                           {horariosFiltrados.map(horario=>(
+                               <div>
+                                   <label>{horario.dias}</label>
+                                   <br/>
+                                   <label>{horario.horaInicio} - {horario.horaFin}</label>
+                               </div>
+
+                               
+                           ))}
                               
-                          </Form>
+                         
                       </ModalBody>
 
                       <ModalFooter>
@@ -238,10 +279,11 @@ export default function GruposMatriculados() {
                       <ModalHeader>Evaluación</ModalHeader>
 
                       <ModalBody>
-                          <Form>                       
-                            
-                              
-                          </Form>
+                          {
+                              evaluacionesFiltradas.map(evaluacion=>(
+                                  <label>{evaluacion.descripcion}</label>
+                              ))
+                          }
                       </ModalBody>
 
                       <ModalFooter>

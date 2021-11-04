@@ -9,6 +9,8 @@ import Login from '../Login/Login.js';
 import InfoEstudiante from '../PagEstu/InfoEstudiante.js';
 import Matricula from '../PagEstu/Matricula.js';
 import GruposMatriculados from '../PagEstu/GruposMatriculados.js';
+import Aprobadas from '../PagEstu/Aprobadas.js';
+import Reprobadas from '../PagEstu/Reprobadas.js';
 //import Calendar from 'react-calendar';
 
 function refreshPage(){
@@ -35,7 +37,8 @@ function Estudiantes(){
                 <Route exact path = '/PaginaPrincipal' component = {PaginaPrincipal}/>
                 <Route exact path = '/Matriculas' component = {Matricula}/>
                 <Route exact path = '/Grupos' component = {GruposMatriculados}/>
-               
+                <Route exact path = '/CursosAprobados' component = {Aprobadas}/>
+                <Route exact path = '/CursosReprobados' component = {Reprobadas}/>
             </Switch>
         </BrowserRouter>
 

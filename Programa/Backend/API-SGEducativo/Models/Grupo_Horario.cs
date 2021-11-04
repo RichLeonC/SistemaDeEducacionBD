@@ -18,8 +18,8 @@ namespace API_SGEducativo.Models
         public int numPeriodo { get; set; }
         public int anno { get; set; }
         public string  dias { get; set; }
-        public DateTime horaInicio { get; set; }
-        public DateTime horaFin { get; set; }
+        public string horaInicio { get; set; }
+        public string horaFin { get; set; }
 
 
     }

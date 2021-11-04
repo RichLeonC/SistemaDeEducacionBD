@@ -105,8 +105,8 @@ create table Grupo_Horario(
 	numPeriodo int not null,
 	anno int not null,
 	dias varchar(200) not null,
-	horaInicio time not null,
-	horaFin time not null,
+	horaInicio varchar(50) not null,
+	horaFin varchar(50) not null,
 	foreign key(codigoGrupo,numPeriodo,anno,nombreMateria) 
 	references Grupo(codigoNombre,numeroPeriodo,anno,nombreMateria),
 	primary key(codigoGrupo,numPeriodo,anno,nombreMateria)

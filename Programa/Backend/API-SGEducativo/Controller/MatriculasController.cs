@@ -65,6 +65,22 @@ namespace API_SGEducativo.Controller
             }
         }
 
+        //GET api/<MatriculasController>/5
+        [HttpGet("{codigoGrupo}/2")]
+        public ActionResult<List<Matricula>> GetMatricula1(string codigoGrupo)
+        {
+            try
+            {
+
+                var matricula = _context.Matricula.Where(matricula => matricula.codigoGrupo.Equals(codigoGrupo)).ToList();
+                return matricula;
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         // POST api/<MatriculasController>
         [HttpPost] //AGREGAR
         public ActionResult Post([FromBody] Matricula matricula)

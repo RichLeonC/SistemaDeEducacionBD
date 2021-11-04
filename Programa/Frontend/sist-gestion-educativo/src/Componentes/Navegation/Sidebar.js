@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import Cookies from 'universal-cookie';
 
 const Nav = styled.div `
-background : #15171c;
+background : #6C63FF;
 height : 80px;
 display: flex;
 justify-content : flex-start;
@@ -30,7 +30,7 @@ const NavIcon = styled (Link) `
 `;
 
 const SideBarNav = styled.nav`
-  background: #15171c;
+  background: #6C63FF;
   width: 250px;
   height: 100vh;
   display: flex;

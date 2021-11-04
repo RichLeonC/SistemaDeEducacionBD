@@ -40,13 +40,13 @@ export const SideBarData = [
         subNav: [
             {
                 title: 'Cursos Aprobados',
-                path: '/CursosAprobados/Estudiante',
+                path: '/CursosAprobados',
                 icon: <IoIcons.IoIosPaper/>, 
             
             },
             {
                 title: 'Cursos Reprobados',
-                path: '/CursosReprobados/Estudiante',
+                path: '/CursosReprobados',
                 icon: <IoIcons.IoIosPaper/>, 
               
 

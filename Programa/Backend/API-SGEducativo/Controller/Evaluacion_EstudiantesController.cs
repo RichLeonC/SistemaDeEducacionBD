@@ -51,6 +51,21 @@ namespace API_SGEducativo.Controller
             }
         }
 
+        [HttpGet("{cedulaEstudiante}/1")]
+        public ActionResult<List<Evaluacion_Estudiante>> GeEvaluacion(int cedulaEstudiante)
+        {
+            try
+            {
+
+                var evaluacion = _context.Evaluacion_Estudiante.Where(evalu => evalu.cedulaEstudiante.Equals(cedulaEstudiante)).ToList();
+                return evaluacion;
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         // POST api/<Evaluacion_EstudiantesController>
         [HttpPost]
         public ActionResult Post([FromBody] Evaluacion_Estudiante evaluacion)
