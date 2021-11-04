@@ -1,5 +1,7 @@
 ﻿using API_SGEducativo.Context;
+using API_SGEducativo.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,38 +20,110 @@ namespace API_SGEducativo.Controller
         public Asistencia_EstudiantesController(AppDbContext context)
         {
             _context = context;
+
         }
 
-        // GET: api/<ValuesController>
+
+        // GET: api/<Asistencia_EstudiantesController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                return Ok(_context.Asistencia_Estudiante.ToList());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
-        // GET api/<ValuesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+
+
+        // GET: api/<Asistencia_EstudiantesController>/5
+        [HttpGet("{cedulaEstudiante}/{codigoGrupo}/{nombreMateria}/{numPeriodo}/{anno}", Name = "Asistencia_Estudiante")]
+        public ActionResult GetAsistencia_Estudiante(int cedulaEstudiante, string codigoGrupo, string nombreMateria, int numPeriodo, int anno)
         {
-            return "value";
+            try
+            {
+                var asistencia_estudiante = _context.Asistencia_Estudiante.FirstOrDefault(e => e.cedulaEstudiante == cedulaEstudiante &&
+                 e.numPeriodo == numPeriodo && e.anno == anno && e.codigoGrupo == codigoGrupo && e.nombreMateria == nombreMateria); //Busca el usuario
+                return Ok(asistencia_estudiante);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
         }
 
-        // POST api/<ValuesController>
+        // POST api/<Asistencia_EstudiantesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Post([FromBody] Asistencia_Estudiante asistencia)
         {
+
+            try
+            {
+                _context.Asistencia_Estudiante.Add(asistencia);
+                _context.SaveChanges(); //Guarda los cambios
+                return Ok(asistencia);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
-        // PUT api/<ValuesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // PUT api/<Asistencia_EstudiantesController>/5
+        [HttpPut("{cedulaEstudiante}/{codigoGrupo}/{nombreMateria}/{numPeriodo}/{anno}")]
+        public ActionResult Put(int cedulaEstudiante, string codigoGrupo, string nombreMateria, int numPeriodo, int anno, [FromBody] Asistencia_Estudiante asistencia)
         {
+            try
+            {
+
+                if (asistencia.cedulaEstudiante == cedulaEstudiante && asistencia.numPeriodo == numPeriodo && asistencia.anno == anno
+                && asistencia.codigoGrupo == codigoGrupo && asistencia.nombreMateria == nombreMateria)
+                {
+
+                    _context.Entry(asistencia).State = EntityState.Modified; //Realiza los cambios
+                    _context.SaveChanges(); //Guarda los cambios
+                    return Ok(cedulaEstudiante);
+                }
+                else
+                {
+                    return BadRequest("No entre");
+                }
+            }
+
+            catch (Exception e)
+            {
+                return BadRequest("Catch");
+            }
         }
 
-        // DELETE api/<ValuesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // DELETE api/<Asistencia_EstudiantesController>/5
+        [HttpDelete("{cedulaEstudiante}/{codigoGrupo}/{nombreMateria}/{numPeriodo}/{anno}")]
+        public ActionResult Delete(int cedulaEstudiante, string codigoGrupo, string nombreMateria, int numPeriodo, int anno)
         {
+            try
+            {
+                var asistencia = _context.Asistencia_Estudiante.FirstOrDefault(e => e.cedulaEstudiante == cedulaEstudiante &&
+                 e.numPeriodo == numPeriodo && e.anno == anno && e.codigoGrupo == codigoGrupo && e.nombreMateria == nombreMateria);
+                if (asistencia != null)
+                {
+                    _context.Asistencia_Estudiante.Remove(asistencia);
+                    _context.SaveChanges();
+                    return Ok(cedulaEstudiante);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }
