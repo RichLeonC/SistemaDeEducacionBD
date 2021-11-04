@@ -194,13 +194,36 @@ create table Factura(
 
 )
 
---Vista que lista la información persona de los usuarios con su dicha ubicación.
-create view Usuarios_CompletosV as
-select Usuario.cedula,nombre,apellido1,apellido2,sexo,fechaNacimiento,provincia,canton,distrito,localidad from Usuario
+--Vista que lista la información personaL de los padres completa
+create view Padre_Vista as
+select Usuario.cedula,concat(nombre,' ',apellido1,' ',apellido2) as nombreCompleto,sexo,fechaNacimiento,provincia,canton,distrito,localidad,
+Padre.profesion, Padre.conyugeNombre,Padre.telefonoConyugue from Usuario
+inner join Usuario_Ubicacion on Usuario_Ubicacion.cedula = Usuario.cedula
+inner join Padre on Padre.cedula = Usuario.cedula
+
+select * from Padre_Vista
+
+--Vista que lista la información personaL de los estudiantes completa
+create view Estudiante_Vista as
+select Usuario.cedula,concat(nombre,' ',apellido1,' ',apellido2) as nombreCompleto,sexo,fechaNacimiento,provincia,canton,distrito,localidad,
+Estudiante.grado from Usuario
 inner join Usuario_Ubicacion on Usuario.cedula = Usuario_Ubicacion.cedula
+inner join Estudiante on Estudiante.cedula = Usuario.cedula
 
-select * from Usuarios_CompletosV
+select * from Estudiante_Vista
 
+--Vista que lista la información personaL de los profesores completa
+
+create view Profesor_Vista as
+select Usuario.cedula,concat(nombre,' ',apellido1,' ',apellido2) as nombreCompleto,sexo,fechaNacimiento,provincia,canton,distrito,localidad,
+Profesor.salario from Usuario
+inner join Usuario_Ubicacion on Usuario.cedula = Usuario_Ubicacion.cedula
+inner join Profesor on Profesor.cedula = Usuario.cedula
+
+select * from Profesor_Vista
+
+
+--INSERTS
 insert into Matricula values(5000,'2001/10/10',1010,'Español-C1', 2, 2021,'Español')
 insert into Matricula values(5000,'2021/5/5',1010,'Matemáticas-A1',1,2020,'Matemáticas');
 
