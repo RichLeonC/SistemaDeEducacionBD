@@ -25,7 +25,7 @@ namespace API_SGEducativo.Controller
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Usuario>>> Getusuarios()
         {
-            return await _context.usuarios.ToListAsync();
+            return  _context.usuarios.FromSqlRaw("select * from Usuario").ToList();
         }
 
 

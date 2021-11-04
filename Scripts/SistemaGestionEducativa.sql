@@ -1,15 +1,11 @@
 use master
 go
-alter database SistemaGestionEducativa set single_user with rollback immediate --Cierra las conexiones de la base de datos
-go
-Drop database if exists SistemaGestionEducativa
-go
 create database SistemaGestionEducativa
 go
 use SistemaGestionEducativa
 go
 
-
+--Tabla que guarda la información para cada usuario existente
 create table Usuario(
 	cedula int not null primary key,
 	nombre varchar(100) not null,
@@ -23,6 +19,7 @@ create table Usuario(
 
 )
 
+--Almacena la información de la ubicación del usuario creado
 create table Usuario_Ubicacion(
 	cedula int not null foreign key references Usuario(cedula),
 	provincia varchar(250) not null,
@@ -33,6 +30,8 @@ create table Usuario_Ubicacion(
 	primary key(cedula)
 
 )
+
+--Tabla para usuario con rol de padre
 create table Padre(
 	cedula int not null foreign key references Usuario(cedula),
 	profesion varchar(200) not null,
@@ -42,6 +41,8 @@ create table Padre(
 
 )
 
+
+--Tabla para usuario con rol de estudiante, contiene su padre también
 create table Estudiante(
 	cedula int not null foreign key references Usuario(cedula),
 	cedulaPadre int not null foreign key references Padre(cedula),
@@ -51,7 +52,7 @@ create table Estudiante(
 )
 
 
-
+--Tabla para usuario con rol de profesor
 create table Profesor(
 	cedula int not null foreign key references Usuario(cedula),
 	salario decimal(10,2) not null,
@@ -60,7 +61,7 @@ create table Profesor(
 
 )
 
-
+--Tabla que guarda los salarios historicos del profesor
 create table Profesor_HistorialSalario(
 	cedula int not null foreign key references Profesor(cedula),
 	inicio date not null,
@@ -70,12 +71,14 @@ create table Profesor_HistorialSalario(
 
 )
 
+--Tabla para guardar la información de las materias
 create table Materia(
 	nombre varchar(100) not null PRIMARY KEY,
 	precio decimal(8,2) ---FK
 
 );
 
+--Tabla que guarda la información de los periodos
 create table Periodo(
 	numero int not null,
 	anno int not null,
@@ -84,7 +87,7 @@ create table Periodo(
 	primary key(numero,anno)
 
 );
-
+--Tabla que almecena toda la información respecto a cada Grupo
 create table Grupo (
   codigoNombre varchar(25) not null,
   nombreMateria varchar(100) foreign key references Materia(nombre),
@@ -99,6 +102,7 @@ create table Grupo (
 
 );
 
+--Tabla que contienes los horarios de un grupo
 create table Grupo_Horario(
 	codigoGrupo varchar(25) not null,
     nombreMateria varchar(100) not null,
@@ -112,6 +116,7 @@ create table Grupo_Horario(
 	primary key(codigoGrupo,numPeriodo,anno,nombreMateria)
 );
 
+--Tabla para llevar registro de la asistencia de un estudiante en un grupo
 create table Asistencia_Estudiante (
 	cedulaEstudiante int not null foreign key references Estudiante(cedula),
 	codigoGrupo varchar(25) not null,
@@ -125,7 +130,7 @@ create table Asistencia_Estudiante (
 	primary key(cedulaEstudiante,codigoGrupo,nombreMateria,numPeriodo,anno)
 )
 
-
+--Tabla que almacena la información de la evaluacion de un grupo
 create table Evaluacion(
 	codigoGrupo varchar(25) not null,
 	numPeriodo int not null,
@@ -138,6 +143,7 @@ create table Evaluacion(
 	
 );
 
+--Tabla que registra cada nota del estudiante por grupo, además con su estado (Aprobado-Reprobado)
 create table Evaluacion_Estudiante(
 	cedulaEstudiante int not null foreign key references Estudiante(cedula),
 	codigoGrupo varchar(25) not null,
@@ -153,7 +159,7 @@ create table Evaluacion_Estudiante(
 )
 
 
-
+--Tabla  que guarda la informacion de cada matricula que se realiza
 create table Matricula(
 	idMatricula int not null IDENTITY(5000,1) primary key,
 	costeMatricula float not null,
@@ -169,7 +175,7 @@ create table Matricula(
 )
 
 
-
+--Tabla que guarda la informacion del cobro de una matriucla efectuada
 create table Cobros(
 	consecutivo int not null IDENTITY(1,1) primary key,
 	--numFactura int foreign key references Factura(numFactura),
@@ -178,6 +184,7 @@ create table Cobros(
 
 )
 
+--Tabla que almacena una factura cuando un cobro se realizó
 create table Factura(
 	numeroFactura int not null primary key,
 	consecutivo int foreign key references Cobros(consecutivo),
@@ -186,6 +193,13 @@ create table Factura(
 	fechaPago date
 
 )
+
+--Vista que lista la información persona de los usuarios con su dicha ubicación.
+create view Usuarios_CompletosV as
+select Usuario.cedula,nombre,apellido1,apellido2,sexo,fechaNacimiento,provincia,canton,distrito,localidad from Usuario
+inner join Usuario_Ubicacion on Usuario.cedula = Usuario_Ubicacion.cedula
+
+select * from Usuarios_CompletosV
 
 insert into Matricula values(5000,'2001/10/10',1010,'Español-C1', 2, 2021,'Español')
 insert into Matricula values(5000,'2021/5/5',1010,'Matemáticas-A1',1,2020,'Matemáticas');

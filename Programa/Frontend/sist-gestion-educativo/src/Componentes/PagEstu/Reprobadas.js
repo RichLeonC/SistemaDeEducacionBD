@@ -24,7 +24,7 @@ export default function Reprobadas() {
     const reprobados = dataEvalEstudiantes.filter(evaluacion=>evaluacion.estado == "Reprobado");
     return (
         <div className="col-sm-8">
-            <h2 text-center> HOal</h2>
+
         <table className="table table-hover mt-5 offset-md-3" >
                <thead>
                    <tr>
