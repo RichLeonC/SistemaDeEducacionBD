@@ -9,7 +9,7 @@ export default function Reprobadas() {
     const [dataEvalEstudiantes,setDataEvalEstudiantes] = useState([]);
 
     const peticionGetEE=async()=>{
-        await axios.get(baseUrlEvalEstudiantes)
+        await axios.get(baseUrlEvalEstudiantes+"/"+cookies.get("cedula")+"/1")
         .then(response=>{
             setDataEvalEstudiantes(response.data);
         }).catch(error=>{
@@ -17,9 +17,14 @@ export default function Reprobadas() {
         })
     }
 
+    useEffect(() => { //Hace efecto la peticion
+        peticionGetEE();
+    }, [])
+
     const reprobados = dataEvalEstudiantes.filter(evaluacion=>evaluacion.estado == "Reprobado");
     return (
         <div className="col-sm-8">
+            <h2>Mis materias reprobadas</h2>
         <table className="table table-hover mt-5 offset-md-3" >
                <thead>
                    <tr>
