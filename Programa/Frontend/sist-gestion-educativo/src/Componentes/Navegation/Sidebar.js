@@ -64,14 +64,16 @@ const SideBar = (props) => {
         this.props.history.push('./');
     }
 
-    return (<>
-       <Nav>
+    return (
+    <div >
+       <Nav >
            <NavIcon to ="#">
-            <FaIcons.FaBars onClick = {showSidebar}  />
+            <FaIcons.FaBars color="#FFFF" onClick = {showSidebar}  />
            
            </NavIcon>
            
-           <Button className='offset-md-9'
+           <Button className='offset-md-3 '
+         
            variant= "contained"
            href='/'
            color= "primary"
@@ -87,7 +89,7 @@ const SideBar = (props) => {
         <SideBarNav sidebar= {sidebar}>
             <SidebarWrap>
             <NavIcon to ="#">
-                 <AiIcons.AiOutlineClose  onClick ={showSidebar} />
+                 <AiIcons.AiOutlineClose color="#FFFF" onClick ={showSidebar} />
                  
             </NavIcon> 
             {props.datos.map((item, index) => {
@@ -97,7 +99,7 @@ const SideBar = (props) => {
             </SidebarWrap>
         </SideBarNav>
            
-       </>
+       </div>
     );
 };
 export default  SideBar;

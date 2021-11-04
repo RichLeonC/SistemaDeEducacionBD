@@ -1,4 +1,4 @@
-import React,{Component,useState,useEffect} from 'react';
+import React,{useState,useEffect} from 'react';
 
 import axios from 'axios';
 import { ModalHeader,Modal,ModalBody,Button,Form,Select,ModalFooter} from 'reactstrap'
@@ -154,6 +154,7 @@ export default function Matricula() {
     <div className="d-flex">
             <div className = "col-sm-8">
                 <br/>
+                <h2 className="text-center offset-md-5 font-weight-bold">Matriculas</h2>
                 <button onClick={()=>abrirCerrarModalInsertar()} className=" offset-md-3 btn btn-success">Realizar matricula</button>
                 <table className="table table-hover mt-5 offset-md-3" >
                     <thead>

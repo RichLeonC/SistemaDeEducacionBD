@@ -172,6 +172,7 @@ export default function GruposMatriculados() {
         <div className="d-flex">
             <div className="col-sm-8">
                 <br/>
+                <h2 className="text-center offset-md-5 font-weight-bold">Mis Grupos</h2>
                 <button onClick={()=>abrirCerrarModalFiltro()} className=" offset-md-3 btn btn-success">Filtrar</button>
                 
                 <table className="table table-hover mt-5 offset-md-3" >

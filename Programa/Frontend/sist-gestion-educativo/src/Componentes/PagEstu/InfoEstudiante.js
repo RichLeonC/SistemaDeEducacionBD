@@ -1,38 +1,71 @@
 import { colors } from '@material-ui/core'
-import React from 'react'
+import React,{useState,useEffect} from 'react';
+import axios from 'axios';
 import { Card,ListGroup,Table} from 'react-bootstrap';
 import Cookies from 'universal-cookie';
+import './Estilos.css'
 
 export default function InfoEstudiante() {
     const cookies = new Cookies();
+    const baseUrl = "https://localhost:44329/api/Estudiante_Vistas/"+cookies.get("cedula");
+    
+    const [dataEstudiante,setDataEstudiante] = useState([]);
 
- 
+    const peticionGet = async()=>{ //Realiza peticiones Get al backend Matriculas
+        await axios.get(baseUrl)
+        .then(response=>{
+            setDataEstudiante(response.data);
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
 
+    useEffect(() => { //Hace efecto la peticion
+        peticionGet();
+
+        
+    }, [])
 
 
     return (
-        <Table className="mt-5 offset-md-1 table table-hover"striped bordered hover variant="light">
+        <div className="col-sm-8">
+             <br/>
+            <h2 className="text-center offset-md-5 font-weight-bold">Información del Estudiante</h2>
+        <table className="table table-hover mt-5 offset-md-3"striped bordered hover variant="light">
             <thead>
                 <tr>
                 <th>Cédula</th>
-                <th>Nombre</th>
-                <th>Apellido1</th>
-                <th>Apellido2</th>
+                <th>NombreCompleto</th>
                 <th>Sexo</th>
                 <th>Fecha Nacimiento</th>
+                <th>Provincia</th>
+                <th>Cantón</th>
+                <th>Distrito</th>
+                <th>Localidad</th>
+                <th>Grado</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                <td>{cookies.get("cedula")}</td>
-                <td>{cookies.get("nombre")}</td>
-                <td>{cookies.get("apellido1")}</td>
-                <td>{cookies.get("apellido2")}</td>
-                <td>{cookies.get("sexo")}</td>
-                <td>{cookies.get("fechaNacimiento")}</td>
-                </tr>
+                {
+                    dataEstudiante.map(est=>(
+                        <tr>
+                        <td>{est.cedula}</td>
+                        <td>{est.nombreCompleto}</td>
+                        <td>{est.sexo}</td>
+                        <td>{est.fechaNacimiento}</td>
+                        <td>{est.provincia}</td>
+                        <td>{est.canton}</td>
+                        <td>{est.distrito}</td>
+                        <td>{est.localidad}</td>
+                        <td>{est.grado}</td>
+                       
+                        </tr>
+                    ))
+                }
+               
                 
             </tbody>
-        </Table>
+        </table>
+        </div>
     )
 }
