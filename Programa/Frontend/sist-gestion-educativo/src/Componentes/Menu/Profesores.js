@@ -7,6 +7,7 @@ import  {BrowserRouter, Switch , Route} from 'react-router-dom';
 import PrincipalProfesor from '../PagProfesor/PrincipalProfesor.js';
 import PagGrupoMateria from '../PagProfesor/PagGrupoMateria.js';
 import PagAsistencia from '../PagProfesor/PagAsistencia.js';
+import PagHistorialSalario from '../PagProfesor/HistorialSalarios.js';
 
 
 function Profesores(){
@@ -20,6 +21,7 @@ function Profesores(){
               <Route exact path = '/PrincipalProfesor' component= {PrincipalProfesor}/>
               <Route exact path = '/PagGrupoMateria' component= {PagGrupoMateria}/>
               <Route exact path = '/PagAsistencia' component= {PagAsistencia}/>
+              <Route exact path = '/PagHistorialSalario' component= {PagHistorialSalario}/>
              
              
           </Switch>

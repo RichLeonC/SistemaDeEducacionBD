@@ -1,11 +1,7 @@
 import React,{Component,useState,useEffect} from 'react';
 import axios from 'axios';
-import { ModalHeader,Modal,ModalBody,Button,Form,Select} from 'reactstrap'
-import { FloatingLabel } from 'react-bootstrap';
-import { useHistory } from "react-router-dom";
 import Cookies from 'universal-cookie';
-import {Link} from 'react-router-dom';
-import PagAsistencia from './PagAsistencia';
+
 
 
 
@@ -35,14 +31,7 @@ export default function PagGrupoMateria() {
         
     }, [])
 
-    const history = useHistory();
-
-    const PasarPag=(grupo)=> {
-        let path = '/PagAsistencia'; 
-        history.push(path);
-      
-
-    }
+    
 
     
     
