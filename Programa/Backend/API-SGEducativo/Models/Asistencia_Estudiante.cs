@@ -17,7 +17,7 @@ namespace API_SGEducativo.Models
         public int numPeriodo { get; set; }
         public int anno { get; set; }
         public DateTime fecha { get; set; }
-        public Boolean asistencia { get; set; }
+        public bool asistencia { get; set; }
 
     }
 }
