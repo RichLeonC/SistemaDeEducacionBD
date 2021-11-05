@@ -38,30 +38,16 @@ namespace API_SGEducativo.Controller
             }
         }
 
-        [HttpGet("{cedula}/1")]
-        public ActionResult<List<Asistencia_Estudiante>> GetAsistencia(int cedula)
-        {
-            try
-            {
 
-                var asistencia = _context.Asistencia_Estudiante.Where(asistencia => asistencia.cedulaEstudiante.Equals(cedula)).ToList();
-                return asistencia;
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
 
         // GET: api/<Asistencia_EstudiantesController>/5
-        [HttpGet("{cedulaEstudiante}/{codigoGrupo}/{nombreMateria}/{numPeriodo}/{anno}/{fecha}", Name = "Asistencia_Estudiante")]
-        public ActionResult GetAsistencia_Estudiante(int cedulaEstudiante, string codigoGrupo, string nombreMateria, int numPeriodo, int anno,DateTime fecha)
+        [HttpGet("{cedulaEstudiante}/{codigoGrupo}/{nombreMateria}/{numPeriodo}/{anno}", Name = "Asistencia_Estudiante")]
+        public ActionResult GetAsistencia_Estudiante(int cedulaEstudiante, string codigoGrupo, string nombreMateria, int numPeriodo, int anno)
         {
             try
             {
                 var asistencia_estudiante = _context.Asistencia_Estudiante.FirstOrDefault(e => e.cedulaEstudiante == cedulaEstudiante &&
-                 e.numPeriodo == numPeriodo && e.anno == anno && e.codigoGrupo == codigoGrupo && e.nombreMateria == nombreMateria
-                 &&e.fecha==fecha); //Busca el usuario
+                 e.numPeriodo == numPeriodo && e.anno == anno && e.codigoGrupo == codigoGrupo && e.nombreMateria == nombreMateria); //Busca el usuario
                 return Ok(asistencia_estudiante);
             }
             catch (Exception e)
@@ -89,14 +75,14 @@ namespace API_SGEducativo.Controller
         }
 
         // PUT api/<Asistencia_EstudiantesController>/5
-        [HttpPut("{cedulaEstudiante}/{codigoGrupo}/{nombreMateria}/{numPeriodo}/{anno}/{fecha}")]
-        public ActionResult Put(int cedulaEstudiante, string codigoGrupo, string nombreMateria, int numPeriodo, int anno, DateTime fecha, [FromBody] Asistencia_Estudiante asistencia)
+        [HttpPut("{cedulaEstudiante}/{codigoGrupo}/{nombreMateria}/{numPeriodo}/{anno}")]
+        public ActionResult Put(int cedulaEstudiante, string codigoGrupo, string nombreMateria, int numPeriodo, int anno, [FromBody] Asistencia_Estudiante asistencia)
         {
             try
             {
 
                 if (asistencia.cedulaEstudiante == cedulaEstudiante && asistencia.numPeriodo == numPeriodo && asistencia.anno == anno
-                && asistencia.codigoGrupo == codigoGrupo && asistencia.nombreMateria == nombreMateria && asistencia.fecha == fecha)
+                && asistencia.codigoGrupo == codigoGrupo && asistencia.nombreMateria == nombreMateria)
                 {
 
                     _context.Entry(asistencia).State = EntityState.Modified; //Realiza los cambios
@@ -116,13 +102,13 @@ namespace API_SGEducativo.Controller
         }
 
         // DELETE api/<Asistencia_EstudiantesController>/5
-        [HttpDelete("{cedulaEstudiante}/{codigoGrupo}/{nombreMateria}/{numPeriodo}/{anno}/{fecha}")]
-        public ActionResult Delete(int cedulaEstudiante, string codigoGrupo, string nombreMateria, int numPeriodo, int anno,DateTime fecha)
+        [HttpDelete("{cedulaEstudiante}/{codigoGrupo}/{nombreMateria}/{numPeriodo}/{anno}")]
+        public ActionResult Delete(int cedulaEstudiante, string codigoGrupo, string nombreMateria, int numPeriodo, int anno)
         {
             try
             {
                 var asistencia = _context.Asistencia_Estudiante.FirstOrDefault(e => e.cedulaEstudiante == cedulaEstudiante &&
-                 e.numPeriodo == numPeriodo && e.anno == anno && e.codigoGrupo == codigoGrupo && e.nombreMateria == nombreMateria && e.fecha == fecha);
+                 e.numPeriodo == numPeriodo && e.anno == anno && e.codigoGrupo == codigoGrupo && e.nombreMateria == nombreMateria);
                 if (asistencia != null)
                 {
                     _context.Asistencia_Estudiante.Remove(asistencia);

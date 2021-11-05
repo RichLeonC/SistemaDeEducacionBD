@@ -12,9 +12,11 @@ namespace API_SGEducativo.Models
     {
         [Key]
         public int cedula { get; set; }
-        public DateTime incio { get; set; }
+        [Key]
+        public DateTime inicio { get; set; }
+        [Key]
         public DateTime fin { get; set; }
-        public float monto { get; set; }
+        public decimal monto { get; set; }
 
 
     }
