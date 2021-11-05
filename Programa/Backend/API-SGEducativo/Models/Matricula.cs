@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace API_SGEducativo.Models
 {
+    //Tabla para Matricula
     [Table("Matricula")]
     public class Matricula
     {
