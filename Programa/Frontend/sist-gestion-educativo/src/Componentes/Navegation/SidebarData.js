@@ -26,6 +26,14 @@ export const SideBarData = [
                 icon: <IoIcons.IoIosPaper/>, 
               
 
+            },
+
+            {
+                title: 'Mi Asistencia',
+                path: '/MiAsistencia',
+                icon: <IoIcons.IoIosPaper/>, 
+              
+
             }
 
         ]
