@@ -38,7 +38,20 @@ namespace API_SGEducativo.Controller
             }
         }
 
+        [HttpGet("{cedula}/1")]
+        public ActionResult<List<Asistencia_Estudiante>> GetAsistencia(int cedula)
+        {
+            try
+            {
 
+                var asistencia = _context.Asistencia_Estudiante.Where(asistencia => asistencia.cedulaEstudiante.Equals(cedula)).ToList();
+                return asistencia;
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
         // GET: api/<Asistencia_EstudiantesController>/5
         [HttpGet("{cedulaEstudiante}/{codigoGrupo}/{nombreMateria}/{numPeriodo}/{anno}/{fecha}", Name = "Asistencia_Estudiante")]
