@@ -8,6 +8,7 @@ import { RiFilterOffLine } from 'react-icons/ri';
 
 export default function PagAsistencia() {
     const cookies = new Cookies();
+    var cedula = cookies.get("cedula");// toma la cedula del profesor que haya iniciado sesión. 
     const baseUrlMatriculas = "https://localhost:44307/api/matriculas";
     const baseUrlEstudiantes =  "https://localhost:44307/api/estudiantes";
     const baseUrlGrupos = "https://localhost:44307/api/Grupos";
@@ -19,6 +20,7 @@ export default function PagAsistencia() {
     const [modalGrupo,setModalGrupos] = useState(false); //Estado para el modal (la ventana de grupo)
     const [modalAsistencia,setModalAsistencia] = useState(false); //Estado para el modal (la ventana de grupo)
     const [grupoSeleccionado,setGrupoSeleccionado] = useState([]); //Estado para el codigo de grupo que se escoje en select
+    const [infogrupo, setInfogrupo] = useState([]);
     const [estudiantesF, setEstudiantesF]= useState([]);
     const [presente, setPresente] = useState ([]);
     
@@ -33,8 +35,8 @@ export default function PagAsistencia() {
 
     const asiste = ["Si", "No"];
    
-    const cokies = new Cookies();
-    var cedula = cokies.get("cedula");// toma la cedula del profesor que haya iniciado sesión. 
+
+    
 
 
     
@@ -46,6 +48,11 @@ export default function PagAsistencia() {
             console.log(error);
          })
     }
+
+
+      
+
+
 
     const peticionGetMatricula= async()=>{ //Realiza peticiones Get al backend de las matriculas
         await axios.get(baseUrlMatriculas+`/${grupoSeleccionado}`+ "/2")
@@ -82,7 +89,7 @@ export default function PagAsistencia() {
 
     const abrirModalGrupos=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
         setModalGrupos(!modalGrupo);
-        peticionGetGrupos();
+        
         if (modalGrupo==false){
             setEstudiantesF([]); 
 
@@ -97,7 +104,7 @@ export default function PagAsistencia() {
 
 
     const abrirCerrarModalAistencia=(estudiante)=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
-
+        
         setModalAsistencia(!modalAsistencia);
        
     }
@@ -105,6 +112,8 @@ export default function PagAsistencia() {
     const handlerOpcion = e=>{ //Guarda el grupo selecionado en el estado
         const opcion = e.target.value;
         setGrupoSeleccionado(opcion);
+      //  setInfogrupo(gruposProfesor.filter(grupo=> grupo.codigoNombre== grupoSeleccionado));
+       // console.log(infogrupo);
         console.log(opcion);
      
         
@@ -132,13 +141,14 @@ export default function PagAsistencia() {
     
 
     const mostrarLista= ()=>{
-        console.log(grupoSeleccionado);
+       
         filtrarEstudiantes();
         cerrarModalGrupos();
     }
 
     useEffect(() => { //Hace efecto la peticion
         peticionGetUsuarios();
+        peticionGetGrupos();
         
     }, [])
 
@@ -173,7 +183,7 @@ export default function PagAsistencia() {
                         <td>{unEs.apellido2}</td>
                         <td>
              
-                        <button className="btn btn-primary" onClick={()=>abrirCerrarModalAistencia()}>Asistencia</button>
+                        <button className="btn btn-primary" onClick={()=>abrirCerrarModalAistencia(unEs)}>Asistencia</button>
                         </td>      
                         
                      </tr>  
@@ -190,19 +200,19 @@ export default function PagAsistencia() {
 
                       <ModalBody>
                         <Form>                       
-                            <FloatingLabel controlId="floatingSelect" label="Código de grupo">
-                        <select id="rol" name="grupos" className="form-control" onChange={handlerOpcion}>
-                        <option value ={-1} selected disabled>Opciones</option>
-                 
-                         {
-                              gruposProfesor.map((item,i)=>(
-                
-                             <option key={"grupo"+i} value={item.codigoNombre}>{item.codigoNombre}</option>
-                
+                        <FloatingLabel controlId="floatingSelect" label="Código de grupo">
+                                <select id="rol" name="grupos" className="form-control" onChange={handlerOpcion}>
+                                    <option value ={-1} selected disabled>Opciones</option>
+                                     
+                                {
+                                  gruposProfesor.map((item,i)=>(
+                                    
+                                    <option key={"grupo"+i} value={item.codigoNombre}>{item.codigoNombre}</option>
+                                    
                                   ))
-                        }
-                         </select> 
-               
+                                }
+                                </select> 
+                                   
                             </FloatingLabel>
           
                         </Form>
