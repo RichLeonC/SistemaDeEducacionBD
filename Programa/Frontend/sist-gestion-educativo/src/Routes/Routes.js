@@ -5,6 +5,7 @@ import './App.css';
 import Login from '../Componentes/Login/Login.js';
 import Estudiantes from '../Componentes/Menu/Estudiantes.js';
 import Profesores from "../Componentes/Menu/Profesores.js";
+import Padres from '../Componentes/Menu/Padres.js';
 import {BrowserRouter,Switch,Route} from 'react-router-dom';
 import PaginaPrincipal from '../Componentes/PagEstu/PaginaPrincipal';
 import axios from 'axios';
@@ -21,7 +22,7 @@ export default function Routes() {
                 <Route exact path="/" component={Login}/>
                 <Route exact path="/Estudiantes" component={Estudiantes}/>
                 <Route exact path="/Profesores" component={Profesores}/>
-             
+                <Route exact path="/Padres" component={Padres}/>
                
             </Switch>
             </BrowserRouter>
