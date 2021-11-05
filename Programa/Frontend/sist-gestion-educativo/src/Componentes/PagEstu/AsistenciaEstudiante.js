@@ -10,7 +10,7 @@ export default function AsistenciaEstudiante() {
     const baseUrl = "https://localhost:44329/api/Asistencia_Estudiantes/"+cookies.get("cedula")+"/1";
     const baseUrlPeriodos = "https://localhost:44329/api/periodos";
     const baseUrlGrupos = "https://localhost:44329/api/grupos";
-    const baseUrlMatriculas = "https://localhost:44329/api/matriculas";
+    const baseUrlMatriculas = "https://localhost:44329/api/matriculas/"+cookies.get("cedula")+"/1";
    
 
     const [dataAsistencia,setDataAsistencia] = useState([]);
@@ -122,13 +122,13 @@ export default function AsistenciaEstudiante() {
         abrirCerrarModalFiltro();
         console.log("Data asistencia antes: "+dataAsistencia);
         setDataAsistencia(dataAsistencia.filter(grupo=>grupo.numPeriodo == numSeleccionado && grupo.anno == annoSeleccionado && grupo.codigoGrupo==codigoSeleccionado));
-        console.log("Data asistencia despues: "+dataAsistencia);
+        console.log("Data asistencia despues: "+dataAsistencia.map(data=>data.codigoGrupo));
     }
 
-    const matriculasFiltradas = dataMatriculas.filter(matricula=>matricula.cedulaEstudiante == cookies.get("cedula"));
+   
     
     
-    const gruposEstudiante = dataGrupos.filter(grupo=>matriculasFiltradas.find(m=>m.codigoGrupo==grupo.codigoNombre));
+    const gruposEstudiante = dataGrupos.filter(grupo=>dataMatriculas.find(m=>m.codigoGrupo==grupo.codigoNombre));
 
     useEffect(() => { //Hace efecto la peticion
         peticionGetAsistencia();
@@ -155,14 +155,14 @@ export default function AsistenciaEstudiante() {
                         </tr>
                     </thead>
                     <tbody>
-                      {dataAsistencia.map(grupo=>(
-                        <tr key ={grupo.codigoGrupo}>
-                        <td>{grupo.codigoGrupo}</td>
-                        <td>{grupo.nombreMateria} </td>
-                        <td>{grupo.numPeriodo}</td>
-                        <td>{grupo.anno}</td>
-                        <td>{grupo.fecha}</td>
-                        <td>{grupo.asistencia?"Sí":"No"}</td>
+                      {dataAsistencia.map(asis=>(
+                        <tr key ={asis.fecha}>
+                        <td>{asis.codigoGrupo}</td>
+                        <td>{asis.nombreMateria} </td>
+                        <td>{asis.numPeriodo}</td>
+                        <td>{asis.anno}</td>
+                        <td>{asis.fecha}</td>
+                        <td>{asis.asistencia?"Sí":"No"}</td>
                      </tr>  
                       ))}
                                                  
