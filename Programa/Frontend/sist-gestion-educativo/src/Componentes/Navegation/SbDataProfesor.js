@@ -28,6 +28,13 @@ export const sbDataProfesor = [
         icon: <BiIcons.BiGroup/>, 
         iconClosed: <AiIcons.AiFillCaretDown/>,
         iconOpened :<AiIcons.AiFillCaretUp/>,
+    },
+    {
+        title: 'Historial Salario',
+        path: '/PagHistorialSalario',
+        icon: <BiIcons.BiGroup/>, 
+        iconClosed: <AiIcons.AiFillCaretDown/>,
+        iconOpened :<AiIcons.AiFillCaretUp/>,
     }
 
 

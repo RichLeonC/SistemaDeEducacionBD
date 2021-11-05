@@ -1,5 +1,9 @@
 use master
 go
+alter database SistemaGestionEducativa set single_user with rollback immediate --Cierra las conexiones de la base de datos
+go
+Drop database if exists SistemaGestionEducativa
+go
 create database SistemaGestionEducativa
 go
 use SistemaGestionEducativa
@@ -67,7 +71,7 @@ create table Profesor_HistorialSalario(
 	inicio date not null,
 	fin date not null,
 	monto float not null,
-	primary key(cedula)
+	primary key(cedula, inicio, fin)
 
 )
 
@@ -229,6 +233,9 @@ insert into Matricula values(5000,'2021/5/5',1010,'Matemáticas-A1',1,2020,'Mate
 
 
 
+insert into Profesor_HistorialSalario values(118180009,'2021/5/5','2021/9/10',150000 )
+
+
 insert into Usuario values(118180009,'Richard','Leon','Chinchilla','0192023a7bbd73250516f069df18b500','Masculino',
 '2001/7/29','Profesor','2021/10/19')
 insert into Usuario_Ubicacion values(118180009,'San José','Desamparados','Gravilias','Villa Nueva');
@@ -290,7 +297,8 @@ insert into Grupo values('Biología-A1','Biología',118180009,1,2020,1,30,'Abier
 insert into Grupo values('Español-C1','Español',302302414,2,2021,1,25,'Abierto')
 insert into Grupo values('Química-B1','Química',110100005,3,2021,1,25,'Abierto')
 insert into Grupo values('Español-C1','Español',302302414,2,2021,1,25,'Abierto')
-insert into Grupo values('Química-B1','Química',110100005,3,2021,1,25,'Abierto')
+
+insert into Grupo values('EstudiosSociales-B1','Estudios Sociales',118180009,3,2021,1,25,'Abierto')
 
 
 insert into Grupo_Horario values('Matemáticas-A1','Matemáticas',1,2020,
