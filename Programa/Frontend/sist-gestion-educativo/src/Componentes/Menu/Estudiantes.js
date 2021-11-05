@@ -11,20 +11,14 @@ import Matricula from '../PagEstu/Matricula.js';
 import GruposMatriculados from '../PagEstu/GruposMatriculados.js';
 import Aprobadas from '../PagEstu/Aprobadas.js';
 import Reprobadas from '../PagEstu/Reprobadas.js';
+import AsistenciaEstudiante from '../PagEstu/AsistenciaEstudiante.js';
 //import Calendar from 'react-calendar';
 
-function refreshPage(){
-    window.location.reload();
-}
+
 
 function Estudiantes(){
   const cookies = new Cookies();
-  const [date, setDate]= useState(new Date())
-
-   const onChange = date =>{
-    setDate(date);
   
-   } ;
 
     return(
         <div>
@@ -39,6 +33,7 @@ function Estudiantes(){
                 <Route exact path = '/Grupos' component = {GruposMatriculados}/>
                 <Route exact path = '/CursosAprobados' component = {Aprobadas}/>
                 <Route exact path = '/CursosReprobados' component = {Reprobadas}/>
+                <Route exact path = '/MiAsistencia' component = {AsistenciaEstudiante}/>
             </Switch>
         </BrowserRouter>
 

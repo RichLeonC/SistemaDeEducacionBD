@@ -146,14 +146,14 @@ export default function GruposMatriculados() {
         setDataGrupos(dataGrupos.filter(grupo=>grupo.numeroPeriodo == numSeleccionado && grupo.anno == annoSeleccionado));
     }
 
+    //Funcion que se encarg de setear el grupo escogido y filtrar sus horarios o evaluaciones
     const seleccionarGrupo=(grupo,caso)=>{
         setGrupoSeleccionado(grupo);
-        console.log(grupoSeleccionado);
-        console.log(dataHorarios);
-        setHorariosFiltrados(dataHorarios.filter(horario=>horario.codigoGrupo==grupo.codigoNombre));
-        setEvaluacionesFiltradas(dataEvaluaciones.filter(evaluacion=>evaluacion.codigoGrupo==grupo.codigoNombre));
-        console.log(dataHorarios);
-        console.log(evaluacionesFiltradas);
+        setHorariosFiltrados(dataHorarios.filter(horario=>horario.codigoGrupo==grupo.codigoNombre && horario.nombreMateria == grupo.nombreMateria && 
+            horario.numPeriodo == grupo.numeroPeriodo && horario.anno ==grupo.anno )); //Escoge unicamente los horarios del grupo que corresponde
+        setEvaluacionesFiltradas(dataEvaluaciones.filter(evaluacion=>evaluacion.codigoGrupo==grupo.codigoNombre && evaluacion.nombreMateria == grupo.nombreMateria
+            && evaluacion.numPeriodo == grupo.numeroPeriodo && evaluacion.anno ==grupo.anno));
+
         (caso == "horario")?
             abrirCerrarModalHorario():abrirCerrarModalEvaluacion();
         
@@ -172,6 +172,7 @@ export default function GruposMatriculados() {
         <div className="d-flex">
             <div className="col-sm-8">
                 <br/>
+                <h2 className="text-center offset-md-5 font-weight-bold">Mis Grupos</h2>
                 <button onClick={()=>abrirCerrarModalFiltro()} className=" offset-md-3 btn btn-success">Filtrar</button>
                 
                 <table className="table table-hover mt-5 offset-md-3" >

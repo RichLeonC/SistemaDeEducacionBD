@@ -23,8 +23,11 @@ namespace API_SGEducativo.Context
             modelBuilder.Entity<Grupo_Horario>().HasKey(e => new { e.numPeriodo, e.anno, e.codigoGrupo, e.nombreMateria });
             modelBuilder.Entity<Evaluacion>().HasKey(e => new { e.numPeriodo, e.anno, e.codigoGrupo, e.nombreMateria });
             modelBuilder.Entity<Periodo>().HasKey(e => new { e.anno, e.numero});
-            modelBuilder.Entity<Asistencia_Estudiante>().HasKey(e => new { e.numPeriodo, e.anno, e.codigoGrupo, e.nombreMateria, e.cedulaEstudiante });
+            modelBuilder.Entity<Asistencia_Estudiante>().HasKey(e => new { e.numPeriodo, e.anno, e.codigoGrupo, e.nombreMateria, e.cedulaEstudiante,e.fecha });
             modelBuilder.Entity<Evaluacion_Estudiante>().HasKey(e => new { e.numPeriodo, e.anno, e.codigoGrupo, e.nombreMateria, e.cedulaEstudiante });
+            modelBuilder.Entity<Estudiante_Vista>().HasKey(e => new { e.cedula });
+            modelBuilder.Entity<Padre_Vista>().HasKey(e => new { e.cedula });
+            modelBuilder.Entity<Profesor_Vista>().HasKey(e => new { e.cedula });
         }
 
       
@@ -57,5 +60,9 @@ namespace API_SGEducativo.Context
 
         public DbSet<Evaluacion_Estudiante> Evaluacion_Estudiante { get; set; }
 
+        public DbSet<Estudiante_Vista> Estudiante_Vista { get; set; }
+
+        public DbSet<Padre_Vista> Padre_Vistas { get; set; }
+        public DbSet<Profesor_Vista> Profesor_Vistas { get; set; }
     }
 }
