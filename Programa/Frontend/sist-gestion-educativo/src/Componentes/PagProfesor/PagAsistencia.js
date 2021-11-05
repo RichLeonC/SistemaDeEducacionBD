@@ -16,7 +16,7 @@ export default function PagAsistencia() {
     const baseUrlEstudiantes =  "https://localhost:44307/api/estudiantes";
     const baseUrlGrupos = "https://localhost:44307/api/Grupos";
     const baseUrlUsuarios =  "https://localhost:44307/api/Usuarios";
-    const baseUrlAsistencia =  "https://localhost:44307/api/Asistencia_Estudiante";
+    const baseUrlAsistencia =  "https://localhost:44307/api/Asistencia_Estudiantes";
     const [matriculas,setMatricula] = useState([]); //Estado para las matriculas
     const [estudiantes,setEstudiante] = useState([]); //Estado para los estudiantes
     const [gruposProfesor,setgruposProfesor] = useState([]); //Estado para los grupos que posee el profesor
@@ -28,7 +28,7 @@ export default function PagAsistencia() {
     const [estudiantesF, setEstudiantesF]= useState([]);
     const [estudianteActual,setestudianteActual] = useState([]);
     const [presente, setPresente] = useState ([]);
-    const [enviarData, setenviarData] = useState ([]);
+    const [asistencias, setAsistencias] = useState ([]);
     const current = new Date();
     const date = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}T00:00:00`;
     
@@ -50,6 +50,15 @@ export default function PagAsistencia() {
         await axios.get(baseUrlGrupos+`/${cedula}`)
         .then(response=>{
             setgruposProfesor(response.data);
+         }).catch(error=>{
+            console.log(error);
+         })
+    }
+
+    const peticionAsistencia = async()=>{ //Realiza peticiones Get al backend de los grupos
+        await axios.get(baseUrlAsistencia)
+        .then(response=>{
+            setAsistencias(response.data);
          }).catch(error=>{
             console.log(error);
          })
@@ -122,9 +131,9 @@ export default function PagAsistencia() {
         setInfogrupo([]);
         const opcion = e.target.value;
         setGrupoSeleccionado(opcion);
-        setInfogrupo(gruposProfesor.filter(grupo=> grupo.codigoNombre== grupoSeleccionado));
-        console.log(infogrupo);
         console.log(opcion);
+        setInfogrupo(gruposProfesor.filter(grupo=> grupo.codigoNombre == gruposProfesor.grupoSeleccionado));
+        console.log(infogrupo);
         console.log(date);
      
         
@@ -161,25 +170,17 @@ export default function PagAsistencia() {
     useEffect(() => { //Hace efecto la peticion
         peticionGetUsuarios();
         peticionGetGrupos();
+        peticionAsistencia();
         
     }, [])
 
 
     const guardarPresentacia =()=>{
         peticionPost();
-
+        setModalAsistencia(!modalAsistencia);
     }
 
-    const transformar = ()=>{
-        if (presente == "Si"){
-            presente = true;
-        }
-        else {
-            presente = false;
-        }
-        
-    }
-
+   
 
     const peticionPost=async()=>{ //Realiza peticiones post al backend
       //  transformar();
@@ -198,7 +199,7 @@ export default function PagAsistencia() {
         
         await axios.post(baseUrlAsistencia,guardarAsistencia) //Realizamos la peticion post, el matriculaSeleccionada se pasa como BODY
         .then(response=>{
-            setenviarData(enviarData.concat(response.enviarData)); //Agregamos al estado lo que responda la API
+            setAsistencias(asistencias.concat(response.asistencias)); //Agregamos al estado lo que responda la API
         }).catch(error=>{
             console.log(error);
         })
