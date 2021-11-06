@@ -70,7 +70,7 @@ create table Profesor_HistorialSalario(
 	cedula int not null foreign key references Profesor(cedula),
 	inicio date not null,
 	fin date not null,
-	monto float not null,
+	monto decimal not null,
 	primary key(cedula, inicio, fin)
 
 )

@@ -21,14 +21,29 @@ export const sbDataProfesor = [
         icon: <BiIcons.BiGroup/>, 
         iconClosed: <AiIcons.AiFillCaretDown/>,
         iconOpened :<AiIcons.AiFillCaretUp/>,
+
+
+
+
+        subNav: [
+            {
+                title: 'Asistencia',
+                path: '/PagAsistencia',
+                icon: <BiIcons.BiGroup/>, 
+             
+            },
+            {
+                title: 'Evaluciones',
+                path: '/Evaluciones',
+                icon: <IoIcons.IoIosPaper/>, 
+              
+
+            },
+
+
+        ]
     },
-    {
-        title: 'Asistencia',
-        path: '/PagAsistencia',
-        icon: <BiIcons.BiGroup/>, 
-        iconClosed: <AiIcons.AiFillCaretDown/>,
-        iconOpened :<AiIcons.AiFillCaretUp/>,
-    },
+   
     {
         title: 'Historial Salario',
         path: '/PagHistorialSalario',

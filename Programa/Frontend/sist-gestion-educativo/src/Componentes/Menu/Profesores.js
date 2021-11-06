@@ -8,6 +8,8 @@ import PrincipalProfesor from '../PagProfesor/PrincipalProfesor.js';
 import PagGrupoMateria from '../PagProfesor/PagGrupoMateria.js';
 import PagAsistencia from '../PagProfesor/PagAsistencia.js';
 import PagHistorialSalario from '../PagProfesor/HistorialSalarios.js';
+import PagEvaluciones from '../PagProfesor/Evaluacion.js';
+
 
 
 function Profesores(){
@@ -22,6 +24,7 @@ function Profesores(){
               <Route exact path = '/PagGrupoMateria' component= {PagGrupoMateria}/>
               <Route exact path = '/PagAsistencia' component= {PagAsistencia}/>
               <Route exact path = '/PagHistorialSalario' component= {PagHistorialSalario}/>
+              <Route exact path = '/Evaluciones' component= {PagEvaluciones}/>
              
              
           </Switch>
