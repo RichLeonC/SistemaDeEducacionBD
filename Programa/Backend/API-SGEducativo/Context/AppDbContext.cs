@@ -58,5 +58,7 @@ namespace API_SGEducativo.Context
 
         public DbSet<Evaluacion_Estudiante> Evaluacion_Estudiante { get; set; }
 
+        public DbSet<Estudiante_Vista> Estudiante_Vista { get; set; }
+
     }
 }
