@@ -25,7 +25,7 @@ namespace API_SGEducativo.Controller
         public ActionResult Get()
         {
             return Ok(_context.Estudiante_Vista.FromSqlRaw("select cedula,nombreCompleto,sexo,FechaNacimiento,provincia," +
-                "canton,distrito,localidad,grado from Estudiante_Vista"));
+                "canton,distrito,localidad,grado,cedulaPadre from Estudiante_Vista"));
         }
 
         // GET api/<Usuarios_CompletosVController>/5
@@ -33,7 +33,7 @@ namespace API_SGEducativo.Controller
         public ActionResult Get(int cedula)
         {
              return Ok(_context.Estudiante_Vista.FromSqlRaw("select cedula,nombreCompleto,sexo,FechaNacimiento,provincia," +
-                "canton,distrito,localidad,grado from Estudiante_Vista where cedula=" + cedula));
+                "canton,distrito,localidad,grado,cedulaPadre from Estudiante_Vista where cedula=" + cedula));
         }
 
         // POST api/<Usuarios_CompletosVController>

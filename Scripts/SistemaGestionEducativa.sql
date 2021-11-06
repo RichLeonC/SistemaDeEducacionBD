@@ -210,9 +210,11 @@ select * from Padre_Vista
 --Vista que lista la información personaL de los estudiantes completa
 create view Estudiante_Vista as
 select Usuario.cedula,concat(nombre,' ',apellido1,' ',apellido2) as nombreCompleto,sexo,fechaNacimiento,provincia,canton,distrito,localidad,
-Estudiante.grado from Usuario
+Estudiante.grado,Estudiante.cedulaPadre from Usuario
 inner join Usuario_Ubicacion on Usuario.cedula = Usuario_Ubicacion.cedula
 inner join Estudiante on Estudiante.cedula = Usuario.cedula
+
+
 
 select * from Estudiante_Vista
 
