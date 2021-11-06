@@ -26,7 +26,7 @@ export default function PagAsistencia() {
     const [modalGrupo,setModalGrupos] = useState(false); //Estado para el modal (la ventana de grupo)
     const [modalAsistencia,setModalAsistencia] = useState(false); //Estado para el modal (la ventana de asistencia)
     const [grupoSeleccionado,setGrupoSeleccionado] = useState([]); //Estado para el codigo de grupo que se escoje en select
-    const [infogrupo, setInfogrupo] = useState([]);//info del grupo seleccionado
+  
     const [estudiantesF, setEstudiantesF]= useState([]);// estudiantes vinculados a un grupo
     const [estudianteActual,setestudianteActual] = useState([]); // estudiante que se desea ingresar su asistencia
     const [asistencias, setAsistencias] = useState ([]); // Estado de la asistencia
@@ -120,13 +120,13 @@ export default function PagAsistencia() {
        
     }
 
+    const infoGrupo =gruposProfesor.filter(grupo=> grupo.codigoNombre == grupoSeleccionado);
+
     const handlerOpcion = e=>{ //Guarda el grupo selecionado en el estado
-        setInfogrupo([]);
         const opcion = e.target.value;
         setGrupoSeleccionado(opcion);
         console.log(opcion);
-        setInfogrupo(gruposProfesor.filter(grupo=> grupo.codigoNombre == grupoSeleccionado));
-        console.log(infogrupo);
+        console.log(infoGrupo);
         console.log(date);
      
         
@@ -173,7 +173,7 @@ export default function PagAsistencia() {
     const peticionPost=async()=>{ //Realiza peticiones post al backend
       //  transformar();
       guardarAsistencia.cedulaEstudiante= estudianteActual.cedula;
-        var iterator = infogrupo.values();
+        var iterator = infoGrupo.values();
         for(let grupo of iterator){
             
             guardarAsistencia.codigoGrupo = grupo.codigoNombre;
