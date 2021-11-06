@@ -12,27 +12,28 @@ import { RiFilterOffLine } from 'react-icons/ri';
 export default function PagAsistencia() {
     const cookies = new Cookies();
     var cedula = cookies.get("cedula");// toma la cedula del profesor que haya iniciado sesión. 
-    const baseUrlMatriculas = "https://localhost:44329/api/matriculas";
-    const baseUrlEstudiantes =  "https://localhost:44329/api/estudiantes";
-    const baseUrlGrupos = "https://localhost:44329/api/Grupos";
-    const baseUrlUsuarios =  "https://localhost:44329/api/Usuarios";
-    const baseUrlAsistencia =  "https://localhost:44329/api/Asistencia_Estudiantes";
+    const baseUrlMatriculas = "https://localhost:44307/api/matriculas";
+    const baseUrlEstudiantes =  "https://localhost:44307/api/estudiantes";
+    const baseUrlGrupos = "https://localhost:44307/api/Grupos";
+    const baseUrlUsuarios =  "https://localhost:44307/api/Usuarios";
+    const baseUrlAsistencia =  "https://localhost:44307/api/Asistencia_Estudiantes";
+
+
     const [matriculas,setMatricula] = useState([]); //Estado para las matriculas
     const [estudiantes,setEstudiante] = useState([]); //Estado para los estudiantes
     const [gruposProfesor,setgruposProfesor] = useState([]); //Estado para los grupos que posee el profesor
-    const [usuarios,setUsuarios] = useState([]); //Estado para los grupos que posee el profesor
+    const [usuarios,setUsuarios] = useState([]); //Lista de usuriaos
     const [modalGrupo,setModalGrupos] = useState(false); //Estado para el modal (la ventana de grupo)
-    const [modalAsistencia,setModalAsistencia] = useState(false); //Estado para el modal (la ventana de grupo)
+    const [modalAsistencia,setModalAsistencia] = useState(false); //Estado para el modal (la ventana de asistencia)
     const [grupoSeleccionado,setGrupoSeleccionado] = useState([]); //Estado para el codigo de grupo que se escoje en select
-    const [infogrupo, setInfogrupo] = useState([]);
-    const [estudiantesF, setEstudiantesF]= useState([]);
-    const [estudianteActual,setestudianteActual] = useState([]);
-    const [presente, setPresente] = useState ([]);
-    const [asistencias, setAsistencias] = useState ([]);
+    const [infogrupo, setInfogrupo] = useState([]);//info del grupo seleccionado
+    const [estudiantesF, setEstudiantesF]= useState([]);// estudiantes vinculados a un grupo
+    const [estudianteActual,setestudianteActual] = useState([]); // estudiante que se desea ingresar su asistencia
+    const [asistencias, setAsistencias] = useState ([]); // Estado de la asistencia
+    const [presente, setPresente] = useState ([]); // Estado de la asistencia
     const current = new Date();
-    const date = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}T00:00:00`;
-    
-    const [guardarAsistencia,setGuardarAsistencia] = useState({ //Estado para guardar la info de la matricula
+    const date = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}T00:00:00`; 
+    const [guardarAsistencia,setGuardarAsistencia] = useState({ //Estado para guardar la info de la asistencia
         cedulaEstudiante: '',
         codigoGrupo: '',
         nombreMateria: '',
@@ -40,7 +41,6 @@ export default function PagAsistencia() {
         fechaAsistencia: date,
         asistencia: '',
     })
-
     const asiste = ["Si", "No"];
    
    
@@ -64,11 +64,6 @@ export default function PagAsistencia() {
          })
     }
 
-
-      
-
-
-
     const peticionGetMatricula= async()=>{ //Realiza peticiones Get al backend de las matriculas
         await axios.get(baseUrlMatriculas+`/${grupoSeleccionado}`+ "/2")
         .then(response=>{
@@ -78,7 +73,6 @@ export default function PagAsistencia() {
         })
     }
 
-   
 
     const peticionGetEstudiantes = async()=>{ //Realiza peticiones Get al backend de los estudiantes
         await axios.get(baseUrlEstudiantes)
@@ -100,7 +94,6 @@ export default function PagAsistencia() {
     }
 
 
-  
 
     const abrirModalGrupos=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
         setModalGrupos(!modalGrupo);
@@ -144,13 +137,9 @@ export default function PagAsistencia() {
         const opcion = e.target.value;
         setPresente(opcion);
         console.log(opcion);
-        
-     
-        
+      
     }
    
-  
-
     const filtrarEstudiantes=()=>{ 
        
         peticionGetEstudiantes();
@@ -159,7 +148,6 @@ export default function PagAsistencia() {
         setEstudiantesF(usuarios.filter(usu=> estudiantes.find(estudiante=> estudiante.cedula == usu.cedula)));
     }
 
-    
 
     const mostrarLista= ()=>{
         peticionGetMatricula();

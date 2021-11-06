@@ -32,7 +32,6 @@ export default function HistorialSalarios() {
         <Table className="mt-5 offset-md-0 table table-hover"striped bordered hover variant="light">
             <thead>
                 <tr>
-                <th>Cédula</th>
                 <th>Inicio</th>
                 <th>Fin</th>
                 <th>Salario</th>
@@ -41,7 +40,6 @@ export default function HistorialSalarios() {
             <tbody>
             {historial.map(historia=>(
                         <tr  key ={historia.cedula, historia.inicio, historia.fin}>
-                        <td>{historia.cedula}</td>
                         <td>{historia.inicio}</td>
                         <td>{historia.fin}</td>
                         <td>{historia.monto}</td>
