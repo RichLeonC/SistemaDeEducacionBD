@@ -34,7 +34,7 @@ export default function InfoEstudiante() {
             <thead>
                 <tr>
                 <th>Cédula</th>
-                <th>NombreCompleto</th>
+                <th>Nombre Completo</th>
                 <th>Sexo</th>
                 <th>Fecha Nacimiento</th>
                 <th>Provincia</th>

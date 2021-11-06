@@ -277,6 +277,12 @@ insert into Usuario values(122543102,'Adrian','Herrera','Segura','0192023a7bbd73
 insert into Usuario_Ubicacion values(122543102,'San José','San Sebastian','Calle Blanco','Residencial MegaSuper');
 insert into Estudiante values(122543102,429847293,1);
 
+insert into Usuario values(115150008,'Shermie','Madrid','Orellana','0192023a7bbd73250516f069df18b500','Femenino',
+'2000/7/3','Estudiante','2021/11/6')
+insert into Usuario_Ubicacion values(115150008,'Heredia','Belén','Lindora','La Panasonic');
+insert into Estudiante values(115150008,114140008,1);
+
+
 
 insert into Materia values('Español',25000);
 insert into Materia values('Matemáticas',45000);

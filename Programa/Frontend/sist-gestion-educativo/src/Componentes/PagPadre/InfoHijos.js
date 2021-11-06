@@ -4,7 +4,7 @@ import Cookies from 'universal-cookie';
 
 export default function InfoHijos() {
     const cookies = new Cookies();
-    const baseUrl = "https://localhost:44329/api/Estudiante_Vistas";
+    const baseUrl = "https://localhost:44329/api/Estudiante_Vistas/"+cookies.get("cedula")+"/1";
     const baseUrlPadre =  "https://localhost:44329/api/Padre_Vistas/"+cookies.get("cedula");
 
     const [dataHijos,setDataHijos]=useState([]);
@@ -44,7 +44,7 @@ export default function InfoHijos() {
             <thead>
                 <tr>
                 <th>Cédula</th>
-                <th>NombreCompleto</th>
+                <th>Nombre Completo</th>
                 <th>Sexo</th>
                 <th>Fecha Nacimiento</th>
                 <th>Provincia</th>
@@ -56,7 +56,7 @@ export default function InfoHijos() {
             </thead>
             <tbody>
                 {
-                    hijos.map(est=>(
+                    dataHijos.map(est=>(
                         <tr>
                         <td>{est.cedula}</td>
                         <td>{est.nombreCompleto}</td>
