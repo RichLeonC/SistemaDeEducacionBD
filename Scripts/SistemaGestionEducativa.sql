@@ -210,9 +210,11 @@ select * from Padre_Vista
 --Vista que lista la información personaL de los estudiantes completa
 create view Estudiante_Vista as
 select Usuario.cedula,concat(nombre,' ',apellido1,' ',apellido2) as nombreCompleto,sexo,fechaNacimiento,provincia,canton,distrito,localidad,
-Estudiante.grado from Usuario
+Estudiante.grado,Estudiante.cedulaPadre from Usuario
 inner join Usuario_Ubicacion on Usuario.cedula = Usuario_Ubicacion.cedula
 inner join Estudiante on Estudiante.cedula = Usuario.cedula
+
+
 
 select * from Estudiante_Vista
 
@@ -274,6 +276,12 @@ insert into Usuario values(122543102,'Adrian','Herrera','Segura','0192023a7bbd73
 '2002/11/9','Estudiante','2021/10/19')
 insert into Usuario_Ubicacion values(122543102,'San José','San Sebastian','Calle Blanco','Residencial MegaSuper');
 insert into Estudiante values(122543102,429847293,1);
+
+insert into Usuario values(115150008,'Shermie','Madrid','Orellana','0192023a7bbd73250516f069df18b500','Femenino',
+'2000/7/3','Estudiante','2021/11/6')
+insert into Usuario_Ubicacion values(115150008,'Heredia','Belén','Lindora','La Panasonic');
+insert into Estudiante values(115150008,114140008,1);
+
 
 
 insert into Materia values('Español',25000);
