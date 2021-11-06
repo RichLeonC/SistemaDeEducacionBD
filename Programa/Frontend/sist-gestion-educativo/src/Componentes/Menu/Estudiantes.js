@@ -1,11 +1,9 @@
-import { render } from '@testing-library/react';
-import React,{Component , useState} from 'react';
-import Cookies from 'universal-cookie';
+
+import React from 'react';
 import SideBar from '../Navegation/Sidebar.js';
 import  {BrowserRouter, Switch , Route} from 'react-router-dom';
 import PaginaPrincipal from '../PagEstu/PaginaPrincipal.js';
 import {SideBarData} from '../Navegation/SidebarData.js';
-import Login from '../Login/Login.js';
 import InfoEstudiante from '../PagEstu/InfoEstudiante.js';
 import Matricula from '../PagEstu/Matricula.js';
 import GruposMatriculados from '../PagEstu/GruposMatriculados.js';
@@ -17,7 +15,7 @@ import AsistenciaEstudiante from '../PagEstu/AsistenciaEstudiante.js';
 
 
 function Estudiantes(){
-  const cookies = new Cookies();
+
   
 
     return(

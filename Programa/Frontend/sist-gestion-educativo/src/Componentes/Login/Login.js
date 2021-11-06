@@ -58,6 +58,9 @@ function Login(props){
                 else  if(respuesta.rol == ("Estudiante")){
                     props.history.push("/Estudiantes");
                 }
+                else if(respuesta.rol ==("Padre")){
+                    props.history.push("/Padres")
+                }
             }
             else{
                 alert("El usuario o contraseña no son correctoss");

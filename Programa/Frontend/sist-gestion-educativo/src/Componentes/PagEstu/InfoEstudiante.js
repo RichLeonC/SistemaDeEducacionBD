@@ -1,7 +1,6 @@
 import { colors } from '@material-ui/core'
 import React,{useState,useEffect} from 'react';
 import axios from 'axios';
-import { Card,ListGroup,Table} from 'react-bootstrap';
 import Cookies from 'universal-cookie';
 import './Estilos.css'
 
@@ -11,7 +10,7 @@ export default function InfoEstudiante() {
     
     const [dataEstudiante,setDataEstudiante] = useState([]);
 
-    const peticionGet = async()=>{ //Realiza peticiones Get al backend Matriculas
+    const peticionGet = async()=>{ //Realiza peticiones Get al backend 
         await axios.get(baseUrl)
         .then(response=>{
             setDataEstudiante(response.data);
