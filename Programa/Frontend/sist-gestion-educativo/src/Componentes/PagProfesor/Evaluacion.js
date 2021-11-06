@@ -28,9 +28,17 @@ export default function Evaluacion () {
     const [grupoSeleccionado, setGrupoSeleccionado] = useState ([]);
     const [estudianteActual,setestudianteActual] = useState([]); // estudiante que se desea ingresar su asistencia
     const [evaluacionGrupo, setEvaluacionGrupo] = useState ([]);
-    
-  
-  
+    const [estudianteNota, setEstudianteNota] = useState({
+        cedulaEstudiante : '',
+        codigoGrupo : grupoSeleccionado,
+        nombreMateria : '',
+        numeroPeriodo: '',
+        anno : '',
+        notaObtenida: '',
+        estado: ''
+    });
+   const [notaO, setNotaO] = useState ("");
+
 
     const peticionGetGrupos = async()=>{ //Realiza peticiones Get al backend de los grupos
         await axios.get(baseUrlGrupos+`/${cedula}`)
@@ -71,7 +79,7 @@ export default function Evaluacion () {
     }
 
     const peticionGetEvalucion = async()=>{ //Realiza peticiones Get al backend de las evaluciones 
-        await axios.get(baseURLEvaluciones )
+        await axios.get(baseURLEvaluciones)
         .then(response=>{
             setEvaluacion(response.data);
         }).catch(error=>{
@@ -98,6 +106,7 @@ export default function Evaluacion () {
            
         }
     }
+
 
     const filtrarMatriculas = matriculas.filter(matricula=> matricula.codigoGrupo == (grupoSeleccionado));
 
@@ -146,6 +155,10 @@ export default function Evaluacion () {
         filtrarEstudiantes();
         cerrarModalGrupos();
     }
+
+
+
+    
     
     const abrirCerrarModalEvaluacion=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
     //  console.log(handlerOpcion());
@@ -164,8 +177,50 @@ export default function Evaluacion () {
     const abrirCerrarNota=(estudiante)=>{
 
         setestudianteActual(estudiante);
+        setmodalNota(!modalNota);
     }
 
+
+    const peticionPost=async()=>{ //Realiza peticiones post al backend
+        //  transformar();
+        estudianteNota.cedulaEstudiante= estudianteActual.cedula;
+        const infoGrupo = gruposProfesor.filter(grupo=>grupo.codigoNombre == (grupoSeleccionado));
+        var iterator = infoGrupo.values();
+        var estadoAlumno ="";
+        const intNota = parseInt(notaO);
+          if (intNota<70){
+              estadoAlumno = "Reprobado"
+          }
+          if (intNota>=70){
+            estadoAlumno = "Aprobado"
+          }
+          for(let grupo of iterator){
+              
+            estudianteNota.codigoGrupo = grupo.codigoNombre;
+            estudianteNota.numPeriodo = parseInt(grupo.numeroPeriodo);
+            estudianteNota.anno = parseInt(grupo.anno);
+            estudianteNota.nombreMateria = grupo.nombreMateria;
+            estudianteNota.notaObtenida= intNota;
+            estudianteNota.estado = estadoAlumno;
+          }
+         
+          
+          
+          await axios.post(baseURLEvalucionesEstudiante,estudianteNota) //Realizamos la peticion post, el matriculaSeleccionada se pasa como BODY
+          .then(response=>{
+            setEvaluacionES(evaluacionEs.concat(response.evaluacionEs)); //Agregamos al estado lo que responda la API
+          }).catch(error=>{
+              console.log(error);
+          })
+      }
+
+      const cerrarpost=()=>{
+        peticionPost();
+        console.log(notaO);
+        setmodalNota(!modalNota);
+
+      }
+ 
 
 return (
  
@@ -255,20 +310,30 @@ return (
         
         
         <Modal isOpen={modalNota}>
-                  <ModalHeader>Evaluación</ModalHeader>
+                  <ModalHeader>Nota Estudiante </ModalHeader>
 
                   <ModalBody>
                       {
-                          evaluacion.map(evaluacion=>(
-                              <label>{evaluacion.descripcion}</label>
-                          ))
+                    <form>
+                          <label>
+                            Nota: 
+                             <input type="text" name="notaO" onChange = {e => setNotaO(e.target.value)}/>
+                            </label>
+ 
+                    </form>
                       }
                   </ModalBody>
 
                   <ModalFooter>
-                    <Button className="btn btn-primary"size="sm" >Aceptar</Button>
+                    <Button className="btn btn-primary"size="sm" onClick={()=> cerrarpost()} >Aceptar</Button>
                   </ModalFooter>
         </Modal>
+
+
+
+
+
+
 
 
 
