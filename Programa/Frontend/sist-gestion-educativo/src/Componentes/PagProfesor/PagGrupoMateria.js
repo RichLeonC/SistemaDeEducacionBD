@@ -1,6 +1,7 @@
 import React,{Component,useState,useEffect} from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import { ModalHeader,Modal,ModalBody,Button,Form,Select,ModalFooter} from 'reactstrap'
 
 
 
@@ -11,6 +12,8 @@ export default function PagGrupoMateria() {
     const baseUrlEstudiantes =  "https://localhost:44307/api/estudiantes";
     const baseUrlUsuarios =  "https://localhost:44307/api/Usuarios";
     const baseUrlMatriculas = "https://localhost:44307/api/matriculas";
+
+    const[modalAviso, setModalAviso]= useState(false);
     const [estudiantesF, setEstudiantesF]= useState([]);// estudiantes vinculados a un grupo
     const [data,setData] = useState([]);
     const [matriculas,setMatricula] = useState([]); //Estado para las matriculas
@@ -87,24 +90,100 @@ export default function PagGrupoMateria() {
 
 
     const cerrarGrupo= grupo =>{
-        var grupoElegido = data.find(grup => grup.codigoNombre == grupo);
-        console.log(grupoElegido);
-        filtrarGrupos(grupo);
+        const grupoElegido = data.filter(grup => grup.codigoNombre == (grupo));
 
+        console.log(grupoElegido);
+
+        var iterator = grupoElegido.values();
+        grupoCerrado.cedulaProfesor = parseInt(cedula);
+        for(let grupo of iterator){
+            
+            grupoCerrado.cupo = parseInt(grupo.cupo);
+            grupoCerrado.codigoNombre = grupo.codigoNombre;
+            grupoCerrado.numeroPeriodo =parseInt( grupo.numeroPeriodo);
+            grupoCerrado.anno = parseInt(grupo.anno);
+            grupoCerrado.nombreMateria = grupo.nombreMateria;
+            grupoCerrado.grado = parseInt(grupo.grado);
+            grupoCerrado.estado = grupo.estado;
+           
+        }
+
+        console.log(grupoCerrado);
+       var cerrar = filtrarGrupos(grupo);
+
+       if (cerrar){
+           peticionPut();
+         // console.log("Cerrado Exitosamente");
+       }
     }
+
+    const peticionPut=async()=>{ //Realiza peticiones post al backend
+        //  transformar();
+
+        
+          await axios.put(baseUrlGrupo+'/'+ grupoCerrado.codigoNombre +'/'+
+          grupoCerrado.nombreMateria +'/' +  grupoCerrado.numeroPeriodo +'/'+ grupoCerrado.anno
+          ,grupoCerrado) //Realizamos la peticion post, el matriculaSeleccionada se pasa como BODY
+          .then(response=>{
+                var respuesta = response.data;
+                var cerrar ="";
+                if (respuesta.estado == "Abierto")
+                {cerrar = "Cerrado"};
+                var dataAuxiliar= data;
+                dataAuxiliar.map(cerrar =>{if(
+                    cerrar.codigoNombre == grupoCerrado.codigoNombre &&
+                    cerrar.nombreMateria == grupoCerrado.nombreMateria &&
+                     cerrar.numeroPeriodo == grupoCerrado.numeroPeriodo 
+                    && cerrar.anno == grupoCerrado.anno){
+                    
+                        cerrar.estado= cerrar;
+                        
+
+
+                    }
+
+                })
+
+          }).catch(error=>{
+              console.log(error);    
+
+          })
+      }
 
 
     const filtrarGrupos= (grupoSeleccionado)=>{
         const filtrarMatriculas = matriculas.filter(matricula=> matricula.codigoGrupo == (grupoSeleccionado));
         const filtrarEvaluciones  = evaluacion.filter(unaEvaluacion=> unaEvaluacion.codigoGrupo == (grupoSeleccionado));
+        const filtrarCedulasE = [];
+        const filtrarCedulasM = [];
+
+        for(let estudianteEvaluado of filtrarEvaluciones){
+            if(!filtrarCedulasE.includes(estudianteEvaluado.cedulaEstudiante)){
+                filtrarCedulasE.push(estudianteEvaluado.cedulaEstudiante);
+            }         
+        }
+
+        for(let estudianMatriculado of filtrarMatriculas){
+            if(!filtrarCedulasM.includes(estudianMatriculado.cedulaEstudiante)){
+                filtrarCedulasM.push(estudianMatriculado.cedulaEstudiante);
+            }         
+        }
+       
+        console.log(filtrarCedulasM);
+        console.log(filtrarCedulasE);
 
 
+        for(let n of filtrarMatriculas){
+            if(!filtrarCedulasE.includes(n.cedulaEstudiante)){
+                CerrarModalAviso()
+                return false;
+            }           
+        }
 
-
-       console.log(filtrarMatriculas);
-       console.log(filtrarEvaluciones);
-
+        return true;
     }
+
+
 
 
     
@@ -119,7 +198,12 @@ export default function PagGrupoMateria() {
 
     
 
-    
+     
+    const CerrarModalAviso=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
+       
+        setModalAviso(!modalAviso);
+    }
+  
     
 
     return (//Metodo que despliega la tabla de los grupos asignados al profesor que inició seseión
@@ -162,6 +246,19 @@ export default function PagGrupoMateria() {
                       </table>
 
                    
+            <Modal isOpen={modalAviso}>
+
+                <ModalBody>
+                No puede cerrar el grupo, no todos los estudiantes tienen nota   
+                    </ModalBody>
+                <ModalFooter>
+                 <Button className="btn btn-danger"size="sm" onClick={()=>CerrarModalAviso()}>Aceptar</Button>
+                </ModalFooter>
+                </Modal>
+
+
+
+
                 </div>
                 </div>
                 )}
