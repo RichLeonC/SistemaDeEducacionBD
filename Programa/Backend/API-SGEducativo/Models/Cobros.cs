@@ -14,5 +14,7 @@ namespace API_SGEducativo.Models
         public int consecutivo { get; set; }
         public int idMatricula { get; set; }
 
+        public string estado { get; set; }
+
     }
 }

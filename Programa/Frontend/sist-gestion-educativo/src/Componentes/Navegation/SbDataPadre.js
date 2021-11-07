@@ -23,9 +23,29 @@ export const SbDataPadre = [
                 title: 'Información de hijos',
                 path: '/Principal/Hijos',
                 icon: <IoIcons.IoIosPaper/>, 
-              
+                
 
             },
+        ]
+    },
+
+    {
+        title: 'Pagos',
+        path: '/Pagos',
+        icon: <FaIcons.FaRegMoneyBillAlt/>,
+        iconClosed: <AiIcons.AiFillCaretDown/>,
+        iconOpened :<AiIcons.AiFillCaretUp/>,
+        subNav:[
+            {
+                title: 'Cobros',
+                path: '/Cobros',
+                icon: <IoIcons.IoIosPaper/>
+            },
+            {
+                title: 'Facturas',
+                path: '/Facturas',
+                icon: <IoIcons.IoIosPaper/>
+            }
         ]
     }
 ]
