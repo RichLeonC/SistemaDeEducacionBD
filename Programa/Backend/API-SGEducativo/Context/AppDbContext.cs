@@ -27,6 +27,7 @@ namespace API_SGEducativo.Context
             modelBuilder.Entity<Evaluacion_Estudiante>().HasKey(e => new { e.numPeriodo, e.anno, e.codigoGrupo, e.nombreMateria, e.cedulaEstudiante });
             modelBuilder.Entity<Profesor_HistorialSalario>().HasKey(e => new { e.cedula, e.inicio, e.fin });
             modelBuilder.Entity<Padre_Vista>().HasKey(e => new { e.cedula });
+            modelBuilder.Entity<Factura_Vista>().HasKey(e => new { e.consecutivo });
         }
 
 
@@ -64,6 +65,7 @@ namespace API_SGEducativo.Context
         public DbSet<Padre_Vista> Padre_Vistas { get; set; }
 
         public DbSet<Profesor_Vista> Profesor_Vistas { get; set; }
+        public DbSet<Factura_Vista> Factura_Vistas { get; set; }
 
     }
 }

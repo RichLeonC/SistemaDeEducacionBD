@@ -10,6 +10,7 @@ export default function Cobros() {
     const baseUrlEstudiantes = "https://localhost:44329/api/Estudiante_Vistas/"+cookies.get("cedula")+"/1";
     const baseUrlMatriculas = "https://localhost:44329/api/matriculas";
     const baseUrlCobros = "https://localhost:44329/api/cobros";
+    const baseUrlFacturas = "https://localhost:44329/api/facturas"
 
     const [modalHijos,setModaHijos] = useState(true);
     const [hijoSeleccionado,setHijoSeleccionado] = useState([]);
@@ -22,6 +23,13 @@ export default function Cobros() {
     const[estadoEscogido,setEstadoEscogido] = useState([]);
     const [cobroSeleccionado,setCobroSeleccionado] = useState([]);
     const [modalPago,setModalPago] = useState(false);
+
+    const [factura,setFactura] = useState({
+        consecutivo: '',
+        totalPago:'',
+        iva:13,
+        fechaPago:"2021-10-28T00:00:00"
+    })
 
 
     const abrirCerrarModalHijos=()=>{
@@ -98,13 +106,28 @@ export default function Cobros() {
         })
     }
 
+    const peticionPostFactura=async()=>{
+        console.log("CSelec: "+cobroSeleccionado.idMatricula);
+        const matricula =  matriculasFiltradas.find(m=>m.idMatricula == cobroSeleccionado.idMatricula);
+        
+        factura.consecutivo = cobroSeleccionado.consecutivo;
+        factura.totalPago = matricula.costeMatricula;
+        console.log(factura);
+
+        await axios.post(baseUrlFacturas,factura)
+        
+    }
+
+
+    
+
 
     const filtrar=()=>{
         setDataCobrosFiltrados(dataCobros.filter(cobro=>matriculasFiltradas.find(matricula=>matricula.idMatricula==cobro.idMatricula &&
             cobro.estado==estadoEscogido)));
         abrirCerrarModalFiltroCobros();
     }
-    const matriculasFiltradas = dataMatriculas.filter(matricula=>matricula.cedulaEstudiante==hijoSeleccionado);
+    const matriculasFiltradas = dataMatriculas.filter(matricula=>matricula.cedulaEstudiante==hijoSeleccionado);//Matriculas que pertenecen al hijo
 
     const seleccionarCobro=(cobro)=>{
         if(cobroSeleccionado.estado=="Pagado"){
@@ -117,8 +140,9 @@ export default function Cobros() {
         }
     }
      const realizarPago=()=>{
-        console.log(cobroSeleccionado);
-        peticionPutCobros();
+         peticionPostFactura();
+         peticionPutCobros();
+        
      }
 
     useEffect(() => { //Hace efecto la peticion

@@ -11,7 +11,6 @@ namespace API_SGEducativo.Models
     public class Factura
     {
         [Key]
-        public int numeroFactura { get; set; }
         public int consecutivo { get; set; }
         public decimal totalPago { get; set; }
         public decimal iva { get; set; }

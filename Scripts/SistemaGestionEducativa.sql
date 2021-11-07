@@ -228,7 +228,7 @@ inner join Profesor on Profesor.cedula = Usuario.cedula
 
 select * from Profesor_Vista
 
-
+--Vista que muestra todo el desglose de la factura del cobro por matricula
 create view Factura_Vista as
 select Factura.consecutivo,Cobros.idMatricula,Matricula.cedulaEstudiante,concat(nombre,' ',apellido1,' ',apellido2) as nombreCompleto
 ,Matricula.codigoGrupo,Matricula.numPeriodo,Matricula.anno,Factura.iva,Factura.totalPago,
