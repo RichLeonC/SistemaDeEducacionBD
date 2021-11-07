@@ -9,6 +9,7 @@ import { RiFilterOffLine } from 'react-icons/ri';
 
 
 
+
 export default function PagAsistencia() {
     const cookies = new Cookies();
     var cedula = cookies.get("cedula");// toma la cedula del profesor que haya iniciado sesión. 
@@ -19,6 +20,7 @@ export default function PagAsistencia() {
     const baseUrlAsistencia =  "https://localhost:44307/api/Asistencia_Estudiantes";
 
 
+    const [actualizar,setActualizar] = useState(false);
     const [matriculas,setMatricula] = useState([]); //Estado para las matriculas
     const [estudiantes,setEstudiante] = useState([]); //Estado para los estudiantes
     const [gruposProfesor,setgruposProfesor] = useState([]); //Estado para los grupos que posee el profesor
@@ -32,13 +34,13 @@ export default function PagAsistencia() {
     const [asistencias, setAsistencias] = useState ([]); // Estado de la asistencia
     const [presente, setPresente] = useState ([]); // Estado de la asistencia
     const current = new Date();
-    const date = `${current.getFullYear()}/${current.getMonth()+1}/${current.getDate()}T00:00:00`; 
+    const date = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}T00:00:00`; 
     const [guardarAsistencia,setGuardarAsistencia] = useState({ //Estado para guardar la info de la asistencia
         cedulaEstudiante: '',
         codigoGrupo: '',
         nombreMateria: '',
         anno: '',
-        fechaAsistencia: date,
+        fechaAsistencia: '',
         asistencia: "",
     })
     const asiste = ["Si", "No"];
@@ -167,6 +169,7 @@ export default function PagAsistencia() {
 
     const guardarPresentacia =()=>{
         peticionPost();
+        setActualizar(false);
         setModalAsistencia(!modalAsistencia);
     }
 
@@ -174,7 +177,14 @@ export default function PagAsistencia() {
 
     const peticionPost=async()=>{ //Realiza peticiones post al backend
       //  transformar();
+    
+   //   if (actualizar== true){
+     //     peticionPut();
+      //}
+      //else{
+      setActualizar(true);
       guardarAsistencia.cedulaEstudiante= estudianteActual.cedula;
+      guardarAsistencia.fechaAsistencia=date;
       const infoGrupo = gruposProfesor.filter(grupo=>grupo.codigoNombre == (grupoSeleccionado));
       var presenteE = false
       if (presente == "Si"){
@@ -198,8 +208,43 @@ export default function PagAsistencia() {
         }).catch(error=>{
             console.log(error);
         })
+      //}
     }
 
+    const peticionPut=async()=>{ //Realiza peticiones post al backend
+        //  transformar();
+
+        
+          await axios.put(baseUrlAsistencia+'/'+guardarAsistencia.cedulaEstudiante +'/'+ guardarAsistencia.codigoGrupo +'/'+
+          guardarAsistencia.nombreMateria +'/' +  guardarAsistencia.numPeriodo +'/'+ guardarAsistencia.anno
+          ,guardarAsistencia) //Realizamos la peticion post, el matriculaSeleccionada se pasa como BODY
+          .then(response=>{
+                var respuesta = response.data;
+                var presenteE = false
+                if (respuesta.asistencia == "Si"){
+                    presenteE = true
+                }
+                var dataAuxiliar= asistencias;
+                dataAuxiliar.map(asistio =>{if(
+                    asistio.cedulaEstudiante == guardarAsistencia.cedulaEstudiante && asistio.codigoGrupo == guardarAsistencia.codigoGrupo &&
+                    asistio.nombreMateria == guardarAsistencia.nombreMateria && asistio.numPeriodo == guardarAsistencia.numPeriodo 
+                    && asistio.anno == guardarAsistencia.anno){
+                    
+                       asistio.asistencia= presenteE;
+                        
+
+
+                    }
+
+                })
+
+                setModalAsistencia(!modalAsistencia);
+          }).catch(error=>{
+              console.log(error);
+             
+
+          })
+      }
 
     return (
         <div className= "col-sm-8">
@@ -303,8 +348,7 @@ export default function PagAsistencia() {
 
 
 
-            <br/>
-            <button  className=" met-5 offset-md-11 btn btn-success">Guardar</button>
+           
             
         </div>
 
