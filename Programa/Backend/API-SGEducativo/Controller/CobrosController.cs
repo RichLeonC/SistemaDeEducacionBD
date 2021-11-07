@@ -1,5 +1,7 @@
 ﻿using API_SGEducativo.Context;
+using API_SGEducativo.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,28 +24,75 @@ namespace API_SGEducativo.Controller
 
         // GET: api/<CobrosController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                return Ok(_context.Cobros.ToList());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // GET api/<CobrosController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{consecutivo}", Name="GetCobro")]
+        public ActionResult Get(int consecutivo)
         {
-            return "value";
+            try
+            {
+                var cobro = _context.Cobros.FirstOrDefault(e => e.consecutivo == consecutivo); //LINQ
+                return Ok(cobro);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // POST api/<CobrosController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Post([FromBody] Cobros cobro)
         {
+
+            try
+            {
+                _context.Cobros.Add(cobro); //Agrega la matricula
+                _context.SaveChanges(); //Guarda los cambios
+                return CreatedAtRoute("GetCobro", new { consecutivo = cobro.consecutivo }, cobro);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // PUT api/<CobrosController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{consecutivo}")]
+        public ActionResult Put(int consecutivo, [FromBody] Cobros cobro)
         {
+
+            try
+            {
+
+                if (cobro.consecutivo == consecutivo)
+                {
+
+                    _context.Entry(cobro).State = EntityState.Modified; //Realiza los cambios
+                    _context.SaveChanges(); //Guarda los cambios
+                    return CreatedAtRoute("GetCobro", new { consecutivo= cobro.consecutivo }, cobro);
+                }
+                else
+                {
+                    return BadRequest("No entre");
+                }
+            }
+
+            catch (Exception e)
+            {
+                return BadRequest("Catch");
+            }
         }
 
         // DELETE api/<CobrosController>/5

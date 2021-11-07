@@ -13,6 +13,8 @@ export default function Matricula() {
     const baseUrlGrupos = "https://localhost:44329/api/Grupos";
     const baseUrlMaterias= "https://localhost:44329/api/materias";
     const baseUrlEstudiantes = "https://localhost:44329/api/estudiantes";
+    const baseUrlCobros = "https://localhost:44329/api/cobros";
+   
     const cookies = new Cookies();
     const [data,setData] = useState([]); //Estado para las matriculas
     const [dataG,setDataG] = useState([]); //Estado para los grupos
@@ -34,6 +36,13 @@ export default function Matricula() {
 
 
     })
+    const [dataIdMatricula,setDataIdMatricula] = useState([]);
+
+    const [cobro,setCobro]=useState({
+        consecutivo:'',
+        idMatricula:'',
+        estado:'Pendiente'
+    })
 
    
     const handlerOpcion = e=>{ //Guarda el grupo selecionado en el estado
@@ -48,13 +57,22 @@ export default function Matricula() {
     const abrirCerrarModalInsertar=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
 
         setModalInsertar(!modalInsertar);
-
+        
     }
 
     const abrirCerrarModalEliminar=()=>{ //Cambia el estado del modal de eliminar(abierto o cerrado)
 
         setModalEliminar(!modalEliminar);
 
+    }
+
+    const insertarMatriculaCobro=()=>{
+        peticionPost();
+        //peticionGet()
+        console.log(dataIdMatricula);;
+       //d peticionGetUltimaM();
+       // peticionPostCobro();
+        abrirCerrarModalInsertar();
     }
     
     const peticionGet = async()=>{ //Realiza peticiones Get al backend Matriculas
@@ -92,6 +110,8 @@ export default function Matricula() {
             console.log(error);
         })
     }
+    
+   
 
     const peticionPost=async()=>{ //Realiza peticiones post al backend
         matriculaSeleccionada.costeMatricula = 5000;
@@ -115,10 +135,19 @@ export default function Matricula() {
         await axios.post(baseUrl,matriculaSeleccionada) //Realizamos la peticion post, el matriculaSeleccionada se pasa como BODY
         .then(response=>{
             setData(data.concat(response.data)); //Agregamos al estado lo que responda la API
-            abrirCerrarModalInsertar();
+            setDataIdMatricula(response.data);
+            
         }).catch(error=>{
             console.log(error);
         })
+    }
+
+    const peticionPostCobro=async()=>{
+        delete cobro.consecutivo;
+        cobro.idMatricula = (dataIdMatricula);
+        console.log("CobroC: "+cobro.idMatricula);
+        await axios.post(baseUrlCobros,cobro) //Realizamos la peticion post, el matriculaSeleccionada se pasa como BODY
+        
     }
 
     const peticionDelete=async()=>{
@@ -146,7 +175,7 @@ export default function Matricula() {
         peticionGetG();
         peticionGetMaterias();
         peticionGetEstudiante();
-
+        
         
     }, [])
     return (
@@ -218,7 +247,7 @@ export default function Matricula() {
                       </ModalBody>
 
                       <ModalFooter>
-                        <Button className="btn btn-primary"size="sm" onClick={()=>peticionPost()}>Insertar</Button>
+                        <Button className="btn btn-primary"size="sm" onClick={()=>insertarMatriculaCobro()}>Insertar</Button>
                         <Button className="btn btn-danger" size="sm" onClick={()=>abrirCerrarModalInsertar()}
                         >Cancelar</Button>
                       </ModalFooter>
