@@ -25,27 +25,27 @@ export default function PagAsistencia() {
     const [usuarios,setUsuarios] = useState([]); //Lista de usuriaos
     const [modalGrupo,setModalGrupos] = useState(false); //Estado para el modal (la ventana de grupo)
     const [modalAsistencia,setModalAsistencia] = useState(false); //Estado para el modal (la ventana de asistencia)
-    const [grupoSeleccionado,setGrupoSeleccionado] = useState([]); //Estado para el codigo de grupo que se escoje en select
+    const [grupoSeleccionado,setGrupoSeleccionado] = useState(""); //Estado para el codigo de grupo que se escoje en select
   
     const [estudiantesF, setEstudiantesF]= useState([]);// estudiantes vinculados a un grupo
     const [estudianteActual,setestudianteActual] = useState([]); // estudiante que se desea ingresar su asistencia
     const [asistencias, setAsistencias] = useState ([]); // Estado de la asistencia
     const [presente, setPresente] = useState ([]); // Estado de la asistencia
     const current = new Date();
-    const date = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}T00:00:00`; 
+    const date = `${current.getFullYear()}/${current.getMonth()+1}/${current.getDate()}T00:00:00`; 
     const [guardarAsistencia,setGuardarAsistencia] = useState({ //Estado para guardar la info de la asistencia
         cedulaEstudiante: '',
         codigoGrupo: '',
         nombreMateria: '',
         anno: '',
         fechaAsistencia: date,
-        asistencia: '',
+        asistencia: "",
     })
     const asiste = ["Si", "No"];
    
    
 
-    
+  
     const peticionGetGrupos = async()=>{ //Realiza peticiones Get al backend de los grupos
         await axios.get(baseUrlGrupos+`/${cedula}`)
         .then(response=>{
@@ -63,16 +63,14 @@ export default function PagAsistencia() {
             console.log(error);
          })
     }
-
     const peticionGetMatricula= async()=>{ //Realiza peticiones Get al backend de las matriculas
-        await axios.get(baseUrlMatriculas+`/${grupoSeleccionado}`+ "/2")
+        await axios.get(baseUrlMatriculas)
         .then(response=>{
             setMatricula(response.data);
         }).catch(error=>{
             console.log(error);
         })
     }
-
 
     const peticionGetEstudiantes = async()=>{ //Realiza peticiones Get al backend de los estudiantes
         await axios.get(baseUrlEstudiantes)
@@ -93,11 +91,28 @@ export default function PagAsistencia() {
         })
     }
 
+    const filtrarMatriculas = matriculas.filter(matricula=> matricula.codigoGrupo == (grupoSeleccionado));
 
+    useEffect(() => { //Hace efecto la peticion
+        peticionGetUsuarios();
+        peticionGetGrupos();
+        peticionGetMatricula();
+        peticionGetEstudiantes();
+        peticionAsistencia();
+
+        
+    }, [])
+
+    
+    const filtrarEstudiantes=()=>{ 
+        const alumno  = estudiantes.filter(unEstudiantes=> filtrarMatriculas.find(matricula=> matricula.cedulaEstudiante == unEstudiantes.cedula));
+        console.log(alumno);
+        setEstudiantesF(usuarios.filter(usu=> alumno.find(estudiante=> estudiante.cedula == usu.cedula)));
+    }
 
     const abrirModalGrupos=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
         setModalGrupos(!modalGrupo);
-       
+       console.log(date);
         if (modalGrupo==false){
             setEstudiantesF([]); 
             
@@ -120,14 +135,12 @@ export default function PagAsistencia() {
        
     }
 
-    const infoGrupo =gruposProfesor.filter(grupo=> grupo.codigoNombre == grupoSeleccionado);
 
     const handlerOpcion = e=>{ //Guarda el grupo selecionado en el estado
         const opcion = e.target.value;
         setGrupoSeleccionado(opcion);
+        console.log(grupoSeleccionado);
         console.log(opcion);
-        console.log(infoGrupo);
-        console.log(date);
      
         
     }
@@ -140,13 +153,7 @@ export default function PagAsistencia() {
       
     }
    
-    const filtrarEstudiantes=()=>{ 
-       
-        peticionGetEstudiantes();
-        peticionGetUsuarios();
-        setEstudiante(estudiantes.filter(unEstudiantes=> unEstudiantes.cedula == matriculas.cedulaEstudiante)) 
-        setEstudiantesF(usuarios.filter(usu=> estudiantes.find(estudiante=> estudiante.cedula == usu.cedula)));
-    }
+  
 
 
     const mostrarLista= ()=>{
@@ -155,12 +162,7 @@ export default function PagAsistencia() {
         cerrarModalGrupos();
     }
 
-    useEffect(() => { //Hace efecto la peticion
-        peticionGetUsuarios();
-        peticionGetGrupos();
-        peticionAsistencia();
-        
-    }, [])
+   
 
 
     const guardarPresentacia =()=>{
@@ -173,14 +175,19 @@ export default function PagAsistencia() {
     const peticionPost=async()=>{ //Realiza peticiones post al backend
       //  transformar();
       guardarAsistencia.cedulaEstudiante= estudianteActual.cedula;
-        var iterator = infoGrupo.values();
+      const infoGrupo = gruposProfesor.filter(grupo=>grupo.codigoNombre == (grupoSeleccionado));
+      var presenteE = false
+      if (presente == "Si"){
+          presenteE = true
+      }
+      var iterator = infoGrupo.values();
         for(let grupo of iterator){
             
             guardarAsistencia.codigoGrupo = grupo.codigoNombre;
             guardarAsistencia.numPeriodo = parseInt(grupo.numeroPeriodo);
             guardarAsistencia.anno = parseInt(grupo.anno);
             guardarAsistencia.nombreMateria = grupo.nombreMateria;
-            guardarAsistencia.asistencia = true;
+            guardarAsistencia.asistencia = presenteE;
         }
        
         
