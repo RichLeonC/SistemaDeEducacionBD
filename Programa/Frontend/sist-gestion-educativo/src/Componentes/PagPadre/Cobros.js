@@ -20,6 +20,8 @@ export default function Cobros() {
     const [dataCobrosFiltrados,setDataCobrosFiltrados] = useState([]);
     const[modalFiltroCobros,setModalFiltroCobros] = useState(false);
     const[estadoEscogido,setEstadoEscogido] = useState([]);
+    const [cobroSeleccionado,setCobroSeleccionado] = useState([]);
+    const [modalPago,setModalPago] = useState(false);
 
 
     const abrirCerrarModalHijos=()=>{
@@ -34,6 +36,10 @@ export default function Cobros() {
         
     }
 
+    const abrirCerrarModalPago=()=>{
+        setModalPago(!modalPago);
+    }
+
     const handlerOpcionHijo=e=>{
         const opcion=e.target.value;
         setHijoSeleccionado(opcion);
@@ -45,6 +51,8 @@ export default function Cobros() {
         const opcion = e.target.value;
         setEstadoEscogido(opcion);
     }
+
+  
 
     const peticionGetEstudiantes = async()=>{ //Realiza peticiones Get al backend
         await axios.get(baseUrlEstudiantes)
@@ -73,6 +81,23 @@ export default function Cobros() {
         })
     }
 
+    const peticionPutCobros = async()=>{
+        cobroSeleccionado.estado="Pagado";
+        await axios.put(baseUrlCobros+"/"+cobroSeleccionado.consecutivo,cobroSeleccionado)
+        .then(response=>{
+            var respuesta = response.data;
+            var dataAuxiliar = dataCobros;
+            dataAuxiliar.map(cobro=>{
+                if(cobro.consecutivo == cobroSeleccionado.consecutivo){
+                    cobro.estado="Pagado";
+                }
+            });
+            abrirCerrarModalPago();
+        }).catch(error=>{
+            console.log("No se pudo cambiar el estado");
+        })
+    }
+
 
     const filtrar=()=>{
         setDataCobrosFiltrados(dataCobros.filter(cobro=>matriculasFiltradas.find(matricula=>matricula.idMatricula==cobro.idMatricula &&
@@ -81,7 +106,20 @@ export default function Cobros() {
     }
     const matriculasFiltradas = dataMatriculas.filter(matricula=>matricula.cedulaEstudiante==hijoSeleccionado);
 
-     
+    const seleccionarCobro=(cobro)=>{
+        if(cobroSeleccionado.estado=="Pagado"){
+            alert("Cobro ya está pagado");
+        }
+        else{
+            setCobroSeleccionado(cobro);
+            //realizarPago();
+            abrirCerrarModalPago();
+        }
+    }
+     const realizarPago=()=>{
+        console.log(cobroSeleccionado);
+        peticionPutCobros();
+     }
 
     useEffect(() => { //Hace efecto la peticion
         peticionGetEstudiantes();
@@ -111,7 +149,7 @@ export default function Cobros() {
                         <td>{cobro.idMatricula}</td>
                         <td>{cobro.estado}</td>
                         <td>
-                            <button className="btn btn-success"
+                            <button className="btn btn-success" onClick={()=>seleccionarCobro(cobro)}
                             >Pagar</button>{" "}
                         </td>
                        
@@ -167,6 +205,20 @@ export default function Cobros() {
                       <ModalFooter>
                         <Button className="btn btn-primary"size="sm" onClick={()=>filtrar()}>Aceptar</Button>
                         <Button className="btn btn-danger"size="sm" onClick={()=>abrirCerrarModalFiltroCobros()}>Cancelar</Button>
+                      </ModalFooter>
+            </Modal>
+
+            <Modal isOpen={modalPago}>
+
+                      <ModalBody>
+                 
+                          <label>Cobro pagado exitosamente</label>  
+                         
+                      </ModalBody>
+
+                      <ModalFooter>
+                        <Button className="btn btn-primary"size="sm" onClick={()=>realizarPago()}>Aceptar</Button>
+
                       </ModalFooter>
             </Modal>
         </div>

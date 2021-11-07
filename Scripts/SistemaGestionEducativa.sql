@@ -190,11 +190,11 @@ create table Cobros(
 
 --Tabla que almacena una factura cuando un cobro se realizó
 create table Factura(
-	numeroFactura int not null primary key,
 	consecutivo int foreign key references Cobros(consecutivo),
-	totalPago decimal(10,2),
-	iva decimal(3,2),
-	fechaPago date
+	totalPago decimal,
+	iva decimal,
+	fechaPago date,
+	primary key(consecutivo)
 
 )
 
@@ -228,6 +228,18 @@ inner join Profesor on Profesor.cedula = Usuario.cedula
 
 select * from Profesor_Vista
 
+
+create view Factura_Vista as
+select Factura.consecutivo,Cobros.idMatricula,Matricula.cedulaEstudiante,concat(nombre,' ',apellido1,' ',apellido2) as nombreCompleto
+,Matricula.codigoGrupo,Matricula.numPeriodo,Matricula.anno,Factura.iva,Factura.totalPago,
+((Matricula.costeMatricula*(Factura.iva/100))+Matricula.costeMatricula) as totalPagadoIva, Factura.fechaPago
+from Factura
+inner join Cobros on Cobros.consecutivo = Factura.consecutivo
+inner join Matricula on Matricula.idMatricula = Cobros.idMatricula
+inner join Usuario on Usuario.cedula = Matricula.cedulaEstudiante
+
+
+select * from Factura_Vista
 
 --INSERTS
 insert into Matricula values(5000,'2001/10/10',1010,'Español-C1', 2, 2021,'Español')
@@ -325,7 +337,7 @@ insert into Evaluacion values('Química-B1',3,2021,'Química','Examenes 80%, Tar
 
 
 
-
+insert into Factura values(21,50000,13,'2021/11/7')
 
 insert into Evaluacion_Estudiante values(1010,'Matemáticas-A1','Matemáticas',1,2020,70,'Aprobado')
 insert into Evaluacion_Estudiante values(1010,'Biología-A1','Biología',1,2020,60,'Reprobado')
