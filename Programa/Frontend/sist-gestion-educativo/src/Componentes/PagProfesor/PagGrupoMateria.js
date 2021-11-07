@@ -92,38 +92,35 @@ export default function PagGrupoMateria() {
     const cerrarGrupo= grupo =>{
         const grupoElegido = data.filter(grup => grup.codigoNombre == (grupo));
 
-        console.log(grupoElegido);
+       // console.log(grupoElegido);
 
         var iterator = grupoElegido.values();
         grupoCerrado.cedulaProfesor = parseInt(cedula);
-        for(let grupo of iterator){
+        for(let grupos of iterator){
             
-            grupoCerrado.cupo = parseInt(grupo.cupo);
-            grupoCerrado.codigoNombre = grupo.codigoNombre;
-            grupoCerrado.numeroPeriodo =parseInt( grupo.numeroPeriodo);
-            grupoCerrado.anno = parseInt(grupo.anno);
-            grupoCerrado.nombreMateria = grupo.nombreMateria;
-            grupoCerrado.grado = parseInt(grupo.grado);
-            grupoCerrado.estado = grupo.estado;
+            grupoCerrado.cupo = parseInt(grupos.cupo);
+            grupoCerrado.codigoNombre = grupos.codigoNombre;
+            grupoCerrado.numeroPeriodo =parseInt( grupos.numeroPeriodo);
+            grupoCerrado.anno = parseInt(grupos.anno);
+            grupoCerrado.nombreMateria = grupos.nombreMateria;
+            grupoCerrado.grado = parseInt(grupos.grado);
+            grupoCerrado.estado = grupos.estado;
+           
            
         }
 
-        console.log(grupoCerrado);
        var cerrar = filtrarGrupos(grupo);
 
        if (cerrar){
            peticionPut();
-         // console.log("Cerrado Exitosamente");
        }
     }
 
     const peticionPut=async()=>{ //Realiza peticiones post al backend
-        //  transformar();
-
-        
-          await axios.put(baseUrlGrupo+'/'+ grupoCerrado.codigoNombre +'/'+
-          grupoCerrado.nombreMateria +'/' +  grupoCerrado.numeroPeriodo +'/'+ grupoCerrado.anno
-          ,grupoCerrado) //Realizamos la peticion post, el matriculaSeleccionada se pasa como BODY
+       
+            console.log(grupoCerrado);
+          await axios.put(baseUrlGrupo+'/'+grupoCerrado.codigoNombre+'/'+grupoCerrado.nombreMateria+'/'+
+          grupoCerrado.numeroPeriodo +'/'+ grupoCerrado.anno ,grupoCerrado) //Realizamos la peticion post, el matriculaSeleccionada se pasa como BODY
           .then(response=>{
                 var respuesta = response.data;
                 var cerrar ="";
@@ -134,13 +131,8 @@ export default function PagGrupoMateria() {
                     cerrar.codigoNombre == grupoCerrado.codigoNombre &&
                     cerrar.nombreMateria == grupoCerrado.nombreMateria &&
                      cerrar.numeroPeriodo == grupoCerrado.numeroPeriodo 
-                    && cerrar.anno == grupoCerrado.anno){
-                    
-                        cerrar.estado= cerrar;
-                        
-
-
-                    }
+                    && cerrar.anno == grupoCerrado.anno)
+                    {cerrar.estado= cerrar;}
 
                 })
 
@@ -169,8 +161,8 @@ export default function PagGrupoMateria() {
             }         
         }
        
-        console.log(filtrarCedulasM);
-        console.log(filtrarCedulasE);
+       // console.log(filtrarCedulasM);
+       // console.log(filtrarCedulasE);
 
 
         for(let n of filtrarMatriculas){
