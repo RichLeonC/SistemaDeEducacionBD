@@ -23,6 +23,7 @@ export default function Matricula() {
     const [grupoSeleccionado,setGrupoSeleccionado] = useState([]); //Estado para el codigo de grupo que se escoje en select
     const [modalInsertar,setModalInsertar] = useState(false); //Estado para el modal (la ventana de insertar)
     const [modalEliminar,setModalEliminar] = useState(false);
+    const [modalExito,setModalExito] = useState(false);
     const [matriculaSeleccionada,setMatriculaSeleccionada] = useState({ //Estado para guardar la info de la matricula
         idMatricula: '',
         costeMatricula: 5000,
@@ -55,24 +56,34 @@ export default function Matricula() {
 
 
     const abrirCerrarModalInsertar=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
-
+       
         setModalInsertar(!modalInsertar);
         
     }
 
     const abrirCerrarModalEliminar=()=>{ //Cambia el estado del modal de eliminar(abierto o cerrado)
-
+        
         setModalEliminar(!modalEliminar);
+        
 
+    }
+
+    const abrirCerrarModalExito=()=>{ //Cambia el estado del modal de eliminar(abierto o cerrado)
+        
+        setModalExito(!modalExito);
+        console.log(modalExito);
+        if(modalExito==false){
+            abrirCerrarModalInsertar();
+           
+        }
+        if(modalExito == true){
+            peticionPostCobro();
+        }
     }
 
     const insertarMatriculaCobro=()=>{
         peticionPost();
-        //peticionGet()
-        console.log(dataIdMatricula);;
-       //d peticionGetUltimaM();
-       // peticionPostCobro();
-        abrirCerrarModalInsertar();
+        abrirCerrarModalExito();
     }
     
     const peticionGet = async()=>{ //Realiza peticiones Get al backend Matriculas
@@ -144,13 +155,13 @@ export default function Matricula() {
 
     const peticionPostCobro=async()=>{
         delete cobro.consecutivo;
-        cobro.idMatricula = (dataIdMatricula);
-        console.log("CobroC: "+cobro.idMatricula);
+        cobro.idMatricula = (dataIdMatricula.idMatricula);
         await axios.post(baseUrlCobros,cobro) //Realizamos la peticion post, el matriculaSeleccionada se pasa como BODY
         
     }
 
     const peticionDelete=async()=>{
+        await axios.delete(baseUrlCobros+"/"+matriculaSeleccionada.idMatricula);
         await axios.delete(baseUrl+"/"+matriculaSeleccionada.idMatricula)
         .then(response=>{
             setData(data.filter(matricula=>matricula.idMatricula!==response.data)); //Guarda en el estado, los que no se eliminaron
@@ -163,6 +174,7 @@ export default function Matricula() {
     const gruposPermitidos = dataG.filter(grupo=>grupo.estado == ("Abierto") && grupo.grado == (dataEstudiante.grado)); //Filtra los grupos
     const grupoEscogido = gruposPermitidos.filter(grupo=>grupo.codigoNombre == (grupoSeleccionado)); //Escogemos el grupo marcado
     
+
     
     const seleccionarMatricula=(matricula,caso)=>{
         setMatriculaSeleccionada(matricula);
@@ -264,6 +276,17 @@ export default function Matricula() {
                     >No</Button>
                 </ModalFooter>
             </Modal>
+            
+             <Modal isOpen={modalExito}>
+
+                <ModalBody>
+                   La matricula se ha realizado correctamente     
+                </ModalBody>
+                <ModalFooter>
+                    <Button className="btn btn-primary"size="sm" onClick={()=>abrirCerrarModalExito()}>Aceptar</Button>
+                </ModalFooter>
+            </Modal>
+            
   
     </div>
     

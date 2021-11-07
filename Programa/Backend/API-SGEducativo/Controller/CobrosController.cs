@@ -96,9 +96,27 @@ namespace API_SGEducativo.Controller
         }
 
         // DELETE api/<CobrosController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{idMatricula}")]
+        public ActionResult Delete(int idMatricula)
         {
+            try
+            {
+                var cobro = _context.Cobros.FirstOrDefault(e => e.idMatricula == idMatricula);
+                if (cobro != null)
+                {
+                    _context.Cobros.Remove(cobro);
+                    _context.SaveChanges();
+                    return Ok(idMatricula);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }
