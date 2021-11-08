@@ -8,6 +8,8 @@ import Cobros from '../PagPadre/Cobros.js';
 import Facturas from '../PagPadre/Facturas.js';
 import GruposHijos from '../PagPadre/GruposHijos.js';
 
+
+//Componente que adminstra todas las funciones de los Padres, es decir sus rutas.
 export default function Padres() {
     return (
         <div>

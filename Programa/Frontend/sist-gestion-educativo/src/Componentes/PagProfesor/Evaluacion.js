@@ -4,7 +4,7 @@ import { ModalHeader,Modal,ModalBody,Button,Form,Select,ModalFooter} from 'react
 import { FloatingLabel, Row } from 'react-bootstrap';
 import Cookies from 'universal-cookie';
 
-
+//Componente que administra las evaluaciones del grupos el cual maneja el profesor.
 export default function Evaluacion () {
     const baseURLEvaluciones = "https://localhost:44307/api/Evaluaciones";
     const baseURLEvalucionesEstudiante = "https://localhost:44307/api/Evaluacion_Estudiantes";

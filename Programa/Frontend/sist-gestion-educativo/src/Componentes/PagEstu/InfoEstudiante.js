@@ -4,6 +4,8 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import './Estilos.css'
 
+
+//Muestra la informacion personal del estudiante
 export default function InfoEstudiante() {
     const cookies = new Cookies();
     const baseUrl = "https://localhost:44329/api/Estudiante_Vistas/"+cookies.get("cedula");

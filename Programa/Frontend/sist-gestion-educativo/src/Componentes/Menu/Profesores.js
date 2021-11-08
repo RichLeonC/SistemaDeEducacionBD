@@ -11,7 +11,7 @@ import PagHistorialSalario from '../PagProfesor/HistorialSalarios.js';
 import PagEvaluciones from '../PagProfesor/Evaluacion.js';
 
 
-
+//Componente que adminstra todas las funciones de los profesores, es decir sus rutas.
 function Profesores(){
   const cookies = new Cookies();
     return(

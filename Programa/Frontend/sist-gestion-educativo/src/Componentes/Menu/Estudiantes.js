@@ -12,7 +12,7 @@ import Reprobadas from '../PagEstu/Reprobadas.js';
 import AsistenciaEstudiante from '../PagEstu/AsistenciaEstudiante.js';
 //import Calendar from 'react-calendar';
 
-
+//Componente que adminstra todas las funciones de los estudiantes, es decir sus rutas.
 
 function Estudiantes(){
 

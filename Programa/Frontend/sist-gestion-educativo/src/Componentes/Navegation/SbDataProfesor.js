@@ -6,6 +6,7 @@ import * as IoIcons from 'react-icons/io';
 import * as BiIcons from 'react-icons/bi';
 import * as BsIcons from 'react-icons/bs';
 
+//Partes del sidebar de Profesor
 export const sbDataProfesor = [
     {
         title: 'Información Profesor',
