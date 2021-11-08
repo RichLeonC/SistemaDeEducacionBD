@@ -33,7 +33,7 @@ export const sbDataProfesor = [
              
             },
             {
-                title: 'Evaluciones',
+                title: 'Evaluaciones',
                 path: '/Evaluciones',
                 icon: <IoIcons.IoIosPaper/>, 
               

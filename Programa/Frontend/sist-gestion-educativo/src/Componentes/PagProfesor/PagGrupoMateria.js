@@ -118,21 +118,19 @@ export default function PagGrupoMateria() {
 
     const peticionPut=async()=>{ //Realiza peticiones post al backend
        
-            console.log(grupoCerrado);
+          
+            grupoCerrado.estado="Cerrado";
           await axios.put(baseUrlGrupo+'/'+grupoCerrado.codigoNombre+'/'+grupoCerrado.nombreMateria+'/'+
           grupoCerrado.numeroPeriodo +'/'+ grupoCerrado.anno ,grupoCerrado) //Realizamos la peticion post, el matriculaSeleccionada se pasa como BODY
           .then(response=>{
                 var respuesta = response.data;
-                var cerrar ="";
-                if (respuesta.estado == "Abierto")
-                {cerrar = "Cerrado"};
                 var dataAuxiliar= data;
                 dataAuxiliar.map(cerrar =>{if(
                     cerrar.codigoNombre == grupoCerrado.codigoNombre &&
                     cerrar.nombreMateria == grupoCerrado.nombreMateria &&
                      cerrar.numeroPeriodo == grupoCerrado.numeroPeriodo 
                     && cerrar.anno == grupoCerrado.anno)
-                    {cerrar.estado= cerrar;}
+                    cerrar.estado= "Cerrado";
 
                 })
 
