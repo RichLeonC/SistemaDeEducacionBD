@@ -43,7 +43,7 @@ export default function Evaluacion () {
     const [evaluacionNuevaG,setevaluacionNuevaG] = useState ({
         codigoGrupo : '',
         nombreMateria : '',
-        numeroPeriodo: '',
+        numPeriodo: '',
         anno : '',
         descripcion: ''
 
@@ -250,7 +250,7 @@ export default function Evaluacion () {
             
            
             evaluacionNuevaG.codigoGrupo = grupos.codigoNombre;
-            evaluacionNuevaG.numeroPeriodo = grupos.numeroPeriodo;
+            evaluacionNuevaG.numPeriodo = parseInt(grupos.numeroPeriodo);
             evaluacionNuevaG.anno = grupos.anno;
             evaluacionNuevaG.nombreMateria = grupos.nombreMateria;
             evaluacionNuevaG.descripcion = "";
@@ -269,8 +269,10 @@ export default function Evaluacion () {
 
         console.log(nuevaDes);
         console.log(evaluacion);
-          await axios.put( baseURLEvaluciones+'/'+ evaluacionNuevaG.codigoGrupo +'/'+
-          evaluacionNuevaG.nombreMateria +'/' +  evaluacionNuevaG.numeroPeriodo +'/'+ evaluacionNuevaG.anno
+        console.log(evaluacionNuevaG);
+        evaluacionNuevaG.descripcion= nuevaDes;
+        await axios.put( baseURLEvaluciones+"/"+ evaluacionNuevaG.codigoGrupo +"/"+
+          evaluacionNuevaG.nombreMateria +"/" +  evaluacionNuevaG.numPeriodo +"/"+ evaluacionNuevaG.anno
           ,evaluacionNuevaG) //Realizamos la peticion post, el matriculaSeleccionada se pasa como BODY
           .then(response=>{
                 var respuesta = response.data;
@@ -278,7 +280,7 @@ export default function Evaluacion () {
                 dataAuxiliar.map(asistio =>{if(
                      asistio.codigoGrupo == evaluacionNuevaG.codigoGrupo &&
                     asistio.nombreMateria == evaluacionNuevaG.nombreMateria &&
-                     asistio.numeroPeriodo == evaluacionNuevaG.numeroPeriodo 
+                     asistio.numPeriodo == evaluacionNuevaG.numPeriodo 
                     && asistio.anno == evaluacionNuevaG.anno){
                     
                        asistio.descripcion= nuevaDes;
@@ -300,7 +302,7 @@ return (
  
     <div className= "col-sm-8">
           <br/>
-            <h2 className="text-center offset-md-5 font-weight-bold">Evalucion por Grupos</h2>
+            <h2 className="text-center offset-md-5 font-weight-bold">Evaluacion por Grupos</h2>
             <br/>
 
         <button onClick={()=>abrirModalGrupos()} className=" met-5 offset-md-3 btn btn-success">Grupos</button>
