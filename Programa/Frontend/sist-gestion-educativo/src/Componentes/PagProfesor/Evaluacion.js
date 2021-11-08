@@ -237,6 +237,12 @@ export default function Evaluacion () {
 
       }
 
+      const cerrarpost1=()=>{
+     
+        setmodalNota(!modalNota);
+
+      }
+
 
    
 
@@ -403,6 +409,7 @@ return (
                             Nota: 
                              <input type="text" name="notaO" onChange = {e => setNotaO(e.target.value)}/>
                             </label>
+
  
                     </form>
                       }
@@ -410,6 +417,7 @@ return (
 
                   <ModalFooter>
                     <Button className="btn btn-primary"size="sm" onClick={()=> cerrarpost()} >Aceptar</Button>
+                    <Button className="btn btn-danger"size="sm" onClick={()=> cerrarpost1()} >Cancelar</Button>
                   </ModalFooter>
         </Modal>
 

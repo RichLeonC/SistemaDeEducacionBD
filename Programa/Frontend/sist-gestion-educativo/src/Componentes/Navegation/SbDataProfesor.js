@@ -4,7 +4,7 @@ import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
 import * as BiIcons from 'react-icons/bi';
-import * as MdIcons from 'react-icons/md';
+import * as BsIcons from 'react-icons/bs';
 
 export const sbDataProfesor = [
     {
@@ -29,7 +29,7 @@ export const sbDataProfesor = [
             {
                 title: 'Asistencia',
                 path: '/PagAsistencia',
-                icon: <BiIcons.BiGroup/>, 
+                icon: <BsIcons.BsFillPersonCheckFill/>, 
              
             },
             {
@@ -47,7 +47,7 @@ export const sbDataProfesor = [
     {
         title: 'Historial Salario',
         path: '/PagHistorialSalario',
-        icon: <BiIcons.BiGroup/>, 
+        icon: <FaIcons.FaMoneyCheckAlt/>, 
         iconClosed: <AiIcons.AiFillCaretDown/>,
         iconOpened :<AiIcons.AiFillCaretUp/>,
     }

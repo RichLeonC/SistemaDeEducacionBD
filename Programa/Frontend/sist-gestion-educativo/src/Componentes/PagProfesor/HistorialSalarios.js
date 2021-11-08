@@ -29,6 +29,10 @@ export default function HistorialSalarios() {
 
 
     return (// metodo que despliega la tabla que muestra los datos del profesor 
+        <div className = "col-sm-8">
+         
+        <h2 className="text-center offset-md-5 font-weight-bold">Historial de Salarios</h2>
+            <br/> 
         <Table className="mt-5 offset-md-0 table table-hover"striped bordered hover variant="light">
             <thead>
                 <tr>
@@ -49,5 +53,7 @@ export default function HistorialSalarios() {
                 
             </tbody>
         </Table>
+        </div>
     )
+
 }

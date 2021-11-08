@@ -176,12 +176,8 @@ export default function PagAsistencia() {
    
 
     const peticionPost=async()=>{ //Realiza peticiones post al backend
-      //  transformar();
     
-   //   if (actualizar== true){
-     //     peticionPut();
-      //}
-      //else{
+      
       setActualizar(true);
       guardarAsistencia.cedulaEstudiante= estudianteActual.cedula;
       guardarAsistencia.fechaAsistencia=date;
@@ -212,8 +208,7 @@ export default function PagAsistencia() {
     }
 
     const peticionPut=async()=>{ //Realiza peticiones post al backend
-        //  transformar();
-
+     
         
           await axios.put(baseUrlAsistencia+'/'+guardarAsistencia.cedulaEstudiante +'/'+ guardarAsistencia.codigoGrupo +'/'+
           guardarAsistencia.nombreMateria +'/' +  guardarAsistencia.numPeriodo +'/'+ guardarAsistencia.anno
@@ -247,6 +242,8 @@ export default function PagAsistencia() {
 
     return (
         <div className= "col-sm-8">
+             <h2 className="text-center offset-md-5 font-weight-bold">Asistencia por grupo</h2>
+             <br/>
              <button onClick={()=>abrirModalGrupos()} className=" met-5 offset-md-3 btn btn-success">Grupos</button>
                 <table className="table table-hover mt-5 offset-md-3" >
                     <thead>

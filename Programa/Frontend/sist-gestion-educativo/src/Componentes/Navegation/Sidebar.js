@@ -72,7 +72,8 @@ const SideBar = (props) => {
            
            </NavIcon>
            
-           <Button className='offset-md-3 '
+           <div className="mt-7 offset-md-9">
+           <Button className="mt-7 offset-md-5"
          
            variant= "contained"
            href='/'
@@ -83,6 +84,7 @@ const SideBar = (props) => {
            onClick={()=>cerrarSesion()}
            >Cerrar Sesión</Button>
 
+            </div>
            
          
        </Nav>

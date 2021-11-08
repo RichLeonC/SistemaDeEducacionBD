@@ -133,6 +133,7 @@ export default function PagGrupoMateria() {
                     cerrar.estado= "Cerrado";
 
                 })
+                alert("Cerrado Exitosa");
 
           }).catch(error=>{
               console.log(error);    
@@ -201,6 +202,7 @@ export default function PagGrupoMateria() {
         <div className="d-flex">
                 <div className = "col-sm-8">
                     <br/>
+                    <h2 className="text-center offset-md-5 font-weight-bold">Grupos del Profesor</h2>
                     
                     <table className="table table-hover mt-5 offset-md-3" >
                         <thead>
