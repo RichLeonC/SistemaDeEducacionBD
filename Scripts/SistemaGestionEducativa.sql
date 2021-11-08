@@ -231,7 +231,7 @@ select * from Profesor_Vista
 --Vista que muestra todo el desglose de la factura del cobro por matricula
 create view Factura_Vista as
 select Factura.consecutivo,Cobros.idMatricula,Matricula.cedulaEstudiante,concat(nombre,' ',apellido1,' ',apellido2) as nombreCompleto
-,Matricula.codigoGrupo,Matricula.numPeriodo,Matricula.anno,Factura.iva,Factura.totalPago,
+,Matricula.codigoGrupo,Matricula.nombreMateria,Matricula.numPeriodo,Matricula.anno,Factura.iva,Factura.totalPago,
 ((Matricula.costeMatricula*(Factura.iva/100))+Matricula.costeMatricula) as totalPagadoIva, Factura.fechaPago
 from Factura
 inner join Cobros on Cobros.consecutivo = Factura.consecutivo
@@ -336,11 +336,6 @@ insert into Evaluacion values('Español-C1',2,2021,'Español','Examenes 60%, Tar
 insert into Evaluacion values('Química-B1',3,2021,'Química','Examenes 80%, Tareas 10%')
 
 
-
-insert into Factura values(21,50000,13,'2021/11/7')
-
-insert into Evaluacion_Estudiante values(1010,'Matemáticas-A1','Matemáticas',1,2020,70,'Aprobado')
-insert into Evaluacion_Estudiante values(1010,'Biología-A1','Biología',1,2020,60,'Reprobado')
 
 ---------DROPS DE LAS TABLAS -------------------
 
