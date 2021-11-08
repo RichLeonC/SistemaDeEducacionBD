@@ -17,6 +17,7 @@ export default function Evaluacion () {
     var cedula = cookies.get("cedula");// toma la cedula del profesor que haya iniciado sesión. 
     const [estudiantesF, setEstudiantesF]= useState([]);// estudiantes vinculados a un grupo
     const [modalGrupo,setModalGrupos] = useState(false); //Estado para el modal (la ventana de grupo)
+    const [modalCambiarEvaluacion,setModalCambiarEvaluacion] = useState(false); //Estado para el modal (la ventana de grupo)
     const [matriculas,setMatricula] = useState([]); //Estado para las matriculas
     const [estudiantes,setEstudiante] = useState([]); //Estado para los estudiantes
     const [gruposProfesor,setgruposProfesor] = useState([]); //Estado para los grupos que posee el profesor
@@ -37,7 +38,21 @@ export default function Evaluacion () {
         notaObtenida: '',
         estado: ''
     });
+
+
+    const [evaluacionNuevaG,setevaluacionNuevaG] = useState ({
+        codigoGrupo : '',
+        nombreMateria : '',
+        numeroPeriodo: '',
+        anno : '',
+        descripcion: ''
+
+
+
+    });
+    
    const [notaO, setNotaO] = useState ("");
+   const [nuevaDes, setNuevaDes] = useState("");
 
 
     const peticionGetGrupos = async()=>{ //Realiza peticiones Get al backend de los grupos
@@ -164,13 +179,14 @@ export default function Evaluacion () {
     //  console.log(handlerOpcion());
         console.log(filtrarMatriculas);
         const infoGrupo = gruposProfesor.filter(grupo=>grupo.codigoNombre == (grupoSeleccionado));
+        console.log(infoGrupo);
         setEvaluacionGrupo(evaluacion.filter(evaluacion=>infoGrupo.find(grupo=> grupo.codigoNombre == evaluacion.codigoGrupo)));
         setmodalEvalucion(!modalEvalucion);
     }
     
     const CerrarModalEvaluacion=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
-       
-        setmodalEvalucion(!modalEvalucion);
+        peticionPut();
+        setModalCambiarEvaluacion(!modalCambiarEvaluacion);
     }
   
 
@@ -220,11 +236,73 @@ export default function Evaluacion () {
         setmodalNota(!modalNota);
 
       }
+
+
+   
+
+    const abrirCerrarModalCambiarEvaluacion =()=>{
+        const infoGrupo = gruposProfesor.filter(grupo=>grupo.codigoNombre == (grupoSeleccionado));
+       // console.log(infoGrupo);
+       
+        var iterator = infoGrupo.values();
+        
+        for(let grupos of iterator){
+            
+           
+            evaluacionNuevaG.codigoGrupo = grupos.codigoNombre;
+            evaluacionNuevaG.numeroPeriodo = grupos.numeroPeriodo;
+            evaluacionNuevaG.anno = grupos.anno;
+            evaluacionNuevaG.nombreMateria = grupos.nombreMateria;
+            evaluacionNuevaG.descripcion = "";
+           
+        }
+
+        console.log(evaluacionNuevaG);
+       
+        setModalCambiarEvaluacion(!modalCambiarEvaluacion);
+        
+    }
+
+
+    const peticionPut=async()=>{ //Realiza peticiones post al backend
+        //  transformar();
+
+        console.log(nuevaDes);
+        console.log(evaluacion);
+          await axios.put( baseURLEvaluciones+'/'+ evaluacionNuevaG.codigoGrupo +'/'+
+          evaluacionNuevaG.nombreMateria +'/' +  evaluacionNuevaG.numeroPeriodo +'/'+ evaluacionNuevaG.anno
+          ,evaluacionNuevaG) //Realizamos la peticion post, el matriculaSeleccionada se pasa como BODY
+          .then(response=>{
+                var respuesta = response.data;
+                var dataAuxiliar= evaluacion;
+                dataAuxiliar.map(asistio =>{if(
+                     asistio.codigoGrupo == evaluacionNuevaG.codigoGrupo &&
+                    asistio.nombreMateria == evaluacionNuevaG.nombreMateria &&
+                     asistio.numeroPeriodo == evaluacionNuevaG.numeroPeriodo 
+                    && asistio.anno == evaluacionNuevaG.anno){
+                    
+                       asistio.descripcion= nuevaDes;
+                        
+
+
+                    }
+
+                })
+
+          }).catch(error=>{
+              console.log(error);    
+
+          })
+      }
  
 
 return (
  
     <div className= "col-sm-8">
+          <br/>
+            <h2 className="text-center offset-md-5 font-weight-bold">Evalucion por Grupos</h2>
+            <br/>
+
         <button onClick={()=>abrirModalGrupos()} className=" met-5 offset-md-3 btn btn-success">Grupos</button>
       
             <table className="table table-hover mt-5 offset-md-3" >
@@ -234,7 +312,9 @@ return (
                         <th>Nombre</th>
                         <th>Apellido 1</th>
                         <th>Apellido 2</th>
-                        <th>Nota Estudiante</th>
+                        <th>Ingresar</th>
+                        <th>Nota Obtenida</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -248,6 +328,7 @@ return (
              
                         <button className="btn btn-primary" onClick={()=>abrirCerrarNota(unEs)}>Nota</button>
                         </td> 
+                        <td></td>
                      
                      </tr>  
 
@@ -256,8 +337,9 @@ return (
                     </tbody>
                 </table>
                 <br/>
-                <button className=" met-5 offset-md-11  btn btn-warning" onClick={()=>abrirCerrarModalEvaluacion()} >Evaluacion</button>
-
+                <button className=" met-5 offset-md-9  btn btn-warning" onClick={()=>abrirCerrarModalEvaluacion()} >Evaluacion</button>
+                
+                <button className=" met-5 offset-md-11  btn btn-danger" onClick={()=>abrirCerrarModalCambiarEvaluacion()} >Cambiar Evaluacion</button>
 
                   <Modal isOpen={modalGrupo}>
                       <ModalHeader>Grupos Abiertos</ModalHeader>
@@ -330,7 +412,26 @@ return (
         </Modal>
 
 
+  
+        <Modal isOpen={modalCambiarEvaluacion}>
+                  <ModalHeader>Cambiar Evalucion </ModalHeader>
 
+                  <ModalBody>
+                      {
+                    <form>
+                          <label>
+                            Nueva Evaluacion: 
+                             <input type="text" name="nuevaDes" onChange = {e => setNuevaDes(e.target.value)}/>
+                            </label>
+ 
+                    </form>
+                      }
+                  </ModalBody>
+
+                  <ModalFooter>
+                    <Button className="btn btn-primary"size="sm" onClick={()=>CerrarModalEvaluacion()} >Aceptar</Button>
+                  </ModalFooter>
+        </Modal>
 
 
 

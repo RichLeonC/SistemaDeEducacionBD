@@ -240,8 +240,7 @@ export default function PagAsistencia() {
 
                 setModalAsistencia(!modalAsistencia);
           }).catch(error=>{
-              console.log(error);
-             
+              console.log(error);    
 
           })
       }
