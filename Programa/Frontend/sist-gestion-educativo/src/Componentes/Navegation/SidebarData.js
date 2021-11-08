@@ -1,10 +1,9 @@
 import React from "react";
 
-import * as FaIcons from 'react-icons/fa';
+
 import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
-import * as BiIcons from "react-icons/bi";
-import * as RiIcons from 'react-icons/ri';
+import * as BsIcons from 'react-icons/bs';
 import * as MdIcons from 'react-icons/md';
 
 //Partes del sidebar de Estudiante
@@ -19,13 +18,13 @@ export const SideBarData = [
             {
                 title: 'Información del Estudiante',
                 path: '/Principal/info',
-                icon: <IoIcons.IoIosPaper/>, 
+                icon: <BsIcons.BsFillPersonFill/>, 
             
             },
             {
                 title: 'Grupos',
                 path: '/Grupos',
-                icon: <IoIcons.IoIosPaper/>, 
+                icon: <MdIcons.MdLibraryBooks/>, 
               
 
             },
@@ -33,7 +32,7 @@ export const SideBarData = [
             {
                 title: 'Mi Asistencia',
                 path: '/MiAsistencia',
-                icon: <IoIcons.IoIosPaper/>, 
+                icon: <BsIcons.BsFillPersonCheckFill/>, 
               
 
             }
