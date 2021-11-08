@@ -24,7 +24,7 @@ namespace API_SGEducativo.Controller
         [HttpGet]
         public ActionResult Get()
         {
-            return Ok(_context.Factura_Vistas.FromSqlRaw("select consecutivo,idMatricula,cedulaEstudiante,nombreCompleto,codigoGrupo,numPeriodo," +
+            return Ok(_context.Factura_Vistas.FromSqlRaw("select consecutivo,idMatricula,cedulaEstudiante,nombreCompleto,codigoGrupo,nombreMateria,numPeriodo," +
                 "anno,iva,totalPago,totalPagadoIva,fechaPago from Factura_Vista"));
         }
 
@@ -32,7 +32,7 @@ namespace API_SGEducativo.Controller
         [HttpGet("{cedulaEstudiante}")]
         public ActionResult Get(int cedulaEstudiante)
         {
-            return Ok(_context.Factura_Vistas.FromSqlRaw("select consecutivo,idMatricula,cedulaEstudiante,nombreCompleto,codigoGrupo,numPeriodo," +
+            return Ok(_context.Factura_Vistas.FromSqlRaw("select consecutivo,idMatricula,cedulaEstudiante,nombreCompleto,codigoGrupo,nombreMateria,numPeriodo," +
                 "anno,iva,totalPago,totalPagadoIva,fechaPago from Factura_Vista where cedulaEstudiante="+cedulaEstudiante));
         }
 

@@ -16,6 +16,7 @@ namespace API_SGEducativo.Models
         public int cedulaEstudiante { get; set; }
         public string nombreCompleto { get; set; }
         public string codigoGrupo { get; set; }
+        public string nombreMateria { get; set; }
         public int numPeriodo { get; set; }
         public int anno { get; set; }
         public decimal iva { get; set; }

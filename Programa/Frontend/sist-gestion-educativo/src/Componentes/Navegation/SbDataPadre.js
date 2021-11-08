@@ -47,6 +47,11 @@ export const SbDataPadre = [
                 icon: <IoIcons.IoIosPaper/>
             }
         ]
+    },
+    {
+        title: 'Grupos matriculados por hijo ',
+        path: '/GruposHijos',
+        icon:<IoIcons.IoIosPaper/>, 
     }
 ]
     
