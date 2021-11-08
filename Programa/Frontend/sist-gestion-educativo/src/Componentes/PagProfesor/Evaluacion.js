@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import axios from 'axios';
 import { ModalHeader,Modal,ModalBody,Button,Form,Select,ModalFooter} from 'reactstrap'
-import { FloatingLabel } from 'react-bootstrap';
+import { FloatingLabel, Row } from 'react-bootstrap';
 import Cookies from 'universal-cookie';
 
 
@@ -310,9 +310,19 @@ return (
           <br/>
             <h2 className="text-center offset-md-5 font-weight-bold">Evaluacion por Grupos</h2>
             <br/>
-
-        <button onClick={()=>abrirModalGrupos()} className=" met-5 offset-md-3 btn btn-success">Grupos</button>
-      
+    <div className = "container offset-md-4">
+        <div className = "row">
+            <div className = "col"> 
+                <button onClick={()=>abrirModalGrupos()} className="btn btn-success">Grupos</button>
+            </div>
+            <div className = "col">
+                 <button className="  btn btn-warning" onClick={()=>abrirCerrarModalEvaluacion()} >Evaluacion</button>        
+            </div>
+            <div className = "col">
+                <button className=" btn btn-danger" onClick={()=>abrirCerrarModalCambiarEvaluacion()} >Cambiar Evaluacion</button>
+            </div>
+        </div>
+    </div>
             <table className="table table-hover mt-5 offset-md-3" >
                 <thead>
                     <tr>
@@ -345,9 +355,7 @@ return (
                     </tbody>
                 </table>
                 <br/>
-                <button className=" met-5 offset-md-9  btn btn-warning" onClick={()=>abrirCerrarModalEvaluacion()} >Evaluacion</button>
-                
-                <button className=" met-5 offset-md-11  btn btn-danger" onClick={()=>abrirCerrarModalCambiarEvaluacion()} >Cambiar Evaluacion</button>
+             
 
                   <Modal isOpen={modalGrupo}>
                       <ModalHeader>Grupos Abiertos</ModalHeader>
