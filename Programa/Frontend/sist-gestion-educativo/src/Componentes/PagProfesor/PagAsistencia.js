@@ -40,7 +40,7 @@ export default function PagAsistencia() {
         codigoGrupo: '',
         nombreMateria: '',
         anno: '',
-        fechaAsistencia: '',
+        fechaAsistencia: '2021-12-24T00:00:00',
         asistencia: "",
     })
     const asiste = ["Si", "No"];
@@ -180,7 +180,7 @@ export default function PagAsistencia() {
       
       setActualizar(true);
       guardarAsistencia.cedulaEstudiante= estudianteActual.cedula;
-      guardarAsistencia.fechaAsistencia=date;
+      guardarAsistencia.fechaAsistencia='2021-12-24T00:00:00';
       const infoGrupo = gruposProfesor.filter(grupo=>grupo.codigoNombre == (grupoSeleccionado));
       var presenteE = false
       if (presente == "Si"){
@@ -242,8 +242,9 @@ export default function PagAsistencia() {
 
     return (
         <div className= "col-sm-8">
-             <h2 className="text-center offset-md-5 font-weight-bold">Asistencia por grupo</h2>
              <br/>
+             <h2 className="text-center offset-md-5 font-weight-bold">Asistencia por grupo</h2>
+            
              <button onClick={()=>abrirModalGrupos()} className=" met-5 offset-md-3 btn btn-success">Grupos</button>
                 <table className="table table-hover mt-5 offset-md-3" >
                     <thead>

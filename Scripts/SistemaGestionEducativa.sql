@@ -243,6 +243,9 @@ select * from Factura_Vista
 
 --INSERTS
 
+insert into Asistencia_Estudiante values(115150008,'Biología-A1','Biología',1,2020,'2021/10/19',1);
+
+
 insert into Usuario values(118180009,'Richard','Leon','Chinchilla','0192023a7bbd73250516f069df18b500','Masculino',
 '2001/7/29','Profesor','2021/10/19')
 insert into Usuario_Ubicacion values(118180009,'San José','Desamparados','Gravilias','Villa Nueva');

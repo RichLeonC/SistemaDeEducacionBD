@@ -331,7 +331,7 @@ return (
                         <th>Apellido 1</th>
                         <th>Apellido 2</th>
                         <th>Ingresar</th>
-                        <th>Nota Obtenida</th>
+                   
 
                         </tr>
                     </thead>
@@ -346,7 +346,7 @@ return (
              
                         <button className="btn btn-primary" onClick={()=>abrirCerrarNota(unEs)}>Nota</button>
                         </td> 
-                        <td></td>
+                      
                      
                      </tr>  
 
