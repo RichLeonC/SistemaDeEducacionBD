@@ -6,7 +6,7 @@ import { FloatingLabel } from 'react-bootstrap';
 import Cookies from 'universal-cookie';
 
 
-
+//Componente que administra las matriculas, permite crear, eliminar, y crea los cobros respectivos
 export default function Matricula() {
 
     const baseUrl = "https://localhost:44329/api/matriculas";

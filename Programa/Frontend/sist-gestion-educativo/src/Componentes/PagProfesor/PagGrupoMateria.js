@@ -5,7 +5,7 @@ import { ModalHeader,Modal,ModalBody,Button,Form,Select,ModalFooter} from 'react
 
 
 
-
+//Componente que lista los grupos del profesor y permite cerrarlos
 export default function PagGrupoMateria() {
     const baseUrlGrupo = "https://localhost:44307/api/Grupos";
     const baseURLEvalucionesEstudiante = "https://localhost:44307/api/Evaluacion_Estudiantes";

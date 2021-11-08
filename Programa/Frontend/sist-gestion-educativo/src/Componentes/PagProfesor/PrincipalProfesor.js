@@ -4,6 +4,8 @@ import Cookies from 'universal-cookie';
 import axios from 'axios';
 import React,{useState,useEffect} from 'react';
 
+
+//Componente que muestra los datos del profesor
 export default function PrincipalProfesor() {
     const cookies = new Cookies();
 

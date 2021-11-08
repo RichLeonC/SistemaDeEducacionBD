@@ -4,7 +4,7 @@ import { Card,ListGroup,Table} from 'react-bootstrap';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 
-
+//Componente que lista el historial de salarios del profesor
 export default function HistorialSalarios() {
     const cookies = new Cookies();
     var cedula = cookies.get("cedula");// toma la cedula del profesor que haya iniciado sesión. 

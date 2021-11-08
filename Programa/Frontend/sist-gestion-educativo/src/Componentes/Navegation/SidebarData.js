@@ -6,6 +6,8 @@ import * as IoIcons from 'react-icons/io';
 import * as BiIcons from "react-icons/bi";
 import * as RiIcons from 'react-icons/ri';
 import * as MdIcons from 'react-icons/md';
+
+//Partes del sidebar de Estudiante
 export const SideBarData = [
     {
         title: 'Información General',

@@ -8,7 +8,7 @@ import { RiFilterOffLine } from 'react-icons/ri';
 
 
 
-
+//Componente que administra la asistencia de los estudiantes, el cual las controla el profesor por grupo
 
 export default function PagAsistencia() {
     const cookies = new Cookies();

@@ -9,6 +9,7 @@ import * as BiIcons from 'react-icons/bi'
 import Button from '@material-ui/core/Button';
 import Cookies from 'universal-cookie';
 
+//Componente que se encarga de crear sidebar
 const Nav = styled.div `
 background :#6C63FF;
 height : 80px;
