@@ -242,13 +242,6 @@ inner join Usuario on Usuario.cedula = Matricula.cedulaEstudiante
 select * from Factura_Vista
 
 --INSERTS
-insert into Matricula values(5000,'2001/10/10',1010,'Español-C1', 2, 2021,'Español')
-insert into Matricula values(5000,'2021/5/5',1010,'Matemáticas-A1',1,2020,'Matemáticas');
-
-
-
-insert into Profesor_HistorialSalario values(118180009,'2021/5/5','2021/9/10',150000 )
-
 
 insert into Usuario values(118180009,'Richard','Leon','Chinchilla','0192023a7bbd73250516f069df18b500','Masculino',
 '2001/7/29','Profesor','2021/10/19')
@@ -279,10 +272,10 @@ insert into Usuario values(429847293,'Mauricio','Aviles','Carmeno','242b9ab779ee
 insert into Usuario_Ubicacion values(429847293,'San José','Desamparados','San Miguel','Centro');
 insert into Padre values(429847293,'Programador','Carolina',85134560);
 
-insert into Usuario values(1010,'Melissa','Alguera','Castillo','0192023a7bbd73250516f069df18b500','Femenino',
+insert into Usuario values(117950392,'Melissa','Alguera','Castillo','0192023a7bbd73250516f069df18b500','Femenino',
 '2000/10/25','Estudiante','2021/10/19')
-insert into Usuario_Ubicacion values(1010,'San José','Desamparados','San Miguel','Centro');
-insert into Estudiante values(1010,114140008,1);
+insert into Usuario_Ubicacion values(117950392,'San José','Desamparados','San Miguel','Centro');
+insert into Estudiante values(117950392,114140008,1);
 
 insert into Usuario values(122543102,'Adrian','Herrera','Segura','0192023a7bbd73250516f069df18b500','Masculino',
 '2002/11/9','Estudiante','2021/10/19')
@@ -318,7 +311,6 @@ insert into Grupo values('Español-C1','Español',302302414,2,2021,1,25,'Abierto
 insert into Grupo values('Química-B1','Química',110100005,3,2021,1,25,'Abierto')
 insert into Grupo values('Español-C1','Español',302302414,2,2021,1,25,'Abierto')
 
-insert into Grupo values('EstudiosSociales-B1','Estudios Sociales',118180009,3,2021,1,25,'Abierto')
 
 
 insert into Grupo_Horario values('Matemáticas-A1','Matemáticas',1,2020,
