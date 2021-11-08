@@ -7,6 +7,7 @@ import InfoHijos from '../PagPadre/InfoHijos.js';
 import Cobros from '../PagPadre/Cobros.js';
 import Facturas from '../PagPadre/Facturas.js';
 import GruposHijos from '../PagPadre/GruposHijos.js';
+import educImg from '../../Imagenes/business.svg';
 
 
 //Componente que adminstra todas las funciones de los Padres, es decir sus rutas.
@@ -22,6 +23,7 @@ export default function Padres() {
                 <Route exact path = '/Cobros' component= {Cobros}/>
                 <Route exact path = '/Facturas' component= {Facturas}/>
                 <Route exact path = '/GruposHijos' component= {GruposHijos}/>
+                <img className ="w-100 educ-img" src={educImg}/>
             </Switch>
         </BrowserRouter>
         </div>
