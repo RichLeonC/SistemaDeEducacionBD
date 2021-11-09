@@ -127,8 +127,9 @@ create table Asistencia_Estudiante (
 	asistencia bit,
 	foreign key(codigoGrupo,numPeriodo,anno,nombreMateria) 
 	references Grupo(codigoNombre,numeroPeriodo,anno,nombreMateria),
-	primary key(cedulaEstudiante,codigoGrupo,nombreMateria,numPeriodo,anno)
+	primary key(cedulaEstudiante,codigoGrupo,nombreMateria,numPeriodo,anno,fecha)
 )
+
 
 --Tabla que almacena la información de la evaluacion de un grupo
 create table Evaluacion(

@@ -6,7 +6,29 @@ import Cookies from 'universal-cookie';
 export default function PrincipalProfesor() {
     const cookies = new Cookies();
 
+<<<<<<< Updated upstream
  
+=======
+    const baseUrl = "https://localhost:44329/api/Profesor_Vistas/"+cookies.get("cedula");
+    
+    const [dataProfesor,setDataProfesor] = useState([]);
+
+    const peticionGet = async()=>{ //Realiza peticiones Get al backend 
+        await axios.get(baseUrl)
+        .then(response=>{
+            setDataProfesor(response.data);
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+
+    useEffect(() => { //Hace efecto la peticion
+        peticionGet();
+
+        
+    }, [])
+
+>>>>>>> Stashed changes
 
 
 

@@ -58,6 +58,21 @@ namespace API_SGEducativo.Controller
 
         }
 
+        [HttpGet("{cedulaEstudiante}/1")]
+        public ActionResult GetAsistencia(int cedulaEstudiante)
+        {
+            try
+            {
+                var asistencia_estudiante = _context.Asistencia_Estudiante.FirstOrDefault(e => e.cedulaEstudiante == cedulaEstudiante); //Busca el usuario
+                return Ok(asistencia_estudiante);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+        }
+
         // POST api/<Asistencia_EstudiantesController>
         [HttpPost]
         public ActionResult Post([FromBody] Asistencia_Estudiante asistencia)

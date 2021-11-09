@@ -1,4 +1,0 @@
-Comandos importantes a ejecutar para instalar paquetes necesarios.
-
-Ir a Extensions-ES7 React-Install
-

@@ -28,7 +28,7 @@ export default function Aprobadas(props) {
     return (
         <div className="col-sm-8">
              <br/>
-            <h2 className="text-center offset-md-5 font-weight-bold">Materias Reprobadas</h2>
+            <h2 className="text-center offset-md-5 font-weight-bold">Cursos Aprobados</h2>
              <table className="table table-hover mt-5 offset-md-3" >
                     <thead>
                         <tr>

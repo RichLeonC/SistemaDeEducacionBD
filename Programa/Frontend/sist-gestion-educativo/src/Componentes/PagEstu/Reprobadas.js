@@ -25,7 +25,7 @@ export default function Reprobadas() {
     return (
         <div className="col-sm-8">
         <br/>
-        <h2 className="text-center offset-md-5 font-weight-bold">Materias Aprobadas</h2>
+        <h2 className="text-center offset-md-5 font-weight-bold">Cursos Reprobados</h2>
         <table className="table table-hover mt-5 offset-md-3" >
                <thead>
                    <tr>

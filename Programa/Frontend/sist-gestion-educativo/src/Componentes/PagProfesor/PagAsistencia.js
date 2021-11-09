@@ -9,10 +9,21 @@ import { RiFilterOffLine } from 'react-icons/ri';
 export default function PagAsistencia() {
     const cookies = new Cookies();
     var cedula = cookies.get("cedula");// toma la cedula del profesor que haya iniciado sesión. 
+<<<<<<< Updated upstream
     const baseUrlMatriculas = "https://localhost:44307/api/matriculas";
     const baseUrlEstudiantes =  "https://localhost:44307/api/estudiantes";
     const baseUrlGrupos = "https://localhost:44307/api/Grupos";
     const baseUrlUsuarios =  "https://localhost:44307/api/Usuarios";
+=======
+    const baseUrlMatriculas = "https://localhost:44329/api/matriculas";
+    const baseUrlEstudiantes =  "https://localhost:44329/api/estudiantes";
+    const baseUrlGrupos = "https://localhost:44329/api/Grupos";
+    const baseUrlUsuarios =  "https://localhost:44329/api/Usuarios";
+    const baseUrlAsistencia =  "https://localhost:44329/api/Asistencia_Estudiantes";
+
+
+    const [actualizar,setActualizar] = useState(false);
+>>>>>>> Stashed changes
     const [matriculas,setMatricula] = useState([]); //Estado para las matriculas
     const [estudiantes,setEstudiante] = useState([]); //Estado para los estudiantes
     const [gruposProfesor,setgruposProfesor] = useState([]); //Estado para los grupos que posee el profesor
@@ -161,6 +172,11 @@ export default function PagAsistencia() {
 
     return (
         <div className= "col-sm-8">
+<<<<<<< Updated upstream
+=======
+             <br/> 
+             <h2 className="text-center offset-md-5 font-weight-bold">Asistencia por grupo</h2>
+>>>>>>> Stashed changes
              <button onClick={()=>abrirModalGrupos()} className=" met-5 offset-md-3 btn btn-success">Grupos</button>
                 <table className="table table-hover mt-5 offset-md-3" >
                     <thead>

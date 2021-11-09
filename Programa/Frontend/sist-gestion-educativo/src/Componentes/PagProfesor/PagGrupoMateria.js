@@ -10,7 +10,18 @@ import PagAsistencia from './PagAsistencia';
 
 
 export default function PagGrupoMateria() {
+<<<<<<< Updated upstream
     const baseUrl = "https://localhost:44307/api/Grupos";
+=======
+    const baseUrlGrupo = "https://localhost:44329/api/Grupos";
+    const baseURLEvalucionesEstudiante = "https://localhost:44329/api/Evaluacion_Estudiantes";
+    const baseUrlEstudiantes =  "https://localhost:44329/api/estudiantes";
+    const baseUrlUsuarios =  "https://localhost:44329/api/Usuarios";
+    const baseUrlMatriculas = "https://localhost:44329/api/matriculas";
+
+    const[modalAviso, setModalAviso]= useState(false);
+    const [estudiantesF, setEstudiantesF]= useState([]);// estudiantes vinculados a un grupo
+>>>>>>> Stashed changes
     const [data,setData] = useState([]);
     const [Ugrupo, setGrupo] = useState([]);
 
