@@ -9,6 +9,7 @@ import * as BiIcons from 'react-icons/bi'
 import Button from '@material-ui/core/Button';
 import Cookies from 'universal-cookie';
 
+//Componente que se encarga de crear sidebar
 const Nav = styled.div `
 background :#6C63FF;
 height : 80px;
@@ -72,7 +73,8 @@ const SideBar = (props) => {
            
            </NavIcon>
            
-           <Button className='offset-md-3 '
+           <div className="mt-7 offset-md-9">
+           <Button className="mt-7 offset-md-5"
          
            variant= "contained"
            href='/'
@@ -83,6 +85,7 @@ const SideBar = (props) => {
            onClick={()=>cerrarSesion()}
            >Cerrar Sesión</Button>
 
+            </div>
            
          
        </Nav>

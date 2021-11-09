@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 
+//Componente que listra las materias reprobadas del estudiante
 export default function Reprobadas() {
     const cookies = new Cookies();
     const baseUrlEvalEstudiantes = "https://localhost:44329/api/Evaluacion_Estudiantes";

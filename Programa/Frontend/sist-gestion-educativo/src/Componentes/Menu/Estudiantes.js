@@ -1,23 +1,22 @@
-import { render } from '@testing-library/react';
-import React,{Component , useState} from 'react';
-import Cookies from 'universal-cookie';
+
+import React from 'react';
 import SideBar from '../Navegation/Sidebar.js';
 import  {BrowserRouter, Switch , Route} from 'react-router-dom';
 import PaginaPrincipal from '../PagEstu/PaginaPrincipal.js';
 import {SideBarData} from '../Navegation/SidebarData.js';
-import Login from '../Login/Login.js';
 import InfoEstudiante from '../PagEstu/InfoEstudiante.js';
 import Matricula from '../PagEstu/Matricula.js';
 import GruposMatriculados from '../PagEstu/GruposMatriculados.js';
 import Aprobadas from '../PagEstu/Aprobadas.js';
 import Reprobadas from '../PagEstu/Reprobadas.js';
 import AsistenciaEstudiante from '../PagEstu/AsistenciaEstudiante.js';
+import educImg from '../../Imagenes/students.svg';
 //import Calendar from 'react-calendar';
 
-
+//Componente que adminstra todas las funciones de los estudiantes, es decir sus rutas.
 
 function Estudiantes(){
-  const cookies = new Cookies();
+
   
 
     return(
@@ -34,6 +33,7 @@ function Estudiantes(){
                 <Route exact path = '/CursosAprobados' component = {Aprobadas}/>
                 <Route exact path = '/CursosReprobados' component = {Reprobadas}/>
                 <Route exact path = '/MiAsistencia' component = {AsistenciaEstudiante}/>
+                <img className ="w-100 educ-img" src={educImg}/>
             </Switch>
         </BrowserRouter>
 

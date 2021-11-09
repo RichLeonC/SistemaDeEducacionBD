@@ -81,6 +81,21 @@ namespace API_SGEducativo.Controller
             }
         }
 
+        [HttpGet("{cedula}/3")] //Devuelve solo un registro
+        public ActionResult GetUltimo()
+        {
+            try
+            {
+                var matricula = _context.Matricula.Max(e => e.idMatricula); //LINQ
+                return Ok(matricula);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+        }
+
         // POST api/<MatriculasController>
         [HttpPost] //AGREGAR
         public ActionResult Post([FromBody] Matricula matricula)

@@ -22,19 +22,15 @@ namespace API_SGEducativo.Context
             modelBuilder.Entity<Grupo>().HasKey(e => new { e.numeroPeriodo, e.anno, e.codigoNombre, e.nombreMateria });
             modelBuilder.Entity<Grupo_Horario>().HasKey(e => new { e.numPeriodo, e.anno, e.codigoGrupo, e.nombreMateria });
             modelBuilder.Entity<Evaluacion>().HasKey(e => new { e.numPeriodo, e.anno, e.codigoGrupo, e.nombreMateria });
-<<<<<<< Updated upstream
-            modelBuilder.Entity<Periodo>().HasKey(e => new { e.anno, e.numero});
-=======
             modelBuilder.Entity<Periodo>().HasKey(e => new { e.anno, e.numero });
->>>>>>> Stashed changes
-            modelBuilder.Entity<Asistencia_Estudiante>().HasKey(e => new { e.numPeriodo, e.anno, e.codigoGrupo, e.nombreMateria, e.cedulaEstudiante,e.fecha });
+            modelBuilder.Entity<Asistencia_Estudiante>().HasKey(e => new { e.numPeriodo, e.anno, e.codigoGrupo, e.nombreMateria, e.cedulaEstudiante });
             modelBuilder.Entity<Evaluacion_Estudiante>().HasKey(e => new { e.numPeriodo, e.anno, e.codigoGrupo, e.nombreMateria, e.cedulaEstudiante });
-            modelBuilder.Entity<Estudiante_Vista>().HasKey(e => new { e.cedula });
+            modelBuilder.Entity<Profesor_HistorialSalario>().HasKey(e => new { e.cedula, e.inicio, e.fin });
             modelBuilder.Entity<Padre_Vista>().HasKey(e => new { e.cedula });
-            modelBuilder.Entity<Profesor_Vista>().HasKey(e => new { e.cedula });
+            modelBuilder.Entity<Factura_Vista>().HasKey(e => new { e.consecutivo });
         }
 
-      
+
         public DbSet<Usuario> usuarios { get; set; }
         public DbSet<Matricula> Matricula { get; set; }
 
@@ -67,6 +63,9 @@ namespace API_SGEducativo.Context
         public DbSet<Estudiante_Vista> Estudiante_Vista { get; set; }
 
         public DbSet<Padre_Vista> Padre_Vistas { get; set; }
+
         public DbSet<Profesor_Vista> Profesor_Vistas { get; set; }
+        public DbSet<Factura_Vista> Factura_Vistas { get; set; }
+
     }
 }

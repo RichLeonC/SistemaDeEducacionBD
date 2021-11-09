@@ -6,51 +6,48 @@ import Cookies from 'universal-cookie';
 import { Card,ListGroup,Table} from 'react-bootstrap';
 import { RiFilterOffLine } from 'react-icons/ri';
 
+
+
+//Componente que administra la asistencia de los estudiantes, el cual las controla el profesor por grupo
+
 export default function PagAsistencia() {
     const cookies = new Cookies();
     var cedula = cookies.get("cedula");// toma la cedula del profesor que haya iniciado sesión. 
-<<<<<<< Updated upstream
     const baseUrlMatriculas = "https://localhost:44307/api/matriculas";
     const baseUrlEstudiantes =  "https://localhost:44307/api/estudiantes";
     const baseUrlGrupos = "https://localhost:44307/api/Grupos";
     const baseUrlUsuarios =  "https://localhost:44307/api/Usuarios";
-=======
-    const baseUrlMatriculas = "https://localhost:44329/api/matriculas";
-    const baseUrlEstudiantes =  "https://localhost:44329/api/estudiantes";
-    const baseUrlGrupos = "https://localhost:44329/api/Grupos";
-    const baseUrlUsuarios =  "https://localhost:44329/api/Usuarios";
-    const baseUrlAsistencia =  "https://localhost:44329/api/Asistencia_Estudiantes";
+    const baseUrlAsistencia =  "https://localhost:44307/api/Asistencia_Estudiantes";
 
 
     const [actualizar,setActualizar] = useState(false);
->>>>>>> Stashed changes
     const [matriculas,setMatricula] = useState([]); //Estado para las matriculas
     const [estudiantes,setEstudiante] = useState([]); //Estado para los estudiantes
     const [gruposProfesor,setgruposProfesor] = useState([]); //Estado para los grupos que posee el profesor
-    const [usuarios,setUsuarios] = useState([]); //Estado para los grupos que posee el profesor
+    const [usuarios,setUsuarios] = useState([]); //Lista de usuriaos
     const [modalGrupo,setModalGrupos] = useState(false); //Estado para el modal (la ventana de grupo)
-    const [modalAsistencia,setModalAsistencia] = useState(false); //Estado para el modal (la ventana de grupo)
-    const [grupoSeleccionado,setGrupoSeleccionado] = useState([]); //Estado para el codigo de grupo que se escoje en select
-    const [infogrupo, setInfogrupo] = useState([]);
-    const [estudiantesF, setEstudiantesF]= useState([]);
-    const [presente, setPresente] = useState ([]);
-    
-    const [guardarAsistencia,setGuardarAsistencia] = useState({ //Estado para guardar la info de la matricula
+    const [modalAsistencia,setModalAsistencia] = useState(false); //Estado para el modal (la ventana de asistencia)
+    const [grupoSeleccionado,setGrupoSeleccionado] = useState(""); //Estado para el codigo de grupo que se escoje en select
+  
+    const [estudiantesF, setEstudiantesF]= useState([]);// estudiantes vinculados a un grupo
+    const [estudianteActual,setestudianteActual] = useState([]); // estudiante que se desea ingresar su asistencia
+    const [asistencias, setAsistencias] = useState ([]); // Estado de la asistencia
+    const [presente, setPresente] = useState ([]); // Estado de la asistencia
+    const current = new Date();
+    const date = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}T00:00:00`; 
+    const [guardarAsistencia,setGuardarAsistencia] = useState({ //Estado para guardar la info de la asistencia
         cedulaEstudiante: '',
         codigoGrupo: '',
         nombreMateria: '',
         anno: '',
-        fechaAsistencia:"2021-10-28T00:00:00",
-        asistencia: '',
+        fechaAsistencia: '2021-12-24T00:00:00',
+        asistencia: "",
     })
-
     const asiste = ["Si", "No"];
    
+   
 
-    
-
-
-    
+  
     const peticionGetGrupos = async()=>{ //Realiza peticiones Get al backend de los grupos
         await axios.get(baseUrlGrupos+`/${cedula}`)
         .then(response=>{
@@ -60,21 +57,22 @@ export default function PagAsistencia() {
          })
     }
 
-
-      
-
-
-
+    const peticionAsistencia = async()=>{ //Realiza peticiones Get al backend de los grupos
+        await axios.get(baseUrlAsistencia)
+        .then(response=>{
+            setAsistencias(response.data);
+         }).catch(error=>{
+            console.log(error);
+         })
+    }
     const peticionGetMatricula= async()=>{ //Realiza peticiones Get al backend de las matriculas
-        await axios.get(baseUrlMatriculas+`/${grupoSeleccionado}`+ "/2")
+        await axios.get(baseUrlMatriculas)
         .then(response=>{
             setMatricula(response.data);
         }).catch(error=>{
             console.log(error);
         })
     }
-
-   
 
     const peticionGetEstudiantes = async()=>{ //Realiza peticiones Get al backend de los estudiantes
         await axios.get(baseUrlEstudiantes)
@@ -95,15 +93,31 @@ export default function PagAsistencia() {
         })
     }
 
+    const filtrarMatriculas = matriculas.filter(matricula=> matricula.codigoGrupo == (grupoSeleccionado));
 
-  
+    useEffect(() => { //Hace efecto la peticion
+        peticionGetUsuarios();
+        peticionGetGrupos();
+        peticionGetMatricula();
+        peticionGetEstudiantes();
+        peticionAsistencia();
+
+        
+    }, [])
+
+    
+    const filtrarEstudiantes=()=>{ 
+        const alumno  = estudiantes.filter(unEstudiantes=> filtrarMatriculas.find(matricula=> matricula.cedulaEstudiante == unEstudiantes.cedula));
+        console.log(alumno);
+        setEstudiantesF(usuarios.filter(usu=> alumno.find(estudiante=> estudiante.cedula == usu.cedula)));
+    }
 
     const abrirModalGrupos=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
         setModalGrupos(!modalGrupo);
-        
+       console.log(date);
         if (modalGrupo==false){
             setEstudiantesF([]); 
-
+            
         }
     }
 
@@ -115,16 +129,19 @@ export default function PagAsistencia() {
 
 
     const abrirCerrarModalAistencia=(estudiante)=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
-        
+    
+        setestudianteActual(estudiante);
         setModalAsistencia(!modalAsistencia);
+
+        
        
     }
+
 
     const handlerOpcion = e=>{ //Guarda el grupo selecionado en el estado
         const opcion = e.target.value;
         setGrupoSeleccionado(opcion);
-      //  setInfogrupo(gruposProfesor.filter(grupo=> grupo.codigoNombre== grupoSeleccionado));
-       // console.log(infogrupo);
+        console.log(grupoSeleccionado);
         console.log(opcion);
      
         
@@ -135,48 +152,99 @@ export default function PagAsistencia() {
         const opcion = e.target.value;
         setPresente(opcion);
         console.log(opcion);
-     
-        
+      
     }
    
   
 
-    const filtrarEstudiantes=()=>{ 
-        peticionGetMatricula();
-        peticionGetEstudiantes();
-        peticionGetUsuarios();
-        setEstudiante(estudiantes.filter(unEstudiantes=> unEstudiantes.cedula == matriculas.cedulaEstudiante)) 
-        setEstudiantesF(usuarios.filter(usu=> estudiantes.find(estudiante=> estudiante.cedula == usu.cedula)));
-    }
-
-    
 
     const mostrarLista= ()=>{
-       
+        peticionGetMatricula();
         filtrarEstudiantes();
         cerrarModalGrupos();
     }
 
-    useEffect(() => { //Hace efecto la peticion
-        peticionGetUsuarios();
-        peticionGetGrupos();
-        
-    }, [])
+   
 
 
     const guardarPresentacia =()=>{
-        
-
+        peticionPost();
+        setActualizar(false);
+        setModalAsistencia(!modalAsistencia);
     }
 
+   
+
+    const peticionPost=async()=>{ //Realiza peticiones post al backend
+    
+      
+      setActualizar(true);
+      guardarAsistencia.cedulaEstudiante= estudianteActual.cedula;
+      guardarAsistencia.fechaAsistencia='2021-12-24T00:00:00';
+      const infoGrupo = gruposProfesor.filter(grupo=>grupo.codigoNombre == (grupoSeleccionado));
+      var presenteE = false
+      if (presente == "Si"){
+          presenteE = true
+      }
+      var iterator = infoGrupo.values();
+        for(let grupo of iterator){
+            
+            guardarAsistencia.codigoGrupo = grupo.codigoNombre;
+            guardarAsistencia.numPeriodo = parseInt(grupo.numeroPeriodo);
+            guardarAsistencia.anno = parseInt(grupo.anno);
+            guardarAsistencia.nombreMateria = grupo.nombreMateria;
+            guardarAsistencia.asistencia = presenteE;
+        }
+       
+        
+        
+        await axios.post(baseUrlAsistencia,guardarAsistencia) //Realizamos la peticion post, el matriculaSeleccionada se pasa como BODY
+        .then(response=>{
+            setAsistencias(asistencias.concat(response.asistencias)); //Agregamos al estado lo que responda la API
+        }).catch(error=>{
+            console.log(error);
+        })
+      //}
+    }
+
+    const peticionPut=async()=>{ //Realiza peticiones post al backend
+     
+        
+          await axios.put(baseUrlAsistencia+'/'+guardarAsistencia.cedulaEstudiante +'/'+ guardarAsistencia.codigoGrupo +'/'+
+          guardarAsistencia.nombreMateria +'/' +  guardarAsistencia.numPeriodo +'/'+ guardarAsistencia.anno
+          ,guardarAsistencia) //Realizamos la peticion post, el matriculaSeleccionada se pasa como BODY
+          .then(response=>{
+                var respuesta = response.data;
+                var presenteE = false
+                if (respuesta.asistencia == "Si"){
+                    presenteE = true
+                }
+                var dataAuxiliar= asistencias;
+                dataAuxiliar.map(asistio =>{if(
+                    asistio.cedulaEstudiante == guardarAsistencia.cedulaEstudiante && asistio.codigoGrupo == guardarAsistencia.codigoGrupo &&
+                    asistio.nombreMateria == guardarAsistencia.nombreMateria && asistio.numPeriodo == guardarAsistencia.numPeriodo 
+                    && asistio.anno == guardarAsistencia.anno){
+                    
+                       asistio.asistencia= presenteE;
+                        
+
+
+                    }
+
+                })
+
+                setModalAsistencia(!modalAsistencia);
+          }).catch(error=>{
+              console.log(error);    
+
+          })
+      }
 
     return (
         <div className= "col-sm-8">
-<<<<<<< Updated upstream
-=======
-             <br/> 
+             <br/>
              <h2 className="text-center offset-md-5 font-weight-bold">Asistencia por grupo</h2>
->>>>>>> Stashed changes
+            
              <button onClick={()=>abrirModalGrupos()} className=" met-5 offset-md-3 btn btn-success">Grupos</button>
                 <table className="table table-hover mt-5 offset-md-3" >
                     <thead>
@@ -190,8 +258,7 @@ export default function PagAsistencia() {
                         </tr>
                     </thead>
                     <tbody>
-                    {
-                      estudiantesF.map(unEs=>(
+                    {estudiantesF.map(unEs=>(
                         <tr  key ={unEs.cedula}>
                         <td>{unEs.cedula}</td>
                         <td>{unEs.nombre}</td>
@@ -278,8 +345,7 @@ export default function PagAsistencia() {
 
 
 
-            <br/>
-            <button  className=" met-5 offset-md-11 btn btn-success">Guardar</button>
+           
             
         </div>
 

@@ -9,7 +9,7 @@ import axios from 'axios';
 
 
 
-
+//Componente que muestra el login e implementa su funcionamiento
 
 
 function Login(props){
@@ -57,6 +57,9 @@ function Login(props){
                 }
                 else  if(respuesta.rol == ("Estudiante")){
                     props.history.push("/Estudiantes");
+                }
+                else if(respuesta.rol ==("Padre")){
+                    props.history.push("/Padres")
                 }
             }
             else{

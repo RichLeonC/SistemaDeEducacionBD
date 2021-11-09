@@ -1,38 +1,46 @@
-import { colors } from '@material-ui/core'
 import React,{useState,useEffect} from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
-import './Estilos.css'
 
-
-//Muestra la informacion personal del estudiante
-export default function InfoEstudiante() {
+export default function InfoHijos() {
     const cookies = new Cookies();
-    const baseUrl = "https://localhost:44329/api/Estudiante_Vistas/"+cookies.get("cedula");
-    
-    const [dataEstudiante,setDataEstudiante] = useState([]);
+    const baseUrl = "https://localhost:44329/api/Estudiante_Vistas/"+cookies.get("cedula")+"/1";
+    const baseUrlPadre =  "https://localhost:44329/api/Padre_Vistas/"+cookies.get("cedula");
 
-    const peticionGet = async()=>{ //Realiza peticiones Get al backend 
+    const [dataHijos,setDataHijos]=useState([]);
+    const [dataPadre,setDataPadre]=useState([]);
+
+    const peticionGet = async()=>{ //Realiza peticiones Get al backend
         await axios.get(baseUrl)
         .then(response=>{
-            setDataEstudiante(response.data);
+            setDataHijos(response.data);
         }).catch(error=>{
             console.log(error);
         })
     }
 
+    const peticionGetPadre = async()=>{ //Realiza peticiones Get al backend
+        await axios.get(baseUrlPadre)
+        .then(response=>{
+            setDataPadre(response.data);
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+
+    const hijos = dataHijos.filter(estudiante=>dataPadre.find(padre=>padre.cedula==estudiante.cedula));
+
     useEffect(() => { //Hace efecto la peticion
         peticionGet();
-
+        peticionGetPadre();
         
     }, [])
 
-
     return (
         <div className="col-sm-8">
-             <br/>
-            <h2 className="text-center offset-md-5 font-weight-bold">Información del Estudiante</h2>
-        <table className="table table-hover mt-5 offset-md-3"striped bordered hover variant="light">
+            <br/>
+            <h2 className="text-center offset-md-5 font-weight-bold">Información Hijos</h2>
+            <table className="table table-hover mt-5 offset-md-3"striped bordered hover variant="light">
             <thead>
                 <tr>
                 <th>Cédula</th>
@@ -44,12 +52,11 @@ export default function InfoEstudiante() {
                 <th>Distrito</th>
                 <th>Localidad</th>
                 <th>Grado</th>
-                <th>Padre</th>
                 </tr>
             </thead>
             <tbody>
                 {
-                    dataEstudiante.map(est=>(
+                    dataHijos.map(est=>(
                         <tr>
                         <td>{est.cedula}</td>
                         <td>{est.nombreCompleto}</td>
@@ -60,7 +67,7 @@ export default function InfoEstudiante() {
                         <td>{est.distrito}</td>
                         <td>{est.localidad}</td>
                         <td>{est.grado}</td>
-                        <td>{est.cedulaPadre}</td>
+                       
                         </tr>
                     ))
                 }

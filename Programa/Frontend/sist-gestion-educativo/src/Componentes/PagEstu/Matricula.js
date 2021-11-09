@@ -6,13 +6,15 @@ import { FloatingLabel } from 'react-bootstrap';
 import Cookies from 'universal-cookie';
 
 
-
+//Componente que administra las matriculas, permite crear, eliminar, y crea los cobros respectivos
 export default function Matricula() {
 
     const baseUrl = "https://localhost:44329/api/matriculas";
     const baseUrlGrupos = "https://localhost:44329/api/Grupos";
     const baseUrlMaterias= "https://localhost:44329/api/materias";
     const baseUrlEstudiantes = "https://localhost:44329/api/estudiantes";
+    const baseUrlCobros = "https://localhost:44329/api/cobros";
+   
     const cookies = new Cookies();
     const [data,setData] = useState([]); //Estado para las matriculas
     const [dataG,setDataG] = useState([]); //Estado para los grupos
@@ -21,6 +23,7 @@ export default function Matricula() {
     const [grupoSeleccionado,setGrupoSeleccionado] = useState([]); //Estado para el codigo de grupo que se escoje en select
     const [modalInsertar,setModalInsertar] = useState(false); //Estado para el modal (la ventana de insertar)
     const [modalEliminar,setModalEliminar] = useState(false);
+    const [modalExito,setModalExito] = useState(false);
     const [matriculaSeleccionada,setMatriculaSeleccionada] = useState({ //Estado para guardar la info de la matricula
         idMatricula: '',
         costeMatricula: 5000,
@@ -34,6 +37,13 @@ export default function Matricula() {
 
 
     })
+    const [dataIdMatricula,setDataIdMatricula] = useState([]);
+
+    const [cobro,setCobro]=useState({
+        consecutivo:'',
+        idMatricula:'',
+        estado:'Pendiente'
+    })
 
    
     const handlerOpcion = e=>{ //Guarda el grupo selecionado en el estado
@@ -46,15 +56,34 @@ export default function Matricula() {
 
 
     const abrirCerrarModalInsertar=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
-
+       
         setModalInsertar(!modalInsertar);
-
+        
     }
 
     const abrirCerrarModalEliminar=()=>{ //Cambia el estado del modal de eliminar(abierto o cerrado)
-
+        
         setModalEliminar(!modalEliminar);
+        
 
+    }
+
+    const abrirCerrarModalExito=()=>{ //Cambia el estado del modal de eliminar(abierto o cerrado)
+        
+        setModalExito(!modalExito);
+        console.log(modalExito);
+        if(modalExito==false){
+            abrirCerrarModalInsertar();
+           
+        }
+        if(modalExito == true){
+            peticionPostCobro();
+        }
+    }
+
+    const insertarMatriculaCobro=()=>{
+        peticionPost();
+        abrirCerrarModalExito();
     }
     
     const peticionGet = async()=>{ //Realiza peticiones Get al backend Matriculas
@@ -92,6 +121,8 @@ export default function Matricula() {
             console.log(error);
         })
     }
+    
+   
 
     const peticionPost=async()=>{ //Realiza peticiones post al backend
         matriculaSeleccionada.costeMatricula = 5000;
@@ -115,13 +146,22 @@ export default function Matricula() {
         await axios.post(baseUrl,matriculaSeleccionada) //Realizamos la peticion post, el matriculaSeleccionada se pasa como BODY
         .then(response=>{
             setData(data.concat(response.data)); //Agregamos al estado lo que responda la API
-            abrirCerrarModalInsertar();
+            setDataIdMatricula(response.data);
+            
         }).catch(error=>{
             console.log(error);
         })
     }
 
+    const peticionPostCobro=async()=>{
+        delete cobro.consecutivo;
+        cobro.idMatricula = (dataIdMatricula.idMatricula);
+        await axios.post(baseUrlCobros,cobro) //Realizamos la peticion post, el matriculaSeleccionada se pasa como BODY
+        
+    }
+
     const peticionDelete=async()=>{
+        await axios.delete(baseUrlCobros+"/"+matriculaSeleccionada.idMatricula);
         await axios.delete(baseUrl+"/"+matriculaSeleccionada.idMatricula)
         .then(response=>{
             setData(data.filter(matricula=>matricula.idMatricula!==response.data)); //Guarda en el estado, los que no se eliminaron
@@ -134,6 +174,7 @@ export default function Matricula() {
     const gruposPermitidos = dataG.filter(grupo=>grupo.estado == ("Abierto") && grupo.grado == (dataEstudiante.grado)); //Filtra los grupos
     const grupoEscogido = gruposPermitidos.filter(grupo=>grupo.codigoNombre == (grupoSeleccionado)); //Escogemos el grupo marcado
     
+
     
     const seleccionarMatricula=(matricula,caso)=>{
         setMatriculaSeleccionada(matricula);
@@ -146,7 +187,7 @@ export default function Matricula() {
         peticionGetG();
         peticionGetMaterias();
         peticionGetEstudiante();
-
+        
         
     }, [])
     return (
@@ -154,7 +195,7 @@ export default function Matricula() {
     <div className="d-flex">
             <div className = "col-sm-8">
                 <br/>
-                <h2 className="text-center offset-md-5 font-weight-bold">Matrículas</h2>
+                <h2 className="text-center offset-md-5 font-weight-bold">Matriculas</h2>
                 <button onClick={()=>abrirCerrarModalInsertar()} className=" offset-md-3 btn btn-success">Realizar matricula</button>
                 <table className="table table-hover mt-5 offset-md-3" >
                     <thead>
@@ -195,7 +236,7 @@ export default function Matricula() {
             </div>
             
             <Modal isOpen={modalInsertar}>
-                      <ModalHeader>Realizar matrícula</ModalHeader>
+                      <ModalHeader>Realizar matricula</ModalHeader>
 
                       <ModalBody>
                           <Form>                       
@@ -218,7 +259,7 @@ export default function Matricula() {
                       </ModalBody>
 
                       <ModalFooter>
-                        <Button className="btn btn-primary"size="sm" onClick={()=>peticionPost()}>Insertar</Button>
+                        <Button className="btn btn-primary"size="sm" onClick={()=>insertarMatriculaCobro()}>Insertar</Button>
                         <Button className="btn btn-danger" size="sm" onClick={()=>abrirCerrarModalInsertar()}
                         >Cancelar</Button>
                       </ModalFooter>
@@ -227,7 +268,7 @@ export default function Matricula() {
             <Modal isOpen={modalEliminar}>
 
                 <ModalBody>
-                   ¿Estás seguro que deseas eliminar la matrícula  {matriculaSeleccionada.idMatricula}?     
+                   ¿Estás seguro que deseas eliminar la matricula  {matriculaSeleccionada.idMatricula}?     
                 </ModalBody>
                 <ModalFooter>
                     <Button className="btn btn-danger"size="sm" onClick={()=>peticionDelete()}>Sí</Button>
@@ -235,20 +276,17 @@ export default function Matricula() {
                     >No</Button>
                 </ModalFooter>
             </Modal>
-<<<<<<< Updated upstream
-=======
             
              <Modal isOpen={modalExito}>
 
                 <ModalBody>
-                   La matrícula se ha realizado correctamente     
+                   La matricula se ha realizado correctamente     
                 </ModalBody>
                 <ModalFooter>
                     <Button className="btn btn-primary"size="sm" onClick={()=>abrirCerrarModalExito()}>Aceptar</Button>
                 </ModalFooter>
             </Modal>
             
->>>>>>> Stashed changes
   
     </div>
     

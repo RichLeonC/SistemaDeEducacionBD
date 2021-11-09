@@ -20,5 +20,6 @@ namespace API_SGEducativo.Models
         public string distrito { get; set; }
         public string localidad { get; set; }
         public int grado { get; set; }
+        public int cedulaPadre { get; set; }
     }
 }

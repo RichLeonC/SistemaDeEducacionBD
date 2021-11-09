@@ -102,13 +102,7 @@ namespace API_SGEducativo.Controller
 
                     _context.Entry(grupo).State = EntityState.Modified; //Realiza los cambios
                     _context.SaveChanges(); //Guarda los cambios
-                    return CreatedAtRoute("GetGrupo", new
-                    {
-                        numeroPeriodo = grupo.numeroPeriodo,
-                        anno = grupo.anno,
-                        codigoNombre = grupo.codigoNombre,
-                        nombreMateria = grupo.nombreMateria
-                    }, grupo);
+                    return Ok(grupo);
                 }
                 else
                 {

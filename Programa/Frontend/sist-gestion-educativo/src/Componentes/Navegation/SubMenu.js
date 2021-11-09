@@ -17,7 +17,8 @@ display: flex;
   font-size: 18px;
   &:hover {
     background: #61608E;
-    border-left: 4px solid #6C63FF;
+    font-color: #FFFF;
+    border-left: 4px solid #FFFF;
     cursor: pointer;
   }
 `;
@@ -33,7 +34,7 @@ padding-left: 3rem;
 display: flex;
 align-items: center;
 text-decoration: none;
-color: #f5f5f5;
+color: #FFFF;
 font-size: 18px;
 &:hover {
   background: #61608E;

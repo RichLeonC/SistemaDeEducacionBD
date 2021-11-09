@@ -1,5 +1,9 @@
 use master
 go
+alter database SistemaGestionEducativa set single_user with rollback immediate --Cierra las conexiones de la base de datos
+go
+Drop database if exists SistemaGestionEducativa
+go
 create database SistemaGestionEducativa
 go
 use SistemaGestionEducativa
@@ -66,8 +70,8 @@ create table Profesor_HistorialSalario(
 	cedula int not null foreign key references Profesor(cedula),
 	inicio date not null,
 	fin date not null,
-	monto float not null,
-	primary key(cedula)
+	monto decimal not null,
+	primary key(cedula, inicio, fin)
 
 )
 
@@ -187,11 +191,11 @@ create table Cobros(
 
 --Tabla que almacena una factura cuando un cobro se realizó
 create table Factura(
-	numeroFactura int not null primary key,
 	consecutivo int foreign key references Cobros(consecutivo),
-	totalPago decimal(10,2),
-	iva decimal(3,2),
-	fechaPago date
+	totalPago decimal,
+	iva decimal,
+	fechaPago date,
+	primary key(consecutivo)
 
 )
 
@@ -207,9 +211,11 @@ select * from Padre_Vista
 --Vista que lista la información personaL de los estudiantes completa
 create view Estudiante_Vista as
 select Usuario.cedula,concat(nombre,' ',apellido1,' ',apellido2) as nombreCompleto,sexo,fechaNacimiento,provincia,canton,distrito,localidad,
-Estudiante.grado from Usuario
+Estudiante.grado,Estudiante.cedulaPadre from Usuario
 inner join Usuario_Ubicacion on Usuario.cedula = Usuario_Ubicacion.cedula
 inner join Estudiante on Estudiante.cedula = Usuario.cedula
+
+
 
 select * from Estudiante_Vista
 
@@ -223,11 +229,22 @@ inner join Profesor on Profesor.cedula = Usuario.cedula
 
 select * from Profesor_Vista
 
+--Vista que muestra todo el desglose de la factura del cobro por matricula
+create view Factura_Vista as
+select Factura.consecutivo,Cobros.idMatricula,Matricula.cedulaEstudiante,concat(nombre,' ',apellido1,' ',apellido2) as nombreCompleto
+,Matricula.codigoGrupo,Matricula.nombreMateria,Matricula.numPeriodo,Matricula.anno,Factura.iva,Factura.totalPago,
+((Matricula.costeMatricula*(Factura.iva/100))+Matricula.costeMatricula) as totalPagadoIva, Factura.fechaPago
+from Factura
+inner join Cobros on Cobros.consecutivo = Factura.consecutivo
+inner join Matricula on Matricula.idMatricula = Cobros.idMatricula
+inner join Usuario on Usuario.cedula = Matricula.cedulaEstudiante
+
+
+select * from Factura_Vista
 
 --INSERTS
-insert into Matricula values(5000,'2001/10/10',1010,'Español-C1', 2, 2021,'Español')
-insert into Matricula values(5000,'2021/5/5',1010,'Matemáticas-A1',1,2020,'Matemáticas');
 
+insert into Asistencia_Estudiante values(115150008,'Biología-A1','Biología',1,2020,'2021/10/19',1);
 
 
 insert into Usuario values(118180009,'Richard','Leon','Chinchilla','0192023a7bbd73250516f069df18b500','Masculino',
@@ -259,15 +276,21 @@ insert into Usuario values(429847293,'Mauricio','Aviles','Carmeno','242b9ab779ee
 insert into Usuario_Ubicacion values(429847293,'San José','Desamparados','San Miguel','Centro');
 insert into Padre values(429847293,'Programador','Carolina',85134560);
 
-insert into Usuario values(1010,'Melissa','Alguera','Castillo','0192023a7bbd73250516f069df18b500','Femenino',
+insert into Usuario values(117950392,'Melissa','Alguera','Castillo','0192023a7bbd73250516f069df18b500','Femenino',
 '2000/10/25','Estudiante','2021/10/19')
-insert into Usuario_Ubicacion values(1010,'San José','Desamparados','San Miguel','Centro');
-insert into Estudiante values(1010,114140008,1);
+insert into Usuario_Ubicacion values(117950392,'San José','Desamparados','San Miguel','Centro');
+insert into Estudiante values(117950392,114140008,1);
 
 insert into Usuario values(122543102,'Adrian','Herrera','Segura','0192023a7bbd73250516f069df18b500','Masculino',
 '2002/11/9','Estudiante','2021/10/19')
 insert into Usuario_Ubicacion values(122543102,'San José','San Sebastian','Calle Blanco','Residencial MegaSuper');
 insert into Estudiante values(122543102,429847293,1);
+
+insert into Usuario values(115150008,'Shermie','Madrid','Orellana','0192023a7bbd73250516f069df18b500','Femenino',
+'2000/7/3','Estudiante','2021/11/6')
+insert into Usuario_Ubicacion values(115150008,'Heredia','Belén','Lindora','La Panasonic');
+insert into Estudiante values(115150008,114140008,1);
+
 
 
 insert into Materia values('Español',25000);
@@ -291,7 +314,7 @@ insert into Grupo values('Biología-A1','Biología',118180009,1,2020,1,30,'Abier
 insert into Grupo values('Español-C1','Español',302302414,2,2021,1,25,'Abierto')
 insert into Grupo values('Química-B1','Química',110100005,3,2021,1,25,'Abierto')
 insert into Grupo values('Español-C1','Español',302302414,2,2021,1,25,'Abierto')
-insert into Grupo values('Química-B1','Química',110100005,3,2021,1,25,'Abierto')
+
 
 
 insert into Grupo_Horario values('Matemáticas-A1','Matemáticas',1,2020,
@@ -309,11 +332,6 @@ insert into Evaluacion values('Español-C1',2,2021,'Español','Examenes 60%, Tar
 insert into Evaluacion values('Química-B1',3,2021,'Química','Examenes 80%, Tareas 10%')
 
 
-
-
-
-insert into Evaluacion_Estudiante values(1010,'Matemáticas-A1','Matemáticas',1,2020,70,'Aprobado')
-insert into Evaluacion_Estudiante values(1010,'Biología-A1','Biología',1,2020,60,'Reprobado')
 
 ---------DROPS DE LAS TABLAS -------------------
 

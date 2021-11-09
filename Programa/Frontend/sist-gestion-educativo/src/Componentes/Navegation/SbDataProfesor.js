@@ -4,8 +4,9 @@ import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
 import * as BiIcons from 'react-icons/bi';
-import * as MdIcons from 'react-icons/md';
+import * as BsIcons from 'react-icons/bs';
 
+//Partes del sidebar de Profesor
 export const sbDataProfesor = [
     {
         title: 'Información Profesor',
@@ -21,11 +22,33 @@ export const sbDataProfesor = [
         icon: <BiIcons.BiGroup/>, 
         iconClosed: <AiIcons.AiFillCaretDown/>,
         iconOpened :<AiIcons.AiFillCaretUp/>,
+
+
+
+
+        subNav: [
+            {
+                title: 'Asistencia',
+                path: '/PagAsistencia',
+                icon: <BsIcons.BsFillPersonCheckFill/>, 
+             
+            },
+            {
+                title: 'Evaluaciones',
+                path: '/Evaluciones',
+                icon: <IoIcons.IoIosPaper/>, 
+              
+
+            },
+
+
+        ]
     },
+   
     {
-        title: 'Asistencia',
-        path: '/PagAsistencia',
-        icon: <BiIcons.BiGroup/>, 
+        title: 'Historial Salario',
+        path: '/PagHistorialSalario',
+        icon: <FaIcons.FaMoneyCheckAlt/>, 
         iconClosed: <AiIcons.AiFillCaretDown/>,
         iconOpened :<AiIcons.AiFillCaretUp/>,
     }

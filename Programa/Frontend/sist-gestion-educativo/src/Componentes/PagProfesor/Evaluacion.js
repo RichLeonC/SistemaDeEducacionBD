@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 import React,{useState,useEffect} from 'react';
 import axios from 'axios';
 import { ModalHeader,Modal,ModalBody,Button,Form,Select,ModalFooter} from 'reactstrap'
@@ -8,12 +6,12 @@ import Cookies from 'universal-cookie';
 
 //Componente que administra las evaluaciones del grupos el cual maneja el profesor.
 export default function Evaluacion () {
-    const baseURLEvaluciones = "https://localhost:44329/api/Evaluaciones";
-    const baseURLEvalucionesEstudiante = "https://localhost:44329/api/Evaluacion_Estudiantes";
-    const baseUrlEstudiantes =  "https://localhost:44329/api/estudiantes";
-    const baseUrlGrupos = "https://localhost:44329/api/Grupos";
-    const baseUrlUsuarios =  "https://localhost:44329/api/Usuarios";
-    const baseUrlMatriculas = "https://localhost:44329/api/matriculas";
+    const baseURLEvaluciones = "https://localhost:44307/api/Evaluaciones";
+    const baseURLEvalucionesEstudiante = "https://localhost:44307/api/Evaluacion_Estudiantes";
+    const baseUrlEstudiantes =  "https://localhost:44307/api/estudiantes";
+    const baseUrlGrupos = "https://localhost:44307/api/Grupos";
+    const baseUrlUsuarios =  "https://localhost:44307/api/Usuarios";
+    const baseUrlMatriculas = "https://localhost:44307/api/matriculas";
 
     const cookies = new Cookies();
     var cedula = cookies.get("cedula");// toma la cedula del profesor que haya iniciado sesión. 
@@ -333,7 +331,7 @@ return (
                         <th>Apellido 1</th>
                         <th>Apellido 2</th>
                         <th>Ingresar</th>
-                        <th>Nota Obtenida</th>
+                   
 
                         </tr>
                     </thead>
@@ -348,7 +346,7 @@ return (
              
                         <button className="btn btn-primary" onClick={()=>abrirCerrarNota(unEs)}>Nota</button>
                         </td> 
-                        <td></td>
+                      
                      
                      </tr>  
 
@@ -463,4 +461,3 @@ return (
 
 )
 }
->>>>>>> Stashed changes

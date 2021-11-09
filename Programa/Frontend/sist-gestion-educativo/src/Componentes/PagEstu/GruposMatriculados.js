@@ -5,7 +5,7 @@ import { FloatingLabel } from 'react-bootstrap';
 import Cookies from 'universal-cookie';
 
 
-
+//Compontente que lista los grupos matriculados por el estudiante y permite filtrarlos
 export default function GruposMatriculados() {
     const cookies = new Cookies();
     const baseUrl = "https://localhost:44329/api/grupos";

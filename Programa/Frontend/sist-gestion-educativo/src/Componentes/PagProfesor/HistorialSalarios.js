@@ -8,7 +8,7 @@ import axios from 'axios';
 export default function HistorialSalarios() {
     const cookies = new Cookies();
     var cedula = cookies.get("cedula");// toma la cedula del profesor que haya iniciado sesión. 
-    const baseUrlHistorialSalario = "https://localhost:44329/api/Profesor_HistorialSalarios";
+    const baseUrlHistorialSalario = "https://localhost:44307/api/Profesor_HistorialSalarios";
     const [historial, setHistorial] = useState([]);
     
     const peticionGetHistorial= async()=>{ //Realiza peticiones Get al backend de las historial
@@ -33,7 +33,7 @@ export default function HistorialSalarios() {
           <br/> 
         <h2 className="text-center offset-md-5 font-weight-bold">Historial de Salarios</h2>
            
-        <table className="mt-5 offset-md-3 table table-hover"striped bordered hover variant="light">
+        <Table className="mt-5 offset-md-0 table table-hover"striped bordered hover variant="light">
             <thead>
                 <tr>
                 <th>Inicio</th>
@@ -52,7 +52,7 @@ export default function HistorialSalarios() {
                      ))}  
                 
             </tbody>
-        </table>
+        </Table>
         </div>
     )
 
