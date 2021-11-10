@@ -33,7 +33,7 @@ function Estudiantes(){
                 <Route exact path = '/CursosAprobados' component = {Aprobadas}/>
                 <Route exact path = '/CursosReprobados' component = {Reprobadas}/>
                 <Route exact path = '/MiAsistencia' component = {AsistenciaEstudiante}/>
-                <img className ="w-100 educ-img" src={educImg}/>
+                
             </Switch>
         </BrowserRouter>
 

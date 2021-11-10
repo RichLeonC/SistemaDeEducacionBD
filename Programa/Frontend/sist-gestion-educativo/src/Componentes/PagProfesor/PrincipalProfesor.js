@@ -9,7 +9,7 @@ import React,{useState,useEffect} from 'react';
 export default function PrincipalProfesor() {
     const cookies = new Cookies();
 
-    const baseUrl = "https://localhost:44307/api/Profesor_Vistas/"+cookies.get("cedula");
+    const baseUrl = "https://localhost:44329/api/Profesor_Vistas/"+cookies.get("cedula");
     
     const [dataProfesor,setDataProfesor] = useState([]);
 

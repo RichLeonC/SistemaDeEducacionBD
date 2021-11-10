@@ -62,7 +62,7 @@ namespace API_SGEducativo.Controller
         {
             try
             {
-                var asistencia_estudiante = _context.Asistencia_Estudiante.FirstOrDefault(e => e.cedulaEstudiante == cedulaEstudiante); //Busca el usuario
+                var asistencia_estudiante = _context.Asistencia_Estudiante.Where(e => e.cedulaEstudiante == cedulaEstudiante); //Busca el usuario
                 return Ok(asistencia_estudiante);
             }
             catch (Exception e)

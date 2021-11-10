@@ -23,7 +23,7 @@ namespace API_SGEducativo.Context
             modelBuilder.Entity<Grupo_Horario>().HasKey(e => new { e.numPeriodo, e.anno, e.codigoGrupo, e.nombreMateria });
             modelBuilder.Entity<Evaluacion>().HasKey(e => new { e.numPeriodo, e.anno, e.codigoGrupo, e.nombreMateria });
             modelBuilder.Entity<Periodo>().HasKey(e => new { e.anno, e.numero });
-            modelBuilder.Entity<Asistencia_Estudiante>().HasKey(e => new { e.numPeriodo, e.anno, e.codigoGrupo, e.nombreMateria, e.cedulaEstudiante });
+            modelBuilder.Entity<Asistencia_Estudiante>().HasKey(e => new { e.numPeriodo, e.anno, e.codigoGrupo, e.nombreMateria, e.cedulaEstudiante,e.fecha });
             modelBuilder.Entity<Evaluacion_Estudiante>().HasKey(e => new { e.numPeriodo, e.anno, e.codigoGrupo, e.nombreMateria, e.cedulaEstudiante });
             modelBuilder.Entity<Profesor_HistorialSalario>().HasKey(e => new { e.cedula, e.inicio, e.fin });
             modelBuilder.Entity<Padre_Vista>().HasKey(e => new { e.cedula });

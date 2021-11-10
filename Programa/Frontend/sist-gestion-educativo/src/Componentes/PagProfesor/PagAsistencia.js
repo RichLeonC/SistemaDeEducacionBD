@@ -13,11 +13,11 @@ import { RiFilterOffLine } from 'react-icons/ri';
 export default function PagAsistencia() {
     const cookies = new Cookies();
     var cedula = cookies.get("cedula");// toma la cedula del profesor que haya iniciado sesión. 
-    const baseUrlMatriculas = "https://localhost:44307/api/matriculas";
-    const baseUrlEstudiantes =  "https://localhost:44307/api/estudiantes";
-    const baseUrlGrupos = "https://localhost:44307/api/Grupos";
-    const baseUrlUsuarios =  "https://localhost:44307/api/Usuarios";
-    const baseUrlAsistencia =  "https://localhost:44307/api/Asistencia_Estudiantes";
+    const baseUrlMatriculas = "https://localhost:44329/api/matriculas";
+    const baseUrlEstudiantes =  "https://localhost:44329/api/estudiantes";
+    const baseUrlGrupos = "https://localhost:44329/api/Grupos";
+    const baseUrlUsuarios =  "https://localhost:44329/api/Usuarios";
+    const baseUrlAsistencia =  "https://localhost:44329/api/Asistencia_Estudiantes";
 
 
     const [actualizar,setActualizar] = useState(false);

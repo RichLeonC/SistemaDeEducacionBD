@@ -8,7 +8,7 @@ import axios from 'axios';
 export default function HistorialSalarios() {
     const cookies = new Cookies();
     var cedula = cookies.get("cedula");// toma la cedula del profesor que haya iniciado sesión. 
-    const baseUrlHistorialSalario = "https://localhost:44307/api/Profesor_HistorialSalarios";
+    const baseUrlHistorialSalario = "https://localhost:44329/api/Profesor_HistorialSalarios";
     const [historial, setHistorial] = useState([]);
     
     const peticionGetHistorial= async()=>{ //Realiza peticiones Get al backend de las historial

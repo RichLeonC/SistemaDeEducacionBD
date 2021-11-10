@@ -23,7 +23,7 @@ export default function AsistenciaEstudiante() {
     const [modalFiltro,setModalFiltro] = useState(false);
 
     const abrirCerrarModalFiltro=()=>{ //Cambia el estado del modal de filtro (abierto o cerrado)
-
+       
         setModalFiltro(!modalFiltro);
         if(modalFiltro == false){
             peticionGetAsistencia();
@@ -52,7 +52,7 @@ export default function AsistenciaEstudiante() {
         await axios.get(baseUrl)
         .then(response=>{
             setDataAsistencia(response.data);
-            console.log(dataAsistencia);
+            
         }).catch(error=>{
             console.log(error);
         })
@@ -132,6 +132,7 @@ export default function AsistenciaEstudiante() {
 
     useEffect(() => { //Hace efecto la peticion
         peticionGetAsistencia();
+       
         peticionGetPeriodos();
         peticionGetMatriculas();
         peticionGetGrupos();

@@ -7,20 +7,18 @@ import { ModalHeader,Modal,ModalBody,Button,Form,Select,ModalFooter} from 'react
 
 //Componente que lista los grupos del profesor y permite cerrarlos
 export default function PagGrupoMateria() {
-    const baseUrlGrupo = "https://localhost:44307/api/Grupos";
-    const baseURLEvalucionesEstudiante = "https://localhost:44307/api/Evaluacion_Estudiantes";
-    const baseUrlEstudiantes =  "https://localhost:44307/api/estudiantes";
-    const baseUrlUsuarios =  "https://localhost:44307/api/Usuarios";
-    const baseUrlMatriculas = "https://localhost:44307/api/matriculas";
+    const baseUrlGrupo = "https://localhost:44329/api/Grupos";
+    const baseURLEvalucionesEstudiante = "https://localhost:44329/api/Evaluacion_Estudiantes";
+    const baseUrlEstudiantes =  "https://localhost:44329/api/estudiantes";
+    const baseUrlUsuarios =  "https://localhost:44329/api/Usuarios";
+    const baseUrlMatriculas = "https://localhost:44329/api/matriculas";
 
     const[modalAviso, setModalAviso]= useState(false);
-    const [estudiantesF, setEstudiantesF]= useState([]);// estudiantes vinculados a un grupo
     const [data,setData] = useState([]);
     const [matriculas,setMatricula] = useState([]); //Estado para las matriculas
     const [estudiantes,setEstudiante] = useState([]); //Estado para los estudiantes
     const [usuarios,setUsuarios] = useState([]); //Lista de usuriaos
     const [evaluacion, setEvaluacion] = useState ([]);// evaluacion ligada al grupo
-    const [grupoSeleccionado, setGrupoSeleccionado] = useState([]);
     const [TodosEvaluados, setTodosEvaluados ] = useState(false);
     const [grupoCerrado, setGrupoCerrado] = useState ({
         codigoNombre: '',
