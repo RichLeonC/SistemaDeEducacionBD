@@ -130,14 +130,11 @@ export default function Cobros() {
     const matriculasFiltradas = dataMatriculas.filter(matricula=>matricula.cedulaEstudiante==hijoSeleccionado);//Matriculas que pertenecen al hijo
 
     const seleccionarCobro=(cobro)=>{
-        if(cobroSeleccionado.estado=="Pagado"){
-            alert("Cobro ya está pagado");
-        }
-        else{
+       
             setCobroSeleccionado(cobro);
             //realizarPago();
             abrirCerrarModalPago();
-        }
+        
     }
      const realizarPago=()=>{
          peticionPostFactura();

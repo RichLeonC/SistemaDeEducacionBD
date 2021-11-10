@@ -14,11 +14,13 @@ export default function PagGrupoMateria() {
     const baseUrlMatriculas = "https://localhost:44329/api/matriculas";
 
     const[modalAviso, setModalAviso]= useState(false);
+    const [estudiantesF, setEstudiantesF]= useState([]);// estudiantes vinculados a un grupo
     const [data,setData] = useState([]);
     const [matriculas,setMatricula] = useState([]); //Estado para las matriculas
     const [estudiantes,setEstudiante] = useState([]); //Estado para los estudiantes
     const [usuarios,setUsuarios] = useState([]); //Lista de usuriaos
     const [evaluacion, setEvaluacion] = useState ([]);// evaluacion ligada al grupo
+    const [grupoSeleccionado, setGrupoSeleccionado] = useState([]);
     const [TodosEvaluados, setTodosEvaluados ] = useState(false);
     const [grupoCerrado, setGrupoCerrado] = useState ({
         codigoNombre: '',

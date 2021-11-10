@@ -89,7 +89,7 @@ namespace API_SGEducativo.Controller
         }
 
         // PUT api/<GruposController>/5
-        [HttpPut("{codigoNombre}/ {nombreMateria}/{numeroPeriodo}/{anno}")]
+        [HttpPut("{codigoNombre}/{nombreMateria}/{numeroPeriodo}/{anno}")]
         public ActionResult Put(string codigoNombre, string nombreMateria, int numeroPeriodo, int anno, [FromBody] Grupo grupo)
         {
 
