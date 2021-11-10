@@ -315,8 +315,6 @@ insert into Grupo values('Español-C1','Español',302302414,2,2021,1,25,'Abierto
 insert into Grupo values('Química-B1','Química',110100005,3,2021,1,25,'Abierto')
 insert into Grupo values('Español-C1','Español',302302414,2,2021,1,25,'Abierto')
 
-update Grupo set estado='Cerrado' where codigoNombre = 'Español-C1'
-
 insert into Grupo_Horario values('Matemáticas-A1','Matemáticas',1,2020,
 'Martes y Jueves','15:00','16:50');
 insert into Grupo_Horario values('Biología-A1','Biología',1,2020,
@@ -330,6 +328,27 @@ insert into Evaluacion values('Matemáticas-A1',1,2020,'Matemáticas','Examenes 
 insert into Evaluacion values('Biología-A1',1,2020,'Biología','Examenes 60%, Tareas 20%, Cotidiano 20%')
 insert into Evaluacion values('Español-C1',2,2021,'Español','Examenes 60%, Tareas 20%, Comunicación 20%')
 insert into Evaluacion values('Química-B1',3,2021,'Química','Examenes 80%, Tareas 10%')
+
+
+
+-------Procedimientos-----------------------------------------------------------------------
+
+go
+create proc EliminarMatricula (@idMatricula int,@costeMatricula float,@fechaCreacion date,@cedulaEstudiante int,@codigoGrupo varchar(25),
+	@numPeriodo int ,@anno int, @nombreMateria varchar(100))
+as begin
+delete from Matricula where idMatricula=@idMatricula
+end
+go
+
+go
+create proc EliminarCobro (@consecutivo int ,@idMatricula int,@estado varchar(20))
+as begin
+delete from Cobros where consecutivo=@consecutivo
+end
+go
+
+
 
 
 
