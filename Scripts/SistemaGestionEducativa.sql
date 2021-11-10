@@ -315,7 +315,7 @@ insert into Grupo values('Español-C1','Español',302302414,2,2021,1,25,'Abierto
 insert into Grupo values('Química-B1','Química',110100005,3,2021,1,25,'Abierto')
 insert into Grupo values('Español-C1','Español',302302414,2,2021,1,25,'Abierto')
 
-
+update Grupo set estado='Cerrado' where codigoNombre = 'Español-C1'
 
 insert into Grupo_Horario values('Matemáticas-A1','Matemáticas',1,2020,
 'Martes y Jueves','15:00','16:50');

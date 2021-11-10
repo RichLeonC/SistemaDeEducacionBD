@@ -55,7 +55,7 @@ namespace API_SGEducativo.Controller
         }
 
         // GET api/<GruposController>/5
-        [HttpGet("{codigoNombre}/ {nombreMateria}/{numeroPeriodo}/{anno}", Name = "GetGrupo")] //Devuelve solo un registro
+        [HttpGet("{codigoNombre}/{nombreMateria}/{numeroPeriodo}/{anno}", Name = "GetGrupo")] //Devuelve solo un registro
         public ActionResult Get(string codigoNombre, string nombreMateria, int numeroPeriodo, int anno)
         {
             try
