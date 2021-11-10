@@ -244,7 +244,7 @@ select * from Factura_Vista
 
 --INSERTS
 
-insert into Asistencia_Estudiante values(115150008,'Biología-A1','Biología',1,2020,'2021/10/19',1);
+
 
 
 insert into Usuario values(118180009,'Richard','Leon','Chinchilla','0192023a7bbd73250516f069df18b500','Masculino',
@@ -331,7 +331,33 @@ insert into Evaluacion values('Biología-A1',1,2020,'Biología','Examenes 60%, T
 insert into Evaluacion values('Español-C1',2,2021,'Español','Examenes 60%, Tareas 20%, Comunicación 20%')
 insert into Evaluacion values('Química-B1',3,2021,'Química','Examenes 80%, Tareas 10%')
 
+--Procedimiento para la creacion de usuarios
+create proc InsertarUsuario (@cedula int,@nombre varchar(100),@apellido1 varchar(100),@apellido2 varchar(100),@clave
+varchar(100),@sexo varchar(20),@fechaNacimiento date,@rol varchar(20),@fechaCreacion date)
+as begin
+insert into Usuario values (@cedula,@nombre,@apellido1,@apellido2,@clave,@sexo,@fechaNacimiento,@rol,@fechaCreacion )
+end
 
+
+--Procedimiento para la insercion de matriculas
+
+create proc InsertarMatriculas(@costeMatricula float,@fechaCreacion date,@cedulaEstudiante int,@codigoGrupo varchar(25),
+@numPeriodo int, @anno int,@nombreMateria varchar(100))
+as begin
+insert into Matricula values(@costeMatricula,@fechaCreacion,@cedulaEstudiante,@codigoGrupo,@numPeriodo,@anno,@nombreMateria)
+end
+
+--Procedimiento para la insercion de Cobros
+
+create proc InsertarCobros (@idMatricula int, @estado varchar(20))
+as begin
+insert into Cobros values(@idMatricula, @estado)
+end
+--Procedimiento para la insercion de Facturas
+create proc InsertarFactura (@consecutivo int,@totalPago decimal,@iva decimal,@fechaPago date)
+as begin
+insert into Factura values(@consecutivo,@totalPago,@iva,@fechaPago)
+end
 
 ---------DROPS DE LAS TABLAS -------------------
 
