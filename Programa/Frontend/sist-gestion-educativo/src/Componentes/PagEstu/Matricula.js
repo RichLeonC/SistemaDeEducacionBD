@@ -195,13 +195,13 @@ export default function Matricula() {
     <div className="d-flex">
             <div className = "col-sm-8">
                 <br/>
-                <h2 className="text-center offset-md-5 font-weight-bold">Matriculas</h2>
-                <button onClick={()=>abrirCerrarModalInsertar()} className=" offset-md-3 btn btn-success">Realizar matricula</button>
+                <h2 className="text-center offset-md-5 font-weight-bold">Matrículas</h2>
+                <button onClick={()=>abrirCerrarModalInsertar()} className=" offset-md-3 btn btn-success">Realizar matrícula</button>
                 <table className="table table-hover mt-5 offset-md-3" >
                     <thead>
                         <tr>
                             <th>ID matricula</th>
-                            <th>Coste matricula</th>
+                            <th>Coste matrícula</th>
                             <th>Fecha Creación</th>
                             <th>Estudiante</th>
                             <th>Grupo</th>
@@ -236,7 +236,7 @@ export default function Matricula() {
             </div>
             
             <Modal isOpen={modalInsertar}>
-                      <ModalHeader>Realizar matricula</ModalHeader>
+                      <ModalHeader>Realizar matrícula</ModalHeader>
 
                       <ModalBody>
                           <Form>                       
@@ -268,7 +268,7 @@ export default function Matricula() {
             <Modal isOpen={modalEliminar}>
 
                 <ModalBody>
-                   ¿Estás seguro que deseas eliminar la matricula  {matriculaSeleccionada.idMatricula}?     
+                   ¿Estás seguro que deseas eliminar la matrícula  {matriculaSeleccionada.idMatricula}?     
                 </ModalBody>
                 <ModalFooter>
                     <Button className="btn btn-danger"size="sm" onClick={()=>peticionDelete()}>Sí</Button>
@@ -280,7 +280,7 @@ export default function Matricula() {
              <Modal isOpen={modalExito}>
 
                 <ModalBody>
-                   La matricula se ha realizado correctamente     
+                   La matrícula se ha realizado correctamente     
                 </ModalBody>
                 <ModalFooter>
                     <Button className="btn btn-primary"size="sm" onClick={()=>abrirCerrarModalExito()}>Aceptar</Button>
