@@ -61,6 +61,9 @@ function Login(props){
                 else if(respuesta.rol ==("Padre")){
                     props.history.push("/Padres")
                 }
+                else{
+                    props.history.push("/Admin")
+                }
             }
             else{
                 alert("El usuario o contraseña no son correctoss");
