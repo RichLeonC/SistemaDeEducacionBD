@@ -21,5 +21,7 @@ namespace API_SGEducativo.Models
         public string localidad { get; set; }
         public int grado { get; set; }
         public int cedulaPadre { get; set; }
+
+        public string nombrePadre { get; set; }
     }
 }

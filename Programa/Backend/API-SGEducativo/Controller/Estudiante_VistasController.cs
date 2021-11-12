@@ -33,14 +33,14 @@ namespace API_SGEducativo.Controller
         public ActionResult Get(int cedula)
         {
              return Ok(_context.Estudiante_Vista.FromSqlRaw("select cedula,nombreCompleto,sexo,FechaNacimiento,provincia," +
-                "canton,distrito,localidad,grado,cedulaPadre from Estudiante_Vista where cedula=" + cedula));
+                "canton,distrito,localidad,grado,cedulaPadre,nombrePadre from Estudiante_Vista where cedula=" + cedula));
         }
 
         [HttpGet("{cedulaPadre}/1")]
         public ActionResult GetHijos(int cedulaPadre)
         {
             return Ok(_context.Estudiante_Vista.FromSqlRaw("select cedula,nombreCompleto,sexo,FechaNacimiento,provincia," +
-               "canton,distrito,localidad,grado,cedulaPadre from Estudiante_Vista where cedulaPadre=" + cedulaPadre));
+               "canton,distrito,localidad,grado,cedulaPadre,nombrePadre from Estudiante_Vista where cedulaPadre=" + cedulaPadre));
         }
 
         // POST api/<Usuarios_CompletosVController>

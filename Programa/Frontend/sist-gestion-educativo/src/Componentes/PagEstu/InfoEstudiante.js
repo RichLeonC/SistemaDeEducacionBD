@@ -44,7 +44,8 @@ export default function InfoEstudiante() {
                 <th>Distrito</th>
                 <th>Localidad</th>
                 <th>Grado</th>
-                <th>Padre</th>
+                <th>Cédula del Padre</th>
+                <th>Nombre del Padre</th>
                 </tr>
             </thead>
             <tbody>
@@ -61,6 +62,7 @@ export default function InfoEstudiante() {
                         <td>{est.localidad}</td>
                         <td>{est.grado}</td>
                         <td>{est.cedulaPadre}</td>
+                        <td>{est.nombrePadre}</td>
                         </tr>
                     ))
                 }
