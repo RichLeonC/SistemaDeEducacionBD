@@ -13,11 +13,11 @@ import { RiFilterOffLine } from 'react-icons/ri';
 export default function PagAsistencia() {
     const cookies = new Cookies();
     var cedula = cookies.get("cedula");// toma la cedula del profesor que haya iniciado sesión. 
-    const baseUrlMatriculas = "https://localhost:44329/api/matriculas";
-    const baseUrlEstudiantes =  "https://localhost:44329/api/estudiantes";
-    const baseUrlGrupos = "https://localhost:44329/api/Grupos";
-    const baseUrlUsuarios =  "https://localhost:44329/api/Usuarios";
-    const baseUrlAsistencia =  "https://localhost:44329/api/Asistencia_Estudiantes";
+    const baseUrlMatriculas = "https://localhost:44307/api/matriculas";
+    const baseUrlEstudiantes =  "https://localhost:44307/api/estudiantes";
+    const baseUrlGrupos = "https://localhost:44307/api/Grupos";
+    const baseUrlUsuarios =  "https://localhost:44307/api/Usuarios";
+    const baseUrlAsistencia =  "https://localhost:44307/api/Asistencia_Estudiantes";
 
 
     const [actualizar,setActualizar] = useState(false);
@@ -33,18 +33,19 @@ export default function PagAsistencia() {
     const [estudianteActual,setestudianteActual] = useState([]); // estudiante que se desea ingresar su asistencia
     const [asistencias, setAsistencias] = useState ([]); // Estado de la asistencia
     const [presente, setPresente] = useState ([]); // Estado de la asistencia
-    const current = new Date();
-    const date = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}T00:00:00`; 
+
+
+   
     const [guardarAsistencia,setGuardarAsistencia] = useState({ //Estado para guardar la info de la asistencia
         cedulaEstudiante: '',
         codigoGrupo: '',
         nombreMateria: '',
         anno: '',
-        fechaAsistencia: '2021-12-24T00:00:00',
+        fecha: "",
         asistencia: "",
     })
     const asiste = ["Si", "No"];
-   
+   const [diaAsistencia, setDiaAsistencia] = useState('');
    
 
   
@@ -114,7 +115,6 @@ export default function PagAsistencia() {
 
     const abrirModalGrupos=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
         setModalGrupos(!modalGrupo);
-       console.log(date);
         if (modalGrupo==false){
             setEstudiantesF([]); 
             
@@ -180,7 +180,7 @@ export default function PagAsistencia() {
       
       setActualizar(true);
       guardarAsistencia.cedulaEstudiante= estudianteActual.cedula;
-      guardarAsistencia.fechaAsistencia='2021-12-24T00:00:00';
+      guardarAsistencia.fecha=  diaAsistencia;
       const infoGrupo = gruposProfesor.filter(grupo=>grupo.codigoNombre == (grupoSeleccionado));
       var presenteE = false
       if (presente == "Si"){
@@ -282,7 +282,7 @@ export default function PagAsistencia() {
                       <ModalHeader>Grupos Abiertos</ModalHeader>
 
                       <ModalBody>
-                        <Form>                       
+                        <Form>                     
                         <FloatingLabel controlId="floatingSelect" label="Código de grupo">
                                 <select id="rol" name="grupos" className="form-control" onChange={handlerOpcion}>
                                     <option value ={-1} selected disabled>Opciones</option>
@@ -313,7 +313,14 @@ export default function PagAsistencia() {
                       <ModalHeader>Asistencia</ModalHeader>
 
                       <ModalBody>
-                        <Form>                       
+                        <Form> 
+                        <label>
+                            Fecha (YYYY/MM/DD):
+                        </label>   
+                        <br/> 
+                             <input type="text" name="diaAsistencia" onChange = {e => setDiaAsistencia(e.target.value)}/>
+                           
+                                                
                             <FloatingLabel controlId="floatingSelect" label="Presente">
                         <select id="rol" name="asistencia" className="form-control" onChange={handlerOpcion1}>
                         <option value ={-1} selected disabled>Asistencia</option>
