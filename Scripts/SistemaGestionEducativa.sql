@@ -78,7 +78,8 @@ create table Profesor_HistorialSalario(
 --Tabla para guardar la información de las materias
 create table Materia(
 	nombre varchar(100) not null PRIMARY KEY,
-	precio decimal(8,2) ---FK
+	precio decimal(8,2), ---FK
+	precioMenualidad decimal (8,2)
 
 );
 
@@ -101,6 +102,7 @@ create table Grupo (
   grado int not null,
   cupo int not null,
   estado varchar(20) not null,
+  descripcionEvaluacion varchar(250)  null,
   foreign key(numeroPeriodo,anno) references Periodo(numero,anno),
   primary key(codigoNombre,numeroPeriodo,anno,nombreMateria)
 
@@ -136,16 +138,21 @@ create table Asistencia_Estudiante (
 
 
 --Tabla que almacena la información de la evaluacion de un grupo
+
+
+
+----Tabla con todos los rublos de evalución de un grupo 
 create table Evaluacion(
+	rubro varchar(50),
+	porcentaje int,
 	codigoGrupo varchar(25) not null,
 	numPeriodo int not null,
 	anno int not null,
 	nombreMateria varchar(100),
-	descripcion varchar(250) not null,
 	foreign key(codigoGrupo,numPeriodo,anno,nombreMateria) 
 	references Grupo(codigoNombre,numeroPeriodo,anno,nombreMateria),
-	primary key(codigoGrupo,numPeriodo,anno,nombreMateria)
-	
+	primary key(rubro,codigoGrupo,numPeriodo,anno,nombreMateria)
+
 );
 
 --Tabla que registra cada nota del estudiante por grupo, además con su estado (Aprobado-Reprobado)
@@ -180,24 +187,24 @@ create table Matricula(
 )
 
 
+
+--Tabla que almacena una factura cuando un cobro se realizó
+create table Factura(
+	numFactura int primary key,
+	totalPago decimal,
+	iva decimal,
+	fechaPago date,
+);
+
 --Tabla que guarda la informacion del cobro de una matriucla efectuada
 create table Cobros(
 	consecutivo int not null IDENTITY(1,1) primary key,
-	--numFactura int foreign key references Factura(numFactura),
+	numFactura int foreign key references Factura(numFactura) null,
 	idMatricula int not null foreign key references Matricula(idMatricula),
 	estado varchar(20)
 
 )
 
---Tabla que almacena una factura cuando un cobro se realizó
-create table Factura(
-	consecutivo int foreign key references Cobros(consecutivo),
-	totalPago decimal,
-	iva decimal,
-	fechaPago date,
-	primary key(consecutivo)
-
-)
 
 --Vista que lista la información personaL de los padres completa
 create view Padre_Vista as
@@ -210,11 +217,10 @@ select * from Padre_Vista
 
 --Vista que lista la información personaL de los estudiantes completa
 create view Estudiante_Vista as
-select Usuario.cedula,concat(Usuario.nombre,' ',Usuario.apellido1,' ',Usuario.apellido2) as nombreCompleto,Usuario.sexo,Usuario.fechaNacimiento,provincia,canton,distrito,localidad,
-Estudiante.grado,Estudiante.cedulaPadre,CONCAT(Padres.nombre,' ',Padres.apellido1,' ',Padres.apellido2) as nombrePadre from Usuario
+select Usuario.cedula,concat(nombre,' ',apellido1,' ',apellido2) as nombreCompleto,sexo,fechaNacimiento,provincia,canton,distrito,localidad,
+Estudiante.grado,Estudiante.cedulaPadre from Usuario
 inner join Usuario_Ubicacion on Usuario.cedula = Usuario_Ubicacion.cedula
 inner join Estudiante on Estudiante.cedula = Usuario.cedula
-inner join Usuario as Padres on Padres.cedula = Estudiante.cedulaPadre
 
 
 
@@ -245,9 +251,8 @@ select * from Factura_Vista
 
 --INSERTS
 
+insert into Asistencia_Estudiante values(115150008,'Biología-A1','Biología',1,2020,'2021/10/19',1);
 
-insert into Usuario values(111,'Richard','Leon','Chinchilla','0192023a7bbd73250516f069df18b500','Masculino',
-'2001/7/29','Admin','2021/10/19')
 
 insert into Usuario values(118180009,'Richard','Leon','Chinchilla','0192023a7bbd73250516f069df18b500','Masculino',
 '2001/7/29','Profesor','2021/10/19')
@@ -331,33 +336,7 @@ insert into Evaluacion values('Biología-A1',1,2020,'Biología','Examenes 60%, T
 insert into Evaluacion values('Español-C1',2,2021,'Español','Examenes 60%, Tareas 20%, Comunicación 20%')
 insert into Evaluacion values('Química-B1',3,2021,'Química','Examenes 80%, Tareas 10%')
 
---Procedimiento para la creacion de usuarios
-create proc InsertarUsuario (@cedula int,@nombre varchar(100),@apellido1 varchar(100),@apellido2 varchar(100),@clave
-varchar(100),@sexo varchar(20),@fechaNacimiento date,@rol varchar(20),@fechaCreacion date)
-as begin
-insert into Usuario values (@cedula,@nombre,@apellido1,@apellido2,@clave,@sexo,@fechaNacimiento,@rol,@fechaCreacion )
-end
 
-
---Procedimiento para la insercion de matriculas
-
-create proc InsertarMatriculas(@costeMatricula float,@fechaCreacion date,@cedulaEstudiante int,@codigoGrupo varchar(25),
-@numPeriodo int, @anno int,@nombreMateria varchar(100))
-as begin
-insert into Matricula values(@costeMatricula,@fechaCreacion,@cedulaEstudiante,@codigoGrupo,@numPeriodo,@anno,@nombreMateria)
-end
-
---Procedimiento para la insercion de Cobros
-
-create proc InsertarCobros (@idMatricula int, @estado varchar(20))
-as begin
-insert into Cobros values(@idMatricula, @estado)
-end
---Procedimiento para la insercion de Facturas
-create proc InsertarFactura (@consecutivo int,@totalPago decimal,@iva decimal,@fechaPago date)
-as begin
-insert into Factura values(@consecutivo,@totalPago,@iva,@fechaPago)
-end
 
 -------Procedimientos-----------------------------------------------------------------------
 
@@ -377,8 +356,18 @@ end
 go
 
 
+go
+create proc ActualizarCerrado (@codigoNombre varchar(25),@numeroPeriodo int ,@anno int, @nombreMateria varchar(100), @estado varchar(20))
+as begin 
+Update Grupo set estado=@estado
+where codigoNombre=@codigoNombre and numeroPeriodo=@numeroPeriodo and nombreMateria= @nombreMateria and anno=@anno
+end 
+go
+
+select * from Grupo
 
 
+execute ActualizarCerrado'Química-B1', 3, 2021, 'Química', 'Abierto' 
 
 ---------DROPS DE LAS TABLAS -------------------
 
