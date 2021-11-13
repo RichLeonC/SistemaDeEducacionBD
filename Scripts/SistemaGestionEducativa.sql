@@ -2,7 +2,7 @@ use master
 go
 alter database SistemaGestionEducativa set single_user with rollback immediate --Cierra las conexiones de la base de datos
 go
-Drop database if exists SistemaGestionEducativa
+Drop database  SistemaGestionEducativa
 go
 create database SistemaGestionEducativa
 go
@@ -78,8 +78,7 @@ create table Profesor_HistorialSalario(
 --Tabla para guardar la información de las materias
 create table Materia(
 	nombre varchar(100) not null PRIMARY KEY,
-	precio decimal(8,2), ---FK
-	precioMenualidad decimal (8,2)
+	precio decimal(8,2) ---FK
 
 );
 
@@ -254,29 +253,116 @@ select * from Factura_Vista
 
 --INSERTS
 
-
-
-
+--1
 insert into Usuario values(118180009,'Richard','Leon','Chinchilla','0192023a7bbd73250516f069df18b500','Masculino',
 '2001/7/29','Profesor','2021/10/19')
 insert into Usuario_Ubicacion values(118180009,'San José','Desamparados','Gravilias','Villa Nueva');
 insert into Profesor values(118180009,605000)
 insert into Profesor_HistorialSalario values(118180009,'2008/10/10','2020/11/5',482000)
-
+--2
 insert into Usuario values(110100005,'Eduardo','Camavinga','Arias','242a7df6497824b3e47e062856610a7a','Masculino',
 '1980/4/12','Profesor','2021/10/19')
 insert into Usuario_Ubicacion values(110100005,'San José','Santa Ana','Pozos','La esquinita');
 insert into Profesor values(110100005,815000)
 insert into Profesor_HistorialSalario values(110100005,'2012/10/10','2019/4/7',536000)
-
+--3
 insert into Usuario values(302302414,'Claudia','Poll','Retana','242a7df6497824b3e47e062856610a7a','Femenino',
 '1974/12/12','Profesor','2021/10/19')
 insert into Usuario_Ubicacion values(302302414,'Heredia','San Joaquín','La Trinidad','Las Flores');
 insert into Profesor values(302302414,942320)
 insert into Profesor_HistorialSalario values(302302414,'2001/10/10','2013/4/7',601000)
+--4
+insert into Usuario values(356175651,'Faustina','Castro','Alguera','242a7df6497824b3e47e062856610a7a','Femenino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(356175651,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(356175651,902320)
+insert into Profesor_HistorialSalario values(356175651,'2001/10/10','2013/4/7',801000)
+
+--5
+insert into Usuario values(256175651,'Calamardo','Estrella','Abano','242a7df6497824b3e47e062856610a7a','Masculino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(256175651,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(256175651,432320)
+insert into Profesor_HistorialSalario values(256175651,'2001/10/10','2013/4/7',401050)
+
+--6
+insert into Usuario values(126175451,'Carlos','Tevez','Apache','242a7df6497824b3e47e062856610a7a','Masculino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(126175451,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(126175451,532520)
+insert into Profesor_HistorialSalario values(126175451,'2001/10/10','2013/4/7',502150)
+
+--7
+insert into Usuario values(416173452,'Oscar','Arias','Sanchez','242a7df6497824b3e47e062856610a7a','Masculino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(416173452,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(416173452,631520)
+insert into Profesor_HistorialSalario values(416173452,'2001/10/10','2013/4/7',411150)
+
+--8
+insert into Usuario values(115173422,'Katniss','Katoa','Kakatua','242a7df6497824b3e47e062856610a7a','Femenino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(115173422,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(115173422,731520)
+insert into Profesor_HistorialSalario values(115173422,'2001/10/10','2013/4/7',813141)
+
+--9
+insert into Usuario values(130173422,'Carmen','Lira','Lora','242a7df6497824b3e47e062856610a7a','Femenino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(130173422,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(130173422,631520)
+insert into Profesor_HistorialSalario values(130173422,'2001/10/10','2013/4/7',423141)
+
+--10
+
+insert into Usuario values(120183421,'Kirtein','Gadjens','Ruiz','242a7df6497824b3e47e062856610a7a','Masculino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(120183421,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(120183421,731420)
+insert into Profesor_HistorialSalario values(120183421,'2001/10/10','2013/4/7',523041)
+
+--11
+insert into Usuario values(120163421,'Lupita','Lapita','Loquita','242a7df6497824b3e47e062856610a7a','Femenino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(120163421,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(120163421,1031420)
+insert into Profesor_HistorialSalario values(120163421,'2001/10/10','2013/4/7',823041)
+
+--12
+
+insert into Usuario values(219161321,'Ludmila','Lopez','Herrera','242a7df6497824b3e47e062856610a7a','Femenino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(219161321,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(219161321,1041420)
+insert into Profesor_HistorialSalario values(219161321,'2001/10/10','2013/4/7',623110)
+
+--13
+
+insert into Usuario values(511133320,'Adolfo','Mussolinni','Frank','242a7df6497824b3e47e062856610a7a','Masculino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(511133320,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(511133320,1141420)
+insert into Profesor_HistorialSalario values(511133320,'2001/10/10','2013/4/7',813810)
+
+--14
+
+insert into Usuario values(811133320,'Benito','Hitlor','Stanley','242a7df6497824b3e47e062856610a7a','Masculino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(811133320,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(811133320,941420)
+insert into Profesor_HistorialSalario values(811133320,'2001/10/10','2013/4/7',815810)
+
+--15
+insert into Usuario values(421933720,'Maria','Becerra','Alguera','242a7df6497824b3e47e062856610a7a','Femenino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(421933720,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(421933720,2041420)
+insert into Profesor_HistorialSalario values(421933720,'2001/10/10','2013/4/7',915915)
 
 
-insert into Usuario values(114140008,'Francisco','Paredes','Mora','242b9ab779ee5a9b937d300817d96144','Masculino',
+-----------------------------Padres--------------------------------------------------
+
+insert into Usuario values(11140008,'Francisco','Paredes','Mora','242b9ab779ee5a9b937d300817d96144','Masculino',
 '1975/5/5','Padre','2021/10/25')
 insert into Usuario_Ubicacion values(114140008,'San José','Desamparados','San Miguel','Centro');
 insert into Padre values(114140008,'Mecanico','Hanna',88705025);
