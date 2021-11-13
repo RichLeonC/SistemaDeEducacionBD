@@ -188,20 +188,22 @@ create table Matricula(
 
 
 
---Tabla que almacena una factura cuando un cobro se realizó
-create table Factura(
-	numFactura int primary key,
-	totalPago decimal,
-	iva decimal,
-	fechaPago date,
-);
-
 --Tabla que guarda la informacion del cobro de una matriucla efectuada
 create table Cobros(
 	consecutivo int not null IDENTITY(1,1) primary key,
-	numFactura int foreign key references Factura(numFactura) null,
+	--numFactura int foreign key references Factura(numFactura),
 	idMatricula int not null foreign key references Matricula(idMatricula),
 	estado varchar(20)
+
+)
+
+--Tabla que almacena una factura cuando un cobro se realizó
+create table Factura(
+	consecutivo int foreign key references Cobros(consecutivo),
+	totalPago decimal,
+	iva decimal,
+	fechaPago date,
+	primary key(consecutivo)
 
 )
 
@@ -217,10 +219,11 @@ select * from Padre_Vista
 
 --Vista que lista la información personaL de los estudiantes completa
 create view Estudiante_Vista as
-select Usuario.cedula,concat(nombre,' ',apellido1,' ',apellido2) as nombreCompleto,sexo,fechaNacimiento,provincia,canton,distrito,localidad,
-Estudiante.grado,Estudiante.cedulaPadre from Usuario
+select Usuario.cedula,concat(Usuario.nombre,' ',Usuario.apellido1,' ',Usuario.apellido2) as nombreCompleto,Usuario.sexo,Usuario.fechaNacimiento,provincia,canton,distrito,localidad,
+Estudiante.grado,Estudiante.cedulaPadre,CONCAT(Padres.nombre,' ',Padres.apellido1,' ',Padres.apellido2) as nombrePadre from Usuario
 inner join Usuario_Ubicacion on Usuario.cedula = Usuario_Ubicacion.cedula
 inner join Estudiante on Estudiante.cedula = Usuario.cedula
+inner join Usuario as Padres on Padres.cedula = Estudiante.cedulaPadre
 
 
 
@@ -251,7 +254,7 @@ select * from Factura_Vista
 
 --INSERTS
 
-insert into Asistencia_Estudiante values(115150008,'Biología-A1','Biología',1,2020,'2021/10/19',1);
+
 
 
 insert into Usuario values(118180009,'Richard','Leon','Chinchilla','0192023a7bbd73250516f069df18b500','Masculino',
