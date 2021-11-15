@@ -135,41 +135,51 @@ create table Asistencia_Estudiante (
 )
 
 
---Tabla que almacena la información de la evaluacion de un grupo
+
 
 
 
 ----Tabla con todos los rublos de evalución de un grupo 
 create table Evaluacion(
-	rubro varchar(50) not null,
-	porcentaje int,
-	codigoGrupo varchar(25) not null,
-	numPeriodo int not null,
-	anno int not null,
-	nombreMateria varchar(100),
-	foreign key(codigoGrupo,numPeriodo,anno,nombreMateria) 
-	references Grupo(codigoNombre,numeroPeriodo,anno,nombreMateria),
-	primary key(rubro,codigoGrupo,numPeriodo,anno,nombreMateria)
+    rubro varchar(50) not null,
+    porcentaje int,
+    codigoGrupo varchar(25) not null,
+    numPeriodo int not null,
+    anno int not null,
+    nombreMateria varchar(100),
+    foreign key(codigoGrupo,numPeriodo,anno,nombreMateria) 
+    references Grupo(codigoNombre,numeroPeriodo,anno,nombreMateria),
+    primary key(rubro,codigoGrupo,numPeriodo,anno,nombreMateria)
 
 );
 
 create table Evaluacion_Grupo_Estudiante(
-	
+    cedulaEstudiante int not null foreign key references Estudiante(cedula),
+    codigoGrupo varchar(25) not null,
+    nombreMateria varchar(100) not null,
+    numPeriodo int not null,
+    anno int not null,
+    notaObtenida float not null,
+    estado varchar(50) not null,
+    descripcionEvaluacion varchar(250)  null,
+    foreign key(codigoGrupo,numPeriodo,anno,nombreMateria) 
+    references Grupo(codigoNombre,numeroPeriodo,anno,nombreMateria),
+    primary key(codigoGrupo,numPeriodo,anno,nombreMateria,cedulaEstudiante)
 
 );
 
 --Tabla que registra cada nota del estudiante por grupo, además con su estado (Aprobado-Reprobado)
 create table Evaluacion_Estudiante(
-	cedulaEstudiante int not null foreign key references Estudiante(cedula),
-	codigoGrupo varchar(25) not null,
+    cedulaEstudiante int not null foreign key references Estudiante(cedula),
+    codigoGrupo varchar(25) not null,
     nombreMateria varchar(100) not null,
-	numPeriodo int not null,
-	anno int not null,
-	notaObtenida float not null,
-	rubro varchar(20) not null ,
-	foreign key(codigoGrupo,numPeriodo,anno,nombreMateria,rubro) 
-	references Evaluacion(codigoGrupo,numPeriodo,anno,nombreMateria,rubro),
-	primary key(cedulaEstudiante,codigoGrupo,nombreMateria,numPeriodo,anno)
+    numPeriodo int not null,
+    anno int not null,
+    notaObtenida float not null,
+    rubro varchar(50) not null ,
+    foreign key(rubro,codigoGrupo,numPeriodo,anno,nombreMateria) 
+    references Evaluacion(rubro,codigoGrupo,numPeriodo,anno,nombreMateria),
+    primary key(cedulaEstudiante,codigoGrupo,nombreMateria,numPeriodo,anno,rubro)
 
 )
 
@@ -738,18 +748,7 @@ insert into Evaluacion values('Español-C1',2,2021,'Español','Examenes 60%, Tar
 insert into Evaluacion values('Química-B1',3,2021,'Química','Examenes 80%, Tareas 10%')
 
 
---create table Evaluacion(
---	rubro varchar(50),
---	porcentaje int,
---	codigoGrupo varchar(25) not null,
---	numPeriodo int not null,
---	anno int not null,
---	nombreMateria varchar(100),
---	foreign key(codigoGrupo,numPeriodo,anno,nombreMateria) 
---	references Grupo(codigoNombre,numeroPeriodo,anno,nombreMateria),
---	primary key(rubro,codigoGrupo,numPeriodo,anno,nombreMateria)
 
---);
 -------Procedimientos-----------------------------------------------------------------------
 
 go
