@@ -2,7 +2,7 @@ use master
 go
 alter database SistemaGestionEducativa set single_user with rollback immediate --Cierra las conexiones de la base de datos
 go
-Drop database if exists SistemaGestionEducativa
+Drop database  SistemaGestionEducativa
 go
 create database SistemaGestionEducativa
 go
@@ -78,8 +78,7 @@ create table Profesor_HistorialSalario(
 --Tabla para guardar la información de las materias
 create table Materia(
 	nombre varchar(100) not null PRIMARY KEY,
-	precio decimal(8,2), ---FK
-	precioMenualidad decimal (8,2)
+	precio decimal(8,2) ---FK
 
 );
 
@@ -259,53 +258,318 @@ select * from Factura_Vista
 
 --INSERTS
 
-
-
-
+--1
 insert into Usuario values(118180009,'Richard','Leon','Chinchilla','0192023a7bbd73250516f069df18b500','Masculino',
 '2001/7/29','Profesor','2021/10/19')
 insert into Usuario_Ubicacion values(118180009,'San José','Desamparados','Gravilias','Villa Nueva');
 insert into Profesor values(118180009,605000)
 insert into Profesor_HistorialSalario values(118180009,'2008/10/10','2020/11/5',482000)
-
+--2
 insert into Usuario values(110100005,'Eduardo','Camavinga','Arias','242a7df6497824b3e47e062856610a7a','Masculino',
 '1980/4/12','Profesor','2021/10/19')
 insert into Usuario_Ubicacion values(110100005,'San José','Santa Ana','Pozos','La esquinita');
 insert into Profesor values(110100005,815000)
 insert into Profesor_HistorialSalario values(110100005,'2012/10/10','2019/4/7',536000)
-
+--3
 insert into Usuario values(302302414,'Claudia','Poll','Retana','242a7df6497824b3e47e062856610a7a','Femenino',
 '1974/12/12','Profesor','2021/10/19')
 insert into Usuario_Ubicacion values(302302414,'Heredia','San Joaquín','La Trinidad','Las Flores');
 insert into Profesor values(302302414,942320)
 insert into Profesor_HistorialSalario values(302302414,'2001/10/10','2013/4/7',601000)
+--4
+insert into Usuario values(356175651,'Faustina','Castro','Alguera','242a7df6497824b3e47e062856610a7a','Femenino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(356175651,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(356175651,902320)
+insert into Profesor_HistorialSalario values(356175651,'2001/10/10','2013/4/7',801000)
+
+--5
+insert into Usuario values(256175651,'Calamardo','Estrella','Abano','242a7df6497824b3e47e062856610a7a','Masculino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(256175651,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(256175651,432320)
+insert into Profesor_HistorialSalario values(256175651,'2001/10/10','2013/4/7',401050)
+
+--6
+insert into Usuario values(126175451,'Carlos','Tevez','Apache','242a7df6497824b3e47e062856610a7a','Masculino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(126175451,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(126175451,532520)
+insert into Profesor_HistorialSalario values(126175451,'2001/10/10','2013/4/7',502150)
+
+--7
+insert into Usuario values(416173452,'Oscar','Arias','Sanchez','242a7df6497824b3e47e062856610a7a','Masculino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(416173452,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(416173452,631520)
+insert into Profesor_HistorialSalario values(416173452,'2001/10/10','2013/4/7',411150)
+
+--8
+insert into Usuario values(115173422,'Katniss','Katoa','Kakatua','242a7df6497824b3e47e062856610a7a','Femenino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(115173422,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(115173422,731520)
+insert into Profesor_HistorialSalario values(115173422,'2001/10/10','2013/4/7',813141)
+
+--9
+insert into Usuario values(130173422,'Carmen','Lira','Lora','242a7df6497824b3e47e062856610a7a','Femenino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(130173422,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(130173422,631520)
+insert into Profesor_HistorialSalario values(130173422,'2001/10/10','2013/4/7',423141)
+
+--10
+
+insert into Usuario values(120183421,'Kirtein','Gadjens','Ruiz','242a7df6497824b3e47e062856610a7a','Masculino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(120183421,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(120183421,731420)
+insert into Profesor_HistorialSalario values(120183421,'2001/10/10','2013/4/7',523041)
+
+--11
+insert into Usuario values(120163421,'Lupita','Lapita','Loquita','242a7df6497824b3e47e062856610a7a','Femenino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(120163421,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(120163421,1031420)
+insert into Profesor_HistorialSalario values(120163421,'2001/10/10','2013/4/7',823041)
+
+--12
+
+insert into Usuario values(219161321,'Ludmila','Lopez','Herrera','242a7df6497824b3e47e062856610a7a','Femenino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(219161321,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(219161321,1041420)
+insert into Profesor_HistorialSalario values(219161321,'2001/10/10','2013/4/7',623110)
+
+--13
+
+insert into Usuario values(511133320,'Adolfo','Mussolinni','Frank','242a7df6497824b3e47e062856610a7a','Masculino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(511133320,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(511133320,1141420)
+insert into Profesor_HistorialSalario values(511133320,'2001/10/10','2013/4/7',813810)
+
+--14
+
+insert into Usuario values(811133320,'Benito','Hitlor','Stanley','242a7df6497824b3e47e062856610a7a','Masculino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(811133320,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(811133320,941420)
+insert into Profesor_HistorialSalario values(811133320,'2001/10/10','2013/4/7',815810)
+
+--15
+insert into Usuario values(421933720,'Maria','Becerra','Alguera','242a7df6497824b3e47e062856610a7a','Femenino',
+'1974/12/12','Profesor','2021/10/19')
+insert into Usuario_Ubicacion values(421933720,'Heredia','San Joaquín','La Trinidad','Las Flores');
+insert into Profesor values(421933720,2041420)
+insert into Profesor_HistorialSalario values(421933720,'2001/10/10','2013/4/7',915915)
 
 
+-----------------------------Padres--------------------------------------------------
+--1
 insert into Usuario values(114140008,'Francisco','Paredes','Mora','242b9ab779ee5a9b937d300817d96144','Masculino',
 '1975/5/5','Padre','2021/10/25')
 insert into Usuario_Ubicacion values(114140008,'San José','Desamparados','San Miguel','Centro');
 insert into Padre values(114140008,'Mecanico','Hanna',88705025);
 
+--2
 insert into Usuario values(429847293,'Mauricio','Aviles','Carmeno','242b9ab779ee5a9b937d300817d96144','Masculino',
 '1985/6/16','Padre','2021/10/25')
 insert into Usuario_Ubicacion values(429847293,'San José','Desamparados','San Miguel','Centro');
 insert into Padre values(429847293,'Programador','Carolina',85134560);
+--3
+insert into Usuario values(449847293,'Mauricio','Estrada','Alvarado','242b9ab779ee5a9b937d300817d96144','Masculino',
+'1985/6/16','Padre','2021/10/25')
+insert into Usuario_Ubicacion values(449847293,'San José','Desamparados','San Miguel','Centro');
+insert into Padre values(449847293,'Programador','Carolina',85134560);
 
+--4
+insert into Usuario values(329847293,'Maria','Alvarado','Costa','242b9ab779ee5a9b937d300817d96144','Femenino',
+'1985/6/16','Padre','2021/10/25')
+insert into Usuario_Ubicacion values(329847293,'San José','Desamparados','San Miguel','Centro');
+insert into Padre values(329847293,'Programador','Carolina',85134560);
+
+--5
+insert into Usuario values(179345290,'Karlos','Mercedes','Rodriguez','242b9ab779ee5a9b937d300817d96144','Masculino',
+'1985/6/16','Padre','2021/10/25')
+insert into Usuario_Ubicacion values(179345290,'San José','Desamparados','San Miguel','Centro');
+insert into Padre values(179345290,'Programador','Carolina',85134560);
+
+--6
+
+insert into Usuario values(149345290,'Fausto','Araya','Araya','242b9ab779ee5a9b937d300817d96144','Masculino',
+'1985/6/16','Padre','2021/10/25')
+insert into Usuario_Ubicacion values(149345290,'San José','Desamparados','San Miguel','Centro');
+insert into Padre values(149345290,'Programador','Carolina',85134560);
+
+--7
+insert into Usuario values(179331290,'Pedro','Picapiedra','Rodriguez','242b9ab779ee5a9b937d300817d96144','Masculino',
+'1985/6/16','Padre','2021/10/25')
+insert into Usuario_Ubicacion values(179331290,'San José','Desamparados','San Miguel','Centro');
+insert into Padre values(179331290,'Programador','Carolina',85134560);
+
+--8
+insert into Usuario values(179331110,'Felipe','Poya','Caya','242b9ab779ee5a9b937d300817d96144','Masculino',
+'1985/6/16','Padre','2021/10/25')
+insert into Usuario_Ubicacion values(179331110,'San José','Desamparados','San Miguel','Centro');
+insert into Padre values(179331110,'Programador','Carolina',85134560);
+
+--9
+insert into Usuario values(279331110,'Juan','Pizcuan','Messi','242b9ab779ee5a9b937d300817d96144','Masculino',
+'1985/6/16','Padre','2021/10/25')
+insert into Usuario_Ubicacion values(279331110,'San José','Desamparados','San Miguel','Centro');
+insert into Padre values(279331110,'Programador','Carolina',85134560);
+
+--10
+insert into Usuario values(379331110,'Mario','Mortadela','De la i','242b9ab779ee5a9b937d300817d96144','Masculino',
+'1985/6/16','Padre','2021/10/25')
+insert into Usuario_Ubicacion values(379331110,'San José','Desamparados','San Miguel','Centro');
+insert into Padre values(379331110,'Programador','Carolina',85134560);
+
+--11
+insert into Usuario values(479331110,'Adrian','Roca','Villalta','242b9ab779ee5a9b937d300817d96144','Masculino',
+'1985/6/16','Padre','2021/10/25')
+insert into Usuario_Ubicacion values(479331110,'San José','Desamparados','San Miguel','Centro');
+insert into Padre values(479331110,'Programador','Carolina',85134560);
+
+--12
+insert into Usuario values(579331110,'Roberto','Leon','Vindas','242b9ab779ee5a9b937d300817d96144','Masculino',
+'1985/6/16','Padre','2021/10/25')
+insert into Usuario_Ubicacion values(579331110,'San José','Desamparados','San Miguel','Centro');
+insert into Padre values(579331110,'Programador','Carolina',85134560);
+
+--13
+insert into Usuario values(679331110,'Rob','Vindas','Vindas','242b9ab779ee5a9b937d300817d96144','Masculino',
+'1985/6/16','Padre','2021/10/25')
+insert into Usuario_Ubicacion values(679331110,'San José','Desamparados','San Miguel','Centro');
+insert into Padre values(679331110,'Programador','Carolina',85134560);
+
+--14
+
+insert into Usuario values(779331110,'Malcom','Bedoya','Solis','242b9ab779ee5a9b937d300817d96144','Masculino',
+'1985/6/16','Padre','2021/10/25')
+insert into Usuario_Ubicacion values(779331110,'San José','Desamparados','San Miguel','Centro');
+insert into Padre values(779331110,'Programador','Carolina',85134560);
+
+-------------------------------Estudiantes----------------------------------------------------
+--1
 insert into Usuario values(117950392,'Melissa','Alguera','Castillo','0192023a7bbd73250516f069df18b500','Femenino',
 '2000/10/25','Estudiante','2021/10/19')
 insert into Usuario_Ubicacion values(117950392,'San José','Desamparados','San Miguel','Centro');
 insert into Estudiante values(117950392,114140008,1);
-
+--2
 insert into Usuario values(122543102,'Adrian','Herrera','Segura','0192023a7bbd73250516f069df18b500','Masculino',
 '2002/11/9','Estudiante','2021/10/19')
 insert into Usuario_Ubicacion values(122543102,'San José','San Sebastian','Calle Blanco','Residencial MegaSuper');
 insert into Estudiante values(122543102,429847293,1);
-
+--3
 insert into Usuario values(115150008,'Shermie','Madrid','Orellana','0192023a7bbd73250516f069df18b500','Femenino',
 '2000/7/3','Estudiante','2021/11/6')
 insert into Usuario_Ubicacion values(115150008,'Heredia','Belén','Lindora','La Panasonic');
 insert into Estudiante values(115150008,114140008,1);
 
+--4
+insert into Usuario values(215150008,'Leandro','Kapello','Orellana','0192023a7bbd73250516f069df18b500','Masculino',
+'2000/7/3','Estudiante','2021/11/6')
+insert into Usuario_Ubicacion values(215150008,'Heredia','Belén','Lindora','La Panasonic');
+insert into Estudiante values(215150008,429847293,1);
+
+--5
+insert into Usuario values(315150008,'Jose','Calvo','Orellana','0192023a7bbd73250516f069df18b500','Masculino',
+'2000/7/3','Estudiante','2021/11/6')
+insert into Usuario_Ubicacion values(315150008,'Heredia','Belén','Lindora','La Panasonic');
+insert into Estudiante values(315150008,114140008,1);
+
+--6
+insert into Usuario values(415150008,'Jose','Figueres','OlsenPresidente','0192023a7bbd73250516f069df18b500','Masculino',
+'2000/7/3','Estudiante','2021/11/6')
+insert into Usuario_Ubicacion values(415150008,'Heredia','Belén','Lindora','La Panasonic');
+insert into Estudiante values(415150008,779331110,2);
+--7
+insert into Usuario values(515150008,'Francisco','Fofo','Olloa','0192023a7bbd73250516f069df18b500','Masculino',
+'2000/7/3','Estudiante','2021/11/6')
+insert into Usuario_Ubicacion values(515150008,'Heredia','Belén','Lindora','La Panasonic');
+insert into Estudiante values(515150008,679331110,2);
+
+--8
+insert into Usuario values(615150008,'Hector','Hernandez','Hugo','0192023a7bbd73250516f069df18b500','Masculino',
+'2000/7/3','Estudiante','2021/11/6')
+insert into Usuario_Ubicacion values(615150008,'Heredia','Belén','Lindora','La Panasonic');
+insert into Estudiante values(615150008,579331110,2);
+
+--9
+insert into Usuario values(715150008,'Keylor','Navas','Diaz','0192023a7bbd73250516f069df18b500','Masculino',
+'2000/7/3','Estudiante','2021/11/6')
+insert into Usuario_Ubicacion values(715150008,'Heredia','Belén','Lindora','La Panasonic');
+insert into Estudiante values(715150008,479331110,2);
+
+--10
+insert into Usuario values(815150008,'Oscar','Duarte','Lopez','0192023a7bbd73250516f069df18b500','Masculino',
+'2000/7/3','Estudiante','2021/11/6')
+insert into Usuario_Ubicacion values(815150008,'Heredia','Belén','Lindora','La Panasonic');
+insert into Estudiante values(815150008,279331110,2);
+
+--11
+insert into Usuario values(125150008,'Angelina','Castro','Madrid','0192023a7bbd73250516f069df18b500','Femenino',
+'2000/7/3','Estudiante','2021/11/6')
+insert into Usuario_Ubicacion values(125150008,'Heredia','Belén','Lindora','La Panasonic');
+insert into Estudiante values(125150008,179331110,3);
+
+--12
+insert into Usuario values(225150008,'Angelica','Carmona','Granada','0192023a7bbd73250516f069df18b500','Femenino',
+'2000/7/3','Estudiante','2021/11/6')
+insert into Usuario_Ubicacion values(225150008,'Heredia','Belén','Lindora','La Panasonic');
+insert into Estudiante values(225150008,179331290,3);
+
+--13
+insert into Usuario values(325150008,'Gabriela','Retana','Piedra','0192023a7bbd73250516f069df18b500','Femenino',
+'2000/7/3','Estudiante','2021/11/6')
+insert into Usuario_Ubicacion values(325150008,'Heredia','Belén','Lindora','La Panasonic');
+insert into Estudiante values(325150008,149345290,3);
+
+--14
+insert into Usuario values(425150008,'Shirley','Retana','Hoja','0192023a7bbd73250516f069df18b500','Femenino',
+'2000/7/3','Estudiante','2021/11/6')
+insert into Usuario_Ubicacion values(425150008,'Heredia','Belén','Lindora','La Panasonic');
+insert into Estudiante values(425150008,179345290,3);
+
+--15
+insert into Usuario values(525150008,'Brenda','Oviedo','Tijera','0192023a7bbd73250516f069df18b500','Femenino',
+'2000/7/3','Estudiante','2021/11/6')
+insert into Usuario_Ubicacion values(525150008,'Heredia','Belén','Lindora','La Panasonic');
+insert into Estudiante values(525150008,329847293,3);
+
+--16
+
+insert into Usuario values(625150008,'Summer','Laitano','Cortes','0192023a7bbd73250516f069df18b500','Femenino',
+'2000/7/3','Estudiante','2021/11/6')
+insert into Usuario_Ubicacion values(625150008,'Heredia','Belén','Lindora','La Panasonic');
+insert into Estudiante values(625150008,449847293,4);
+
+--17
+
+insert into Usuario values(725150008,'Juliana','Barboza','Rojas','0192023a7bbd73250516f069df18b500','Femenino',
+'2000/7/3','Estudiante','2021/11/6')
+insert into Usuario_Ubicacion values(725150008,'Heredia','Belén','Lindora','La Panasonic');
+insert into Estudiante values(725150008,449847293,4);
+
+--18
+insert into Usuario values(825150008,'Julieta','Mendoza','Fonseca','0192023a7bbd73250516f069df18b500','Femenino',
+'2000/7/3','Estudiante','2021/11/6')
+insert into Usuario_Ubicacion values(825150008,'Heredia','Belén','Lindora','La Panasonic');
+insert into Estudiante values(825150008,149345290,4);
+
+--19
+insert into Usuario values(190150018,'Susana','Vividea','Chinchilla','0192023a7bbd73250516f069df18b500','Femenino',
+'2000/7/3','Estudiante','2021/11/6')
+insert into Usuario_Ubicacion values(190150018,'Heredia','Belén','Lindora','La Panasonic');
+insert into Estudiante values(190150018,279331110,4);
+
+--20
+insert into Usuario values(290150018,'Lara','Gean','Porras','0192023a7bbd73250516f069df18b500','Femenino',
+'2000/7/3','Estudiante','2021/11/6')
+insert into Usuario_Ubicacion values(290150018,'Heredia','Belén','Lindora','La Panasonic');
+insert into Estudiante values(290150018,679331110,4);
 
 
 insert into Materia values('Español',25000,2000);
