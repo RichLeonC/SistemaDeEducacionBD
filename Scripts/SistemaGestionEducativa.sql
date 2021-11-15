@@ -101,7 +101,6 @@ create table Grupo (
   grado int not null,
   cupo int not null,
   estado varchar(20) not null,
-  descripcionEvaluacion varchar(250)  null,
   foreign key(numeroPeriodo,anno) references Periodo(numero,anno),
   primary key(codigoNombre,numeroPeriodo,anno,nombreMateria)
 
@@ -508,63 +507,63 @@ insert into Estudiante values(815150008,279331110,2);
 insert into Usuario values(125150008,'Angelina','Castro','Madrid','0192023a7bbd73250516f069df18b500','Femenino',
 '2000/7/3','Estudiante','2021/11/6')
 insert into Usuario_Ubicacion values(125150008,'Heredia','Belén','Lindora','La Panasonic');
-insert into Estudiante values(125150008,179331110,3);
+insert into Estudiante values(125150008,179331110,1);
 
 --12
 insert into Usuario values(225150008,'Angelica','Carmona','Granada','0192023a7bbd73250516f069df18b500','Femenino',
 '2000/7/3','Estudiante','2021/11/6')
 insert into Usuario_Ubicacion values(225150008,'Heredia','Belén','Lindora','La Panasonic');
-insert into Estudiante values(225150008,179331290,3);
+insert into Estudiante values(225150008,179331290,1);
 
 --13
 insert into Usuario values(325150008,'Gabriela','Retana','Piedra','0192023a7bbd73250516f069df18b500','Femenino',
 '2000/7/3','Estudiante','2021/11/6')
 insert into Usuario_Ubicacion values(325150008,'Heredia','Belén','Lindora','La Panasonic');
-insert into Estudiante values(325150008,149345290,3);
+insert into Estudiante values(325150008,149345290,1);
 
 --14
 insert into Usuario values(425150008,'Shirley','Retana','Hoja','0192023a7bbd73250516f069df18b500','Femenino',
 '2000/7/3','Estudiante','2021/11/6')
 insert into Usuario_Ubicacion values(425150008,'Heredia','Belén','Lindora','La Panasonic');
-insert into Estudiante values(425150008,179345290,3);
+insert into Estudiante values(425150008,179345290,1);
 
 --15
 insert into Usuario values(525150008,'Brenda','Oviedo','Tijera','0192023a7bbd73250516f069df18b500','Femenino',
 '2000/7/3','Estudiante','2021/11/6')
 insert into Usuario_Ubicacion values(525150008,'Heredia','Belén','Lindora','La Panasonic');
-insert into Estudiante values(525150008,329847293,3);
+insert into Estudiante values(525150008,329847293,1);
 
 --16
 
 insert into Usuario values(625150008,'Summer','Laitano','Cortes','0192023a7bbd73250516f069df18b500','Femenino',
 '2000/7/3','Estudiante','2021/11/6')
 insert into Usuario_Ubicacion values(625150008,'Heredia','Belén','Lindora','La Panasonic');
-insert into Estudiante values(625150008,449847293,4);
+insert into Estudiante values(625150008,449847293,2);
 
 --17
 
 insert into Usuario values(725150008,'Juliana','Barboza','Rojas','0192023a7bbd73250516f069df18b500','Femenino',
 '2000/7/3','Estudiante','2021/11/6')
 insert into Usuario_Ubicacion values(725150008,'Heredia','Belén','Lindora','La Panasonic');
-insert into Estudiante values(725150008,449847293,4);
+insert into Estudiante values(725150008,449847293,2);
 
 --18
 insert into Usuario values(825150008,'Julieta','Mendoza','Fonseca','0192023a7bbd73250516f069df18b500','Femenino',
 '2000/7/3','Estudiante','2021/11/6')
 insert into Usuario_Ubicacion values(825150008,'Heredia','Belén','Lindora','La Panasonic');
-insert into Estudiante values(825150008,149345290,4);
+insert into Estudiante values(825150008,149345290,2);
 
 --19
 insert into Usuario values(190150018,'Susana','Vividea','Chinchilla','0192023a7bbd73250516f069df18b500','Femenino',
 '2000/7/3','Estudiante','2021/11/6')
 insert into Usuario_Ubicacion values(190150018,'Heredia','Belén','Lindora','La Panasonic');
-insert into Estudiante values(190150018,279331110,4);
+insert into Estudiante values(190150018,279331110,2);
 
 --20
 insert into Usuario values(290150018,'Lara','Gean','Porras','0192023a7bbd73250516f069df18b500','Femenino',
 '2000/7/3','Estudiante','2021/11/6')
 insert into Usuario_Ubicacion values(290150018,'Heredia','Belén','Lindora','La Panasonic');
-insert into Estudiante values(290150018,679331110,4);
+insert into Estudiante values(290150018,679331110,2);
 
 
 insert into Materia values('Español',25000);
@@ -572,31 +571,157 @@ insert into Materia values('Matemáticas',45000);
 insert into Materia values('Estudios Sociales',15000);
 insert into Materia values('Biología',34000);
 insert into Materia values('Química',34000);
-insert into Materia values('Fisica Elemental',34000);
+insert into Materia values('Fisica',34000);
+insert into Materia values('Informática',20000);
+insert into Materia values('Inglés',18000)
+
 
 
 insert into Periodo values(1,2020,'2020/2/2','2020/4/28');
 insert into Periodo values(2,2020,'2020/4/30','2020/7/28');
-insert into Periodo values(3,2020,'2020/8/1','2020/10/28');
+--insert into Periodo values(3,2020,'2020/8/1','2020/10/28');
 
 insert into Periodo values(1,2021,'2020/2/2','2020/4/28');
 insert into Periodo values(2,2021,'2020/4/30','2020/7/28');
-insert into Periodo values(3,2021,'2020/8/1','2020/10/28');
+--insert into Periodo values(3,2021,'2020/8/1','2020/10/28');
 
-insert into Grupo values('Matemáticas-A1','Matemáticas',118180009,1,2020,1,30,'Abierto')
-insert into Grupo values('Biología-A1','Biología',118180009,1,2020,1,30,'Abierto')
-insert into Grupo values('Español-C1','Español',302302414,2,2021,1,25,'Abierto')
-insert into Grupo values('Química-B1','Química',110100005,3,2021,1,25,'Abierto')
-insert into Grupo values('Español-C1','Español',302302414,2,2021,1,25,'Abierto')
+--1 2020
+insert into Grupo values('Matemáticas-A1','Matemáticas',110100005,1,2020,1,30,'Abierto')
+insert into Grupo values('Matemáticas-A2','Matemáticas',115173422,1,2020,2,30,'Abierto')
+insert into Grupo values('Estudios Sociales-A1','Estudios Sociales',120183421,1,2020,1,30,'Abierto')
+insert into Grupo values('Estudios Sociales-A2','Estudios Sociales',126175451,1,2020,2,30,'Abierto')
 
-insert into Grupo_Horario values('Matemáticas-A1','Matemáticas',1,2020,
-'Martes y Jueves','15:00','16:50');
-insert into Grupo_Horario values('Biología-A1','Biología',1,2020,
-'Viernes','13:00','16:50');
-insert into Grupo_Horario values('Español-C1','Español',2,2021,
-'Lunes y Miercoles','8:00','11:25');
-insert into Grupo_Horario values('Química-B1','Química',3,2021,
-'Lunes y Miercoles','13:00','15:30');
+
+
+--2 2020
+insert into Grupo values('Biología-A1','Biología',256175651,2,2020,1,30,'Abierto')
+insert into Grupo values('Biología-A2','Biología',302302414,2,2020,2,30,'Abierto')
+insert into Grupo values('Español-A1','Español',421933720,2,2020,1,25,'Abierto')
+insert into Grupo values('Español-A2','Español',511133320,2,2020,2,25,'Abierto')
+
+
+--1 2021
+insert into Grupo values('Inglés-A1','Inglés',115173422,1,2021,1,30,'Abierto')
+insert into Grupo values('Inglés-A2','Inglés',118180009,1,2021,2,30,'Abierto')
+insert into Grupo values('Informática-A1','Informática',130173422,1,2021,1,30,'Abierto')
+insert into Grupo values('Informática-A2','Informática',219161321,1,2021,2,30,'Abierto')
+
+
+--2 2021
+insert into Grupo values('Química-A1','Química',356175651,2,2021,1,30,'Abierto')
+insert into Grupo values('Química-A2','Química',416173452,2,2021,2,30,'Abierto')
+insert into Grupo values('Fisica-A1','Fisica',811133320,2,2021,1,30,'Abierto')
+insert into Grupo values('Fisica-A2','Fisica',115173422,2,2021,2,30,'Abierto')
+
+
+--1 2020
+insert into Matricula values(5000,'2020/2/2',115150008,'Matemáticas-A1',1,2020,'Matemáticas')
+insert into Matricula values(5000,'2020/2/2',117950392,'Matemáticas-A1',1,2020,'Matemáticas')
+insert into Matricula values(5000,'2020/2/2',122543102,'Matemáticas-A1',1,2020,'Matemáticas')
+insert into Matricula values(5000,'2020/2/2',125150008,'Matemáticas-A1',1,2020,'Matemáticas')
+insert into Matricula values(5000,'2020/2/2',215150008,'Matemáticas-A1',1,2020,'Matemáticas')
+
+insert into Matricula values(5000,'2020/2/2',515150008,'Matemáticas-A2',1,2020,'Matemáticas')
+insert into Matricula values(5000,'2020/2/2',615150008,'Matemáticas-A2',1,2020,'Matemáticas')
+insert into Matricula values(5000,'2020/2/2',625150008,'Matemáticas-A2',1,2020,'Matemáticas')
+insert into Matricula values(5000,'2020/2/2',715150008,'Matemáticas-A2',1,2020,'Matemáticas')
+insert into Matricula values(5000,'2020/2/2',725150008,'Matemáticas-A2',1,2020,'Matemáticas')
+
+
+insert into Matricula values(5000,'2020/2/2',115150008,'Estudios Sociales-A1',1,2020,'Estudios Sociales')
+insert into Matricula values(5000,'2020/2/2',117950392,'Estudios Sociales-A1',1,2020,'Estudios Sociales')
+insert into Matricula values(5000,'2020/2/2',122543102,'Estudios Sociales-A1',1,2020,'Estudios Sociales')
+insert into Matricula values(5000,'2020/2/2',125150008,'Estudios Sociales-A1',1,2020,'Estudios Sociales')
+insert into Matricula values(5000,'2020/2/2',215150008,'Estudios Sociales-A1',1,2020,'Estudios Sociales')
+
+insert into Matricula values(5000,'2020/2/2',515150008,'Estudios Sociales-A2',1,2020,'Estudios Sociales')
+insert into Matricula values(5000,'2020/2/2',615150008,'Estudios Sociales-A2',1,2020,'Estudios Sociales')
+insert into Matricula values(5000,'2020/2/2',625150008,'Estudios Sociales-A2',1,2020,'Estudios Sociales')
+insert into Matricula values(5000,'2020/2/2',715150008,'Estudios Sociales-A2',1,2020,'Estudios Sociales')
+insert into Matricula values(5000,'2020/2/2',725150008,'Estudios Sociales-A2',1,2020,'Estudios Sociales')
+
+
+--2 2020
+insert into Matricula values(5000,'2020/2/2',225150008,'Biología-A1',2,2020,'Biología')
+insert into Matricula values(5000,'2020/2/2',315150008,'Biología-A1',2,2020,'Biología')
+insert into Matricula values(5000,'2020/2/2',325150008,'Biología-A1',2,2020,'Biología')
+insert into Matricula values(5000,'2020/2/2',525150008,'Biología-A1',2,2020,'Biología')
+insert into Matricula values(5000,'2020/2/2',425150008,'Biología-A1',2,2020,'Biología')
+
+insert into Matricula values(5000,'2020/2/2',815150008,'Biología-A2',2,2020,'Biología')
+insert into Matricula values(5000,'2020/2/2',825150008,'Biología-A2',2,2020,'Biología')
+insert into Matricula values(5000,'2020/2/2',415150008,'Biología-A2',2,2020,'Biología')
+insert into Matricula values(5000,'2020/2/2',290150018,'Biología-A2',2,2020,'Biología')
+insert into Matricula values(5000,'2020/2/2',190150018,'Biología-A2',2,2020,'Biología')
+
+insert into Matricula values(5000,'2020/2/2',225150008,'Español-A1',2,2020,'Español')
+insert into Matricula values(5000,'2020/2/2',315150008,'Español-A1',2,2020,'Español')
+insert into Matricula values(5000,'2020/2/2',325150008,'Español-A1',2,2020,'Español')
+insert into Matricula values(5000,'2020/2/2',525150008,'Español-A1',2,2020,'Español')
+insert into Matricula values(5000,'2020/2/2',425150008,'Español-A1',2,2020,'Español')
+
+insert into Matricula values(5000,'2020/2/2',815150008,'Español-A2',2,2020,'Español')
+insert into Matricula values(5000,'2020/2/2',825150008,'Español-A2',2,2020,'Español')
+insert into Matricula values(5000,'2020/2/2',415150008,'Español-A2',2,2020,'Español')
+insert into Matricula values(5000,'2020/2/2',290150018,'Español-A2',2,2020,'Español')
+insert into Matricula values(5000,'2020/2/2',190150018,'Español-A2',2,2020,'Español')
+
+
+--1 2021
+insert into Matricula values(5000,'2021/2/2',115150008,'Informática-A1',1,2021,'Informática')
+insert into Matricula values(5000,'2021/2/2',117950392,'Informática-A1',1,2021,'Informática')
+insert into Matricula values(5000,'2021/2/2',122543102,'Informática-A1',1,2021,'Informática')
+insert into Matricula values(5000,'2021/2/2',125150008,'Informática-A1',1,2021,'Informática')
+insert into Matricula values(5000,'2021/2/2',215150008,'Informática-A1',1,2021,'Informática')
+
+insert into Matricula values(5000,'2021/2/2',515150008,'Informática-A2',1,2021,'Informática')
+insert into Matricula values(5000,'2021/2/2',615150008,'Informática-A2',1,2021,'Informática')
+insert into Matricula values(5000,'2021/2/2',625150008,'Informática-A2',1,2021,'Informática')
+insert into Matricula values(5000,'2021/2/2',715150008,'Informática-A2',1,2021,'Informática')
+insert into Matricula values(5000,'2021/2/2',725150008,'Informática-A2',1,2021,'Informática')
+
+insert into Matricula values(5000,'2021/2/2',115150008,'Inglés-A1',1,2021,'Inglés')
+insert into Matricula values(5000,'2021/2/2',117950392,'Inglés-A1',1,2021,'Inglés')
+insert into Matricula values(5000,'2021/2/2',122543102,'Inglés-A1',1,2021,'Inglés')
+insert into Matricula values(5000,'2021/2/2',125150008,'Inglés-A1',1,2021,'Inglés')
+insert into Matricula values(5000,'2021/2/2',215150008,'Inglés-A1',1,2021,'Inglés')
+
+insert into Matricula values(5000,'2021/2/2',515150008,'Inglés-A2',1,2021,'Inglés')
+insert into Matricula values(5000,'2021/2/2',615150008,'Inglés-A2',1,2021,'Inglés')
+insert into Matricula values(5000,'2021/2/2',625150008,'Inglés-A2',1,2021,'Inglés')
+insert into Matricula values(5000,'2021/2/2',715150008,'Inglés-A2',1,2021,'Inglés')
+insert into Matricula values(5000,'2021/2/2',725150008,'Inglés-A2',1,2021,'Inglés')
+
+--2 2021
+insert into Matricula values(5000,'2021/2/2',225150008,'Fisica-A1',2,2021,'Fisica')
+insert into Matricula values(5000,'2021/2/2',315150008,'Fisica-A1',2,2021,'Fisica')
+insert into Matricula values(5000,'2021/2/2',325150008,'Fisica-A1',2,2021,'Fisica')
+insert into Matricula values(5000,'2021/2/2',525150008,'Fisica-A1',2,2021,'Fisica')
+insert into Matricula values(5000,'2021/2/2',425150008,'Fisica-A1',2,2021,'Fisica')
+
+insert into Matricula values(5000,'2021/2/2',815150008,'Fisica-A2',2,2021,'Fisica')
+insert into Matricula values(5000,'2021/2/2',825150008,'Fisica-A2',2,2021,'Fisica')
+insert into Matricula values(5000,'2021/2/2',415150008,'Fisica-A2',2,2021,'Fisica')
+insert into Matricula values(5000,'2021/2/2',290150018,'Fisica-A2',2,2021,'Fisica')
+insert into Matricula values(5000,'2021/2/2',190150018,'Fisica-A2',2,2021,'Fisica')
+
+insert into Matricula values(5000,'2021/2/2',225150008,'Química-A1',2,2021,'Química')
+insert into Matricula values(5000,'2021/2/2',315150008,'Química-A1',2,2021,'Química')
+insert into Matricula values(5000,'2021/2/2',325150008,'Química-A1',2,2021,'Química')
+insert into Matricula values(5000,'2021/2/2',525150008,'Química-A1',2,2021,'Química')
+insert into Matricula values(5000,'2021/2/2',425150008,'Química-A1',2,2021,'Química')
+
+insert into Matricula values(5000,'2021/2/2',815150008,'Química-A2',2,2021,'Química')
+insert into Matricula values(5000,'2021/2/2',825150008,'Química-A2',2,2021,'Química')
+insert into Matricula values(5000,'2021/2/2',415150008,'Química-A2',2,2021,'Química')
+insert into Matricula values(5000,'2021/2/2',290150018,'Química-A2',2,2021,'Química')
+insert into Matricula values(5000,'2021/2/2',190150018,'Química-A2',2,2021,'Química')
+
+
+--insert into Grupo_Horario values('Matemáticas-A1','Matemáticas',1,2020,
+--'Martes y Jueves','15:00','16:50');
+
+select * from Estudiante order by grado ASC
 
 insert into Evaluacion values('Matemáticas-A1',1,2020,'Matemáticas','Examenes 90%, Tareas 10%')
 insert into Evaluacion values('Biología-A1',1,2020,'Biología','Examenes 60%, Tareas 20%, Cotidiano 20%')
