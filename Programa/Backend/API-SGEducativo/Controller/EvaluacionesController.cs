@@ -36,14 +36,34 @@ namespace API_SGEducativo.Controller
             }
         }
 
+
+        // GET: api/<EvaluacionesController>
+        [HttpGet("{codigoNombre}/1")]
+        public ActionResult<List<Evaluacion>> GetEvalucion(String codigoNombre)
+        {
+            try
+            {
+
+                var evalucion = _context.Evaluacion.Where(eva => eva.codigoGrupo.Equals(codigoNombre)).ToList();
+                return evalucion;
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+
+
         // GET api/<EvaluacionesController>/5
-        [HttpGet("{codigoGrupo}/{nombreMateria}/{numPeriodo}/{anno}", Name = "GetGrupoEvaluacion")] //Devuelve solo un registro
-        public ActionResult Get(string codigoGrupo, string nombreMateria, int numPeriodo, int anno)
+        [HttpGet("{rubro}/{codigoGrupo}/{nombreMateria}/{numPeriodo}/{anno}", Name = "GetGrupoEvaluacion")] //Devuelve solo un registro
+        public ActionResult Get(string codigoGrupo, string nombreMateria, int numPeriodo, int anno, string rubro)
         {
             try
             {
                 var evaluacion = _context.Evaluacion.FirstOrDefault(e => e.numPeriodo == numPeriodo && e.anno == anno
-                && e.codigoGrupo == codigoGrupo && e.nombreMateria == nombreMateria);
+                && e.codigoGrupo == codigoGrupo && e.nombreMateria == nombreMateria && e.rubro == rubro);
                 return Ok(evaluacion);
             }
             catch (Exception e)
@@ -70,20 +90,19 @@ namespace API_SGEducativo.Controller
         }
 
         // PUT api/<EvaluacionesController>/5
-        [HttpPut("{codigoGrupo}/{nombreMateria}/{numPeriodo}/{anno}")]
-        public ActionResult Put(string codigoGrupo, string nombreMateria, int numPeriodo, int anno, [FromBody] Evaluacion evaluacion)
+        [HttpPut("{rubro}/{codigoGrupo}/{nombreMateria}/{numPeriodo}/{anno}")]
+        public ActionResult Put( string codigoGrupo, string nombreMateria, int numPeriodo, int anno, string rubro, [FromBody] Evaluacion evaluacion)
         {
-
             try
             {
 
                 if (evaluacion.numPeriodo == numPeriodo && evaluacion.anno == anno
-                && evaluacion.codigoGrupo == codigoGrupo && evaluacion.nombreMateria == nombreMateria)
+                && evaluacion.codigoGrupo == codigoGrupo && evaluacion.nombreMateria == nombreMateria && evaluacion.rubro == rubro)
                 {
 
                     _context.Entry(evaluacion).State = EntityState.Modified; //Realiza los cambios
                     _context.SaveChanges(); //Guarda los cambios
-                    return Ok(evaluacion);
+                    return Ok(codigoGrupo);
                 }
                 else
                 {
@@ -95,18 +114,17 @@ namespace API_SGEducativo.Controller
             {
                 return BadRequest("Catch");
             }
-
         }
 
         // DELETE api/<EvaluacionesController>/5
-        [HttpDelete("{codigoGrupo}/ {nombreMateria}/{numeroPeriodo}/{anno}")]
-        public ActionResult Delete(string codigoGrupo, string nombreMateria, int numPeriodo, int anno)
+        [HttpDelete("{rubro}/{codigoGrupo}/{nombreMateria}/{numeroPeriodo}/{anno}")]
+        public ActionResult Delete(string codigoGrupo, string nombreMateria, int numPeriodo, int anno, string rubro)
         {
 
             try
             {
                 var evaluacion = _context.Evaluacion.FirstOrDefault(e => e.numPeriodo == numPeriodo && e.anno == anno
-              && e.codigoGrupo == codigoGrupo && e.nombreMateria == nombreMateria);
+              && e.codigoGrupo == codigoGrupo && e.nombreMateria == nombreMateria && e.rubro == rubro);
                 if (evaluacion != null)
                 {
                     _context.Evaluacion.Remove(evaluacion);

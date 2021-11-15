@@ -6,28 +6,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace API_SGEducativo.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Evaluacion_EstudiantesController : ControllerBase
+    public class Evaluacion_Grupo_EstudianteController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public Evaluacion_EstudiantesController(AppDbContext context)
+        public Evaluacion_Grupo_EstudianteController(AppDbContext context)
         {
             _context = context;
         }
-        // GET: api/<Evaluacion_EstudiantesController>
+        // GET: api/<Evaluacion_Grupo_EstudianteController>
         [HttpGet]
         public ActionResult Get()
         {
             try
             {
-                return Ok(_context.Evaluacion_Estudiante.ToList());
+                return Ok(_context.Evaluacion_Grupo_Estudiante.ToList());
             }
             catch (Exception e)
             {
@@ -35,15 +32,15 @@ namespace API_SGEducativo.Controller
             }
         }
 
-        // GET api/<Evaluacion_EstudiantesController>/5
-        [HttpGet("{cedulaEstudiante}/{codigoGrupo}/{nombreMateria}/{numPeriodo}/{anno}", Name ="GetEvaluacion_Estudiante")]
-        public ActionResult Get(int cedulaEstudiante,string codigoGrupo, string nombreMateria, int numPeriodo, int anno)
+        // GET api/<Evaluacion_Grupo_EstudianteController>/5
+        [HttpGet("{codigoGrupo}/{nombreMateria}/{numPeriodo}/{anno}/{cedulaEstudiante}", Name = "GetEvaluacion_Grupo_Estudiante")]
+        public ActionResult Get( string codigoGrupo, string nombreMateria, int numPeriodo, int anno, int cedulaEstudiante)
         {
             try
             {
-                var evaluacion = _context.Evaluacion_Estudiante.FirstOrDefault(e => e.cedulaEstudiante == cedulaEstudiante &&
-                 e.numPeriodo == numPeriodo && e.anno == anno && e.codigoGrupo == codigoGrupo && e.nombreMateria == nombreMateria 
-                 ); //LINQ
+                var evaluacion = _context.Evaluacion_Grupo_Estudiante.FirstOrDefault(e =>
+                 e.numPeriodo == numPeriodo && e.anno == anno && e.codigoGrupo == codigoGrupo && e.nombreMateria == nombreMateria&&
+                 e.cedulaEstudiante == cedulaEstudiante ); //LINQ
                 return Ok(evaluacion);
             }
             catch (Exception e)
@@ -53,12 +50,12 @@ namespace API_SGEducativo.Controller
         }
 
         [HttpGet("{cedulaEstudiante}/1")]
-        public ActionResult<List<Evaluacion_Estudiante>> GeEvaluacion(int cedulaEstudiante)
+        public ActionResult<List<Evaluacion_Grupo_Estudiante>> GeEvaluacion(int cedulaEstudiante)
         {
             try
             {
 
-                var evaluacion = _context.Evaluacion_Estudiante.Where(evalu => evalu.cedulaEstudiante.Equals(cedulaEstudiante)).ToList();
+                var evaluacion = _context.Evaluacion_Grupo_Estudiante.Where(evalu => evalu.cedulaEstudiante.Equals(cedulaEstudiante)).ToList();
                 return evaluacion;
             }
             catch (Exception e)
@@ -67,14 +64,14 @@ namespace API_SGEducativo.Controller
             }
         }
 
-        // POST api/<Evaluacion_EstudiantesController>
+        // POST api/<Evaluacion_Grupo_EstudianteController>
         [HttpPost]
-        public ActionResult Post([FromBody] Evaluacion_Estudiante evaluacion)
+        public ActionResult Post([FromBody] Evaluacion_Grupo_Estudiante evaluacion)
         {
 
             try
             {
-                _context.Evaluacion_Estudiante.Add(evaluacion);
+                _context.Evaluacion_Grupo_Estudiante.Add(evaluacion);
                 _context.SaveChanges(); //Guarda los cambios
                 return Ok(evaluacion);
             }
@@ -84,9 +81,9 @@ namespace API_SGEducativo.Controller
             }
         }
 
-        // PUT api/<Evaluacion_EstudiantesController>/5
+        // PUT api/<Evaluacion_Grupo_EstudianteController>/5
         [HttpPut("{cedulaEstudiante}/{codigoGrupo}/{nombreMateria}/{numPeriodo}/{anno}")]
-        public ActionResult Put(int cedulaEstudiante, string codigoGrupo, string nombreMateria, int numPeriodo, int anno,[FromBody] Evaluacion_Estudiante evaluacion)
+        public ActionResult Put(int cedulaEstudiante, string codigoGrupo, string nombreMateria, int numPeriodo, int anno, [FromBody] Evaluacion_Grupo_Estudiante evaluacion)
         {
             try
             {
@@ -111,17 +108,17 @@ namespace API_SGEducativo.Controller
             }
         }
 
-        // DELETE api/<Evaluacion_EstudiantesController>/5
+        // DELETE api/<Evaluacion_Grupo_EstudianteController>/5
         [HttpDelete("{cedulaEstudiante}/{codigoGrupo}/{nombreMateria}/{numPeriodo}/{anno}")]
         public ActionResult Delete(int cedulaEstudiante, string codigoGrupo, string nombreMateria, int numPeriodo, int anno)
         {
             try
             {
-                var evaluacion = _context.Evaluacion_Estudiante.FirstOrDefault(e => e.cedulaEstudiante == cedulaEstudiante &&
-                 e.numPeriodo == numPeriodo && e.anno == anno && e.codigoGrupo == codigoGrupo && e.nombreMateria == nombreMateria );
+                var evaluacion = _context.Evaluacion_Grupo_Estudiante.FirstOrDefault(e => e.cedulaEstudiante == cedulaEstudiante &&
+                 e.numPeriodo == numPeriodo && e.anno == anno && e.codigoGrupo == codigoGrupo && e.nombreMateria == nombreMateria);
                 if (evaluacion != null)
                 {
-                    _context.Evaluacion_Estudiante.Remove(evaluacion);
+                    _context.Evaluacion_Grupo_Estudiante.Remove(evaluacion);
                     _context.SaveChanges();
                     return Ok(cedulaEstudiante);
                 }

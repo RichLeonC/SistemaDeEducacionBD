@@ -18,6 +18,6 @@ namespace API_SGEducativo.Models
         public int anno { get; set; }
 
         public double notaObtenida { get; set; }
-        public string estado { get; set; }
+        public string rubro { get; set; }
     }
 }
