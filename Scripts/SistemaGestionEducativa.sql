@@ -143,7 +143,7 @@ create table Asistencia_Estudiante (
 
 ----Tabla con todos los rublos de evalución de un grupo 
 create table Evaluacion(
-	rubro varchar(50),
+	rubro varchar(50) not null,
 	porcentaje int,
 	codigoGrupo varchar(25) not null,
 	numPeriodo int not null,
@@ -155,6 +155,11 @@ create table Evaluacion(
 
 );
 
+create table Evaluacion_Grupo_Estudiante(
+	
+
+);
+
 --Tabla que registra cada nota del estudiante por grupo, además con su estado (Aprobado-Reprobado)
 create table Evaluacion_Estudiante(
 	cedulaEstudiante int not null foreign key references Estudiante(cedula),
@@ -163,9 +168,9 @@ create table Evaluacion_Estudiante(
 	numPeriodo int not null,
 	anno int not null,
 	notaObtenida float not null,
-	estado varchar(20) not null,
-	foreign key(codigoGrupo,numPeriodo,anno,nombreMateria) 
-	references Grupo(codigoNombre,numeroPeriodo,anno,nombreMateria),
+	rubro varchar(20) not null ,
+	foreign key(codigoGrupo,numPeriodo,anno,nombreMateria,rubro) 
+	references Evaluacion(codigoGrupo,numPeriodo,anno,nombreMateria,rubro),
 	primary key(cedulaEstudiante,codigoGrupo,nombreMateria,numPeriodo,anno)
 
 )
@@ -303,12 +308,12 @@ insert into Estudiante values(115150008,114140008,1);
 
 
 
-insert into Materia values('Español',25000);
-insert into Materia values('Matemáticas',45000);
-insert into Materia values('Estudios Sociales',15000);
-insert into Materia values('Biología',34000);
-insert into Materia values('Química',34000);
-insert into Materia values('Fisica Elemental',34000);
+insert into Materia values('Español',25000,2000);
+insert into Materia values('Matemáticas',45000,20000);
+insert into Materia values('Estudios Sociales',15000,2000);
+insert into Materia values('Biología',34000,2000,200);
+insert into Materia values('Química',34000,200,2000);
+insert into Materia values('Fisica Elemental',34000,200);
 
 
 insert into Periodo values(1,2020,'2020/2/2','2020/4/28');
@@ -319,7 +324,7 @@ insert into Periodo values(1,2021,'2020/2/2','2020/4/28');
 insert into Periodo values(2,2021,'2020/4/30','2020/7/28');
 insert into Periodo values(3,2021,'2020/8/1','2020/10/28');
 
-insert into Grupo values('Matemáticas-A1','Matemáticas',118180009,1,2020,1,30,'Abierto')
+insert into Grupo values('Matemáticas-A1','Matemáticas',118180009,1,2020,1,30,'Abierto','')
 insert into Grupo values('Biología-A1','Biología',118180009,1,2020,1,30,'Abierto')
 insert into Grupo values('Español-C1','Español',302302414,2,2021,1,25,'Abierto')
 insert into Grupo values('Química-B1','Química',110100005,3,2021,1,25,'Abierto')
@@ -334,13 +339,28 @@ insert into Grupo_Horario values('Español-C1','Español',2,2021,
 insert into Grupo_Horario values('Química-B1','Química',3,2021,
 'Lunes y Miercoles','13:00','15:30');
 
-insert into Evaluacion values('Matemáticas-A1',1,2020,'Matemáticas','Examenes 90%, Tareas 10%')
+insert into Evaluacion values('Tareas',10,'Matemáticas-A1',1,2020,'Matemáticas')
+insert into Evaluacion values('Cotidiano',20,'Matemáticas-A1',1,2020,'Matemáticas')
+insert into Evaluacion values('Proyectos',30,'Matemáticas-A1',1,2020,'Matemáticas')
+insert into Evaluacion values('Examenes',40,'Matemáticas-A1',1,2020,'Matemáticas')
+}
 insert into Evaluacion values('Biología-A1',1,2020,'Biología','Examenes 60%, Tareas 20%, Cotidiano 20%')
 insert into Evaluacion values('Español-C1',2,2021,'Español','Examenes 60%, Tareas 20%, Comunicación 20%')
 insert into Evaluacion values('Química-B1',3,2021,'Química','Examenes 80%, Tareas 10%')
 
 
+--create table Evaluacion(
+--	rubro varchar(50),
+--	porcentaje int,
+--	codigoGrupo varchar(25) not null,
+--	numPeriodo int not null,
+--	anno int not null,
+--	nombreMateria varchar(100),
+--	foreign key(codigoGrupo,numPeriodo,anno,nombreMateria) 
+--	references Grupo(codigoNombre,numeroPeriodo,anno,nombreMateria),
+--	primary key(rubro,codigoGrupo,numPeriodo,anno,nombreMateria)
 
+--);
 -------Procedimientos-----------------------------------------------------------------------
 
 go
