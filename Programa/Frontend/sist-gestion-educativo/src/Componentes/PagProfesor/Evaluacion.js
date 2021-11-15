@@ -6,15 +6,17 @@ import Cookies from 'universal-cookie';
 
 //Componente que administra las evaluaciones del grupos el cual maneja el profesor.
 export default function Evaluacion () {
-    const baseURLEvaluciones = "https://localhost:44329/api/Evaluaciones";
-    const baseURLEvalucionesEstudiante = "https://localhost:44329/api/Evaluacion_Estudiantes";
-    const baseUrlEstudiantes =  "https://localhost:44329/api/estudiantes";
-    const baseUrlGrupos = "https://localhost:44329/api/Grupos";
-    const baseUrlUsuarios =  "https://localhost:44329/api/Usuarios";
-    const baseUrlMatriculas = "https://localhost:44329/api/matriculas";
+    const baseURLEvaluciones = "https://localhost:44307/api/Evaluaciones";
+    const baseURLEvalucionesEstudiante = "https://localhost:44307/api/Evaluacion_Estudiantes";
+    const baseURLEvalucionesGrupoEstudiante = "https://localhost:44307/api/Evaluacion_Grupo_Estudiante";
+    const baseUrlEstudiantes =  "https://localhost:44307/api/estudiantes";
+    const baseUrlGrupos = "https://localhost:44307/api/Grupos";
+    const baseUrlUsuarios =  "https://localhost:44307/api/Usuarios";
+    const baseUrlMatriculas = "https://localhost:44307/api/matriculas";
 
     const cookies = new Cookies();
-    var cedula = cookies.get("cedula");// toma la cedula del profesor que haya iniciado sesión. 
+    var cedula = cookies.get("cedula");// toma la cedula del profesor que haya iniciado sesión.
+
     const [estudiantesF, setEstudiantesF]= useState([]);// estudiantes vinculados a un grupo
     const [modalGrupo,setModalGrupos] = useState(false); //Estado para el modal (la ventana de grupo)
     const [modalCambiarEvaluacion,setModalCambiarEvaluacion] = useState(false); //Estado para el modal (la ventana de grupo)
@@ -26,30 +28,33 @@ export default function Evaluacion () {
     const [modalNota,setmodalNota] = useState(false); //Estado para el modal (la ventana de asistencia)
     const [evaluacion, setEvaluacion] = useState ([]);// evaluacion ligada al grupo
     const [evaluacionEs, setEvaluacionES] = useState ([]);// evalucion del obtenida por el estudiante 
+    const [evaluacionGrupoEs, setEvaluacionGrupoES] = useState ([]);// evalucion del obtenida por el estudiante 
     const [grupoSeleccionado, setGrupoSeleccionado] = useState ([]);
     const [estudianteActual,setestudianteActual] = useState([]); // estudiante que se desea ingresar su asistencia
     const [evaluacionGrupo, setEvaluacionGrupo] = useState ([]);
+    const [tipoEvalucion, setTipoEvalucion] = useState ("");
     const [estudianteNota, setEstudianteNota] = useState({
+        rubro: '',
+        cedulaEstudiante : '',
+        codigoGrupo : grupoSeleccionado,
+        nombreMateria : '',
+        numeroPeriodo: '',
+        anno : '',
+        notaObtenida: ''
+    });
+
+    const [notaFinal, setNotaFinal] = useState({
         cedulaEstudiante : '',
         codigoGrupo : grupoSeleccionado,
         nombreMateria : '',
         numeroPeriodo: '',
         anno : '',
         notaObtenida: '',
-        estado: ''
+        estado: '',
+        descripcionEvaluacion : ''
     });
 
 
-    const [evaluacionNuevaG,setevaluacionNuevaG] = useState ({
-        codigoGrupo : '',
-        nombreMateria : '',
-        numPeriodo: '',
-        anno : '',
-        descripcion: ''
-
-
-
-    });
     
    const [notaO, setNotaO] = useState ("");
    const [nuevaDes, setNuevaDes] = useState("");
@@ -112,10 +117,18 @@ export default function Evaluacion () {
         })
     }
 
-    const abrirModalGrupos=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
+    const peticionGetEvalucionGrupoEstudiantes = async()=>{ //Realiza peticiones Get al backend de los estudiantes
+        await axios.get(baseURLEvalucionesGrupoEstudiante)
+        .then(response=>{
+            setEvaluacionGrupoES(response.data);
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
 
+    const abrirModalGrupos=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
         setModalGrupos(!modalGrupo);
-       
+        
         if (modalGrupo==false){
             setEstudiantesF([]); 
            
@@ -132,6 +145,7 @@ export default function Evaluacion () {
         peticionGetMatricula();
         peticionGetEstudiantes();
         peticionGetEvalucion();
+        peticionGetEvalucionGrupoEstudiantes();
 
         
     }, [])
@@ -146,7 +160,13 @@ export default function Evaluacion () {
         
        
     }
-
+    
+    const handlerOpcion1 = e =>{ //Guarda el grupo selecionado en el estado
+        const opcion = e.target.value;
+        setTipoEvalucion(opcion);
+        console.log(opcion);
+      
+    }
 
 
     const opciones = ()=> {
@@ -171,21 +191,31 @@ export default function Evaluacion () {
         cerrarModalGrupos();
     }
 
+    const todoEvaluado= ()=> {
+        const contaEstu = evaluacionEs.filter(estudiante=> estudiante.cedulaEstudiante == (estudianteActual.cedula));
 
+        if (contaEstu.length == evaluacion.length){
+            peticionPost();
+            return true;
+        }
+        else{
+            return false;
 
-    
-    
+        }
+    }
+
     const abrirCerrarModalEvaluacion=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
-    //  console.log(handlerOpcion());
-        console.log(filtrarMatriculas);
+    
         const infoGrupo = gruposProfesor.filter(grupo=>grupo.codigoNombre == (grupoSeleccionado));
-        console.log(infoGrupo);
+ 
+        console.log(evaluacion);
         setEvaluacionGrupo(evaluacion.filter(evaluacion=>infoGrupo.find(grupo=> grupo.codigoNombre == evaluacion.codigoGrupo)));
+        console.log(evaluacion);
         setmodalEvalucion(!modalEvalucion);
     }
     
     const CerrarModalEvaluacion=()=>{ //Cambia el estado del modal de insertar (abierto o cerrado)
-        peticionPut();
+  
         setModalCambiarEvaluacion(!modalCambiarEvaluacion);
     }
   
@@ -197,19 +227,56 @@ export default function Evaluacion () {
     }
 
 
+
+
     const peticionPost=async()=>{ //Realiza peticiones post al backend
+        //  transformar();
+        notaFinal.cedulaEstudiante= estudianteActual.cedula;
+        const infoGrupo = gruposProfesor.filter(grupo=>grupo.codigoNombre == (grupoSeleccionado));
+        const contaEstu = evaluacionEs.filter(estudiante=> estudiante.cedulaEstudiante == (estudianteActual.cedula));
+        var notaTotal = 0;
+        for (let n of contaEstu){
+            notaTotal = notaTotal + n.notaObtenida
+
+        }
+        var estadoAlumno= '';
+        var iterator = infoGrupo.values();
+          if (notaTotal<70){
+              estadoAlumno = "Reprobado"
+          }
+          if (notaTotal>=70){
+            estadoAlumno = "Aprobado"
+          }
+          for(let grupo of iterator){
+              
+            notaFinal.codigoGrupo = grupo.codigoNombre;
+            notaFinal.numPeriodo = parseInt(grupo.numeroPeriodo);
+            notaFinal.anno = parseInt(grupo.anno);
+            notaFinal.nombreMateria = grupo.nombreMateria;
+            notaFinal.notaObtenida= notaTotal;
+            notaFinal.estado = estadoAlumno;
+            notaFinal.descripcionEvaluacion = '';
+          }
+         
+          
+          
+          await axios.post(baseURLEvalucionesGrupoEstudiante,notaFinal) //Realizamos la peticion post, el matriculaSeleccionada se pasa como BODY
+          .then(response=>{
+            setEvaluacionGrupoES(evaluacionGrupoEs.concat(response.evaluacionGrupoEs)); //Agregamos al estado lo que responda la API
+          }).catch(error=>{
+              console.log(error);
+          })
+      }
+
+      const peticionPostRubroNota=async()=>{ //Realiza peticiones post al backend
         //  transformar();
         estudianteNota.cedulaEstudiante= estudianteActual.cedula;
         const infoGrupo = gruposProfesor.filter(grupo=>grupo.codigoNombre == (grupoSeleccionado));
+        
         var iterator = infoGrupo.values();
-        var estadoAlumno ="";
+       
         const intNota = parseInt(notaO);
-          if (intNota<70){
-              estadoAlumno = "Reprobado"
-          }
-          if (intNota>=70){
-            estadoAlumno = "Aprobado"
-          }
+        
           for(let grupo of iterator){
               
             estudianteNota.codigoGrupo = grupo.codigoNombre;
@@ -217,7 +284,8 @@ export default function Evaluacion () {
             estudianteNota.anno = parseInt(grupo.anno);
             estudianteNota.nombreMateria = grupo.nombreMateria;
             estudianteNota.notaObtenida= intNota;
-            estudianteNota.estado = estadoAlumno;
+            estudianteNota.rubro= tipoEvalucion;
+           
           }
          
           
@@ -231,7 +299,8 @@ export default function Evaluacion () {
       }
 
       const cerrarpost=()=>{
-        peticionPost();
+        peticionPostRubroNota();
+        todoEvaluado();
         console.log(notaO);
         setmodalNota(!modalNota);
 
@@ -246,62 +315,6 @@ export default function Evaluacion () {
 
    
 
-    const abrirCerrarModalCambiarEvaluacion =()=>{
-        const infoGrupo = gruposProfesor.filter(grupo=>grupo.codigoNombre == (grupoSeleccionado));
-       // console.log(infoGrupo);
-       
-        var iterator = infoGrupo.values();
-        
-        for(let grupos of iterator){
-            
-           
-            evaluacionNuevaG.codigoGrupo = grupos.codigoNombre;
-            evaluacionNuevaG.numPeriodo = parseInt(grupos.numeroPeriodo);
-            evaluacionNuevaG.anno = grupos.anno;
-            evaluacionNuevaG.nombreMateria = grupos.nombreMateria;
-            evaluacionNuevaG.descripcion = "";
-           
-        }
-
-        console.log(evaluacionNuevaG);
-       
-        setModalCambiarEvaluacion(!modalCambiarEvaluacion);
-        
-    }
-
-
-    const peticionPut=async()=>{ //Realiza peticiones post al backend
-        //  transformar();
-
-        console.log(nuevaDes);
-        console.log(evaluacion);
-        console.log(evaluacionNuevaG);
-        evaluacionNuevaG.descripcion= nuevaDes;
-        await axios.put( baseURLEvaluciones+"/"+ evaluacionNuevaG.codigoGrupo +"/"+
-          evaluacionNuevaG.nombreMateria +"/" +  evaluacionNuevaG.numPeriodo +"/"+ evaluacionNuevaG.anno
-          ,evaluacionNuevaG) //Realizamos la peticion post, el matriculaSeleccionada se pasa como BODY
-          .then(response=>{
-                var respuesta = response.data;
-                var dataAuxiliar= evaluacion;
-                dataAuxiliar.map(asistio =>{if(
-                     asistio.codigoGrupo == evaluacionNuevaG.codigoGrupo &&
-                    asistio.nombreMateria == evaluacionNuevaG.nombreMateria &&
-                     asistio.numPeriodo == evaluacionNuevaG.numPeriodo 
-                    && asistio.anno == evaluacionNuevaG.anno){
-                    
-                       asistio.descripcion= nuevaDes;
-                        
-
-
-                    }
-
-                })
-
-          }).catch(error=>{
-              console.log(error);    
-
-          })
-      }
  
 
 return (
@@ -318,9 +331,7 @@ return (
             <div className = "col">
                  <button className="  btn btn-warning" onClick={()=>abrirCerrarModalEvaluacion()} >Evaluacion</button>        
             </div>
-            <div className = "col">
-                <button className=" btn btn-danger" onClick={()=>abrirCerrarModalCambiarEvaluacion()} >Cambiar Evaluacion</button>
-            </div>
+         
         </div>
     </div>
             <table className="table table-hover mt-5 offset-md-3" >
@@ -376,7 +387,7 @@ return (
                                 </select> 
                                    
                             </FloatingLabel>
-          
+                       
                         </Form>
 
                       </ModalBody> 
@@ -394,11 +405,22 @@ return (
                       <ModalHeader>Evaluación</ModalHeader>
 
                       <ModalBody>
-                          {
-                              evaluacionGrupo.map(evaluacion=>(
-                                  <label>{evaluacion.descripcion}</label>
-                              ))
-                          }
+                      <Form>    
+                            <FloatingLabel controlId="floatingSelect" label="Evaluacion">
+                                <select id="rol" name="evaluaciones" className="form-control" onChange={handlerOpcion1}>
+                                    <option value ={-1} selected disabled>Opciones</option>
+                                       
+                                  {
+                                    evaluacion.map((item,i)=>(
+                                      
+                                      <option key={"evaluacion"+i} value={item.rubro}>{item.rubro}</option>
+                                      
+                                    ))
+                                  }
+                                </select> 
+                                     
+                              </FloatingLabel>
+                              </Form>    
                       </ModalBody>
 
                       <ModalFooter>
