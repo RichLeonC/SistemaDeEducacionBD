@@ -732,17 +732,88 @@ insert into Matricula values(5000,'2021/2/2',415150008,'Química-A2',2,2021,'Qu�
 insert into Matricula values(5000,'2021/2/2',290150018,'Química-A2',2,2021,'Química')
 insert into Matricula values(5000,'2021/2/2',190150018,'Química-A2',2,2021,'Química')
 
+--------------------------------------------------Asistencia-------------------------------
+
+insert into Asistencia_Estudiante values(115150008,'Matemáticas-A1','Matemáticas',1,2020,'2020/4/4',0);
+insert into Asistencia_Estudiante values(115150008,'Matemáticas-A1','Matemáticas',1,2020,'2020/4/5',0);
+insert into Asistencia_Estudiante values(115150008,'Matemáticas-A1','Matemáticas',1,2020,'2020/4/6',0);
+insert into Asistencia_Estudiante values(115150008,'Matemáticas-A1','Matemáticas',1,2020,'2020/4/7',0);
+
+insert into Asistencia_Estudiante values(117950392,'Matemáticas-A1','Matemáticas',1,2020,'2020/4/4',0);
+insert into Asistencia_Estudiante values(117950392,'Matemáticas-A1','Matemáticas',1,2020,'2020/4/5',0);
+insert into Asistencia_Estudiante values(117950392,'Matemáticas-A1','Matemáticas',1,2020,'2020/4/6',0);
+insert into Asistencia_Estudiante values(117950392,'Matemáticas-A1','Matemáticas',1,2020,'2020/4/7',0);
+insert into Asistencia_Estudiante values(117950392,'Matemáticas-A1','Matemáticas',1,2020,'2020/4/8',0);
+
+insert into Asistencia_Estudiante values(122543102,'Matemáticas-A1','Matemáticas',1,2020,'2020/4/4',0);
+insert into Asistencia_Estudiante values(122543102,'Matemáticas-A1','Matemáticas',1,2020,'2020/4/5',0);
+insert into Asistencia_Estudiante values(122543102,'Matemáticas-A1','Matemáticas',1,2020,'2020/4/6',0);
+
+insert into Asistencia_Estudiante values(125150008,'Matemáticas-A1','Matemáticas',1,2020,'2020/4/4',0);
+insert into Asistencia_Estudiante values(125150008,'Matemáticas-A1','Matemáticas',1,2020,'2020/4/5',0);
+insert into Asistencia_Estudiante values(125150008,'Matemáticas-A1','Matemáticas',1,2020,'2020/4/6',0);
+
+insert into Asistencia_Estudiante values(215150008,'Matemáticas-A1','Matemáticas',1,2020,'2020/4/4',0);
+insert into Asistencia_Estudiante values(215150008,'Matemáticas-A1','Matemáticas',1,2020,'2020/4/5',0);
+insert into Asistencia_Estudiante values(215150008,'Matemáticas-A1','Matemáticas',1,2020,'2020/4/6',0);
+
+insert into Asistencia_Estudiante values(515150008,'Matemáticas-A2','Matemáticas',1,2020,'2020/4/4',0);
+insert into Asistencia_Estudiante values(515150008,'Matemáticas-A2','Matemáticas',1,2020,'2020/4/5',0);
+insert into Asistencia_Estudiante values(515150008,'Matemáticas-A2','Matemáticas',1,2020,'2020/4/6',0);
+
+
+insert into Asistencia_Estudiante values(615150008,'Matemáticas-A2','Matemáticas',1,2020,'2020/4/4',0);
+insert into Asistencia_Estudiante values(615150008,'Matemáticas-A2','Matemáticas',1,2020,'2020/4/5',0);
+
+insert into Asistencia_Estudiante values(625150008,'Matemáticas-A2','Matemáticas',1,2020,'2020/4/4',0);
+insert into Asistencia_Estudiante values(625150008,'Matemáticas-A2','Matemáticas',1,2020,'2020/4/6',0);
+
+insert into Asistencia_Estudiante values(715150008,'Matemáticas-A2','Matemáticas',1,2020,'2020/4/4',0);
+insert into Asistencia_Estudiante values(715150008,'Matemáticas-A2','Matemáticas',1,2020,'2020/4/6',0);
+
+insert into Asistencia_Estudiante values(725150008,'Matemáticas-A2','Matemáticas',1,2020,'2020/4/6',0);
+
+insert into Asistencia_Estudiante values(815150008,'Fisica-A2','Fisica',2,2021,'2021/4/2',0);
+
+insert into Asistencia_Estudiante values(825150008,'Fisica-A2','Fisica',2,2021,'2021/4/2',0);
+
+insert into Asistencia_Estudiante values(415150008,'Fisica-A2','Fisica',2,2021,'2021/4/2',0);
+
+insert into Asistencia_Estudiante values(290150018,'Fisica-A2','Fisica',2,2021,'2021/4/2',0);
+
+
+DECLARE @cnt INT = 5000;
+
+WHILE @cnt < 5080
+BEGIN
+   if @cnt%3=0 insert into Cobros values(@cnt,'Pagado')
+
+   else insert into Cobros values(@cnt,'Pendiente')
+   SET @cnt = @cnt + 1;
+END;
+
+select * from Cobros
+
+DECLARE @consecutivo INT = 1;
+
+--WHILE @consecutivo < 80
+--BEGIN
+ --  if 'Pagado' = (select estado from Cobros)
+--		insert into Factura values (@consecutivo,50000,2,'2021/11/15')
+	
+--SET @consecutivo = @consecutivo + 1;
+--END;
 
 --insert into Grupo_Horario values('Matemáticas-A1','Matemáticas',1,2020,
 --'Martes y Jueves','15:00','16:50');
 
-select * from Estudiante order by grado ASC
+select * from Matricula 
 
 insert into Evaluacion values('Tareas',10,'Matemáticas-A1',1,2020,'Matemáticas')
 insert into Evaluacion values('Cotidiano',20,'Matemáticas-A1',1,2020,'Matemáticas')
 insert into Evaluacion values('Proyectos',30,'Matemáticas-A1',1,2020,'Matemáticas')
 insert into Evaluacion values('Examenes',40,'Matemáticas-A1',1,2020,'Matemáticas')
-}
+
 insert into Evaluacion values('Biología-A1',1,2020,'Biología','Examenes 60%, Tareas 20%, Cotidiano 20%')
 insert into Evaluacion values('Español-C1',2,2021,'Español','Examenes 60%, Tareas 20%, Comunicación 20%')
 insert into Evaluacion values('Química-B1',3,2021,'Química','Examenes 80%, Tareas 10%')
