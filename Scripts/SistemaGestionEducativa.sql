@@ -1,9 +1,5 @@
 use master
 go
-alter database SistemaGestionEducativa set single_user with rollback immediate --Cierra las conexiones de la base de datos
-go
-Drop database  SistemaGestionEducativa
-go
 create database SistemaGestionEducativa
 go
 use SistemaGestionEducativa
@@ -794,20 +790,21 @@ END;
 
 select * from Cobros
 
-DECLARE @consecutivo INT = 1;
+DECLARE @consecutivo INT = 5000;
 
---WHILE @consecutivo < 80
---BEGIN
- --  if 'Pagado' = (select estado from Cobros)
---		insert into Factura values (@consecutivo,50000,2,'2021/11/15')
-	
---SET @consecutivo = @consecutivo + 1;
---END;
+WHILE @consecutivo < 5080
+BEGIN
+
+	if @consecutivo%3=0 insert into Factura values(@consecutivo-4999,50000,2,'2021/11/16')
+
+SET @consecutivo = @consecutivo + 1;
+END;
 
 --insert into Grupo_Horario values('Matemáticas-A1','Matemáticas',1,2020,
 --'Martes y Jueves','15:00','16:50');
 
 select * from Matricula 
+select * from Cobros
 
 insert into Evaluacion values('Tareas',10,'Matemáticas-A1',1,2020,'Matemáticas')
 insert into Evaluacion values('Cotidiano',20,'Matemáticas-A1',1,2020,'Matemáticas')
