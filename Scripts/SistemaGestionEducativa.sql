@@ -274,6 +274,43 @@ return(
 
 )
 
+select * from  dbo.PromedioEstudiantes_F (1)
+
+
+-----Promedio de Notas por Profesor por Grupo --------------------
+create function Promedio_Notas_P (@cedulaProfesor int)
+returns table 
+as 
+return (
+
+	select Evaluacion_Grupo_Estudiante.codigoGrupo,Evaluacion_Grupo_Estudiante.numPeriodo,Evaluacion_Grupo_Estudiante.anno,
+	avg(Evaluacion_Grupo_Estudiante.notaObtenida) as PromedioNota from Evaluacion_Grupo_Estudiante 
+	inner join Grupo on Grupo.codigoNombre =Evaluacion_Grupo_Estudiante.codigoGrupo and Grupo.cedulaProfesor= @cedulaProfesor
+	group by codigoGrupo,numPeriodo, Evaluacion_Grupo_Estudiante.anno
+	
+
+)
+
+select * from  dbo.Promedio_Notas_P(118180009)
+
+
+---------Cantidad de estudiantes por periodo por grupo----------------------
+create function Cantidad_Estudiantes_Pe(@numeroPeriodo int)
+returns table
+as 
+return (
+		select count(Matricula.idMatricula) as CantidadEstudiantes , Matricula.codigoGrupo, Matricula.anno, Matricula.numPeriodo 
+		from Matricula where Matricula.numPeriodo = @numeroPeriodo
+		group by codigoGrupo,anno,numPeriodo
+
+)
+
+
+select * from dbo.Cantidad_Estudiantes_Pe (1)
+
+
+
+
 
 
 
