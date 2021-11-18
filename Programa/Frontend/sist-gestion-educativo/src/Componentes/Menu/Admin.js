@@ -3,7 +3,7 @@ import SideBar from '../Navegation/Sidebar.js';
 import  {BrowserRouter, Switch , Route} from 'react-router-dom';
 import { SbDataAdmin } from '../Navegation/SbDataAdmin.js';
 import DeudasPadres from '../Administrador/Padres/DeudasPadres.js';
-
+import PromedioGrupos from '../Administrador/Estudiantes/PromedioGrupos.js';
 
 
 export default function Admin() {
