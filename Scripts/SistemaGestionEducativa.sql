@@ -892,30 +892,160 @@ insert into Evaluacion values('Examenes',40,'Matemáticas-A2',1,2020,'Matemátic
 
 
 
-insert into Evaluacion values ('Laboratorio', 60,'Quimica-A2',2,2021,'Quimica');
-insert into Evaluacion values ('Tareas', 40,'Quimica-A2',2,2021,'Quimica');
+insert into Evaluacion values ('Laboratorio', 60,'Química-A2',2,2021,'Química');
+insert into Evaluacion values ('Tareas', 40,'Química-A2',2,2021,'Química');
 
 
-insert into Evaluacion values ('Laboratorio', 60,'Quimica-A1',2,2021,'Quimica');
-insert into Evaluacion values ('Tareas', 40,'Quimica-A1',2,2021,'Quimica');
+insert into Evaluacion values ('Laboratorio', 60,'Química-A1',2,2021,'Química');
+insert into Evaluacion values ('Tareas', 40,'Química-A1',2,2021,'Química');
 
 
 -------------------------Evalucion nota obtenida por rubro por estudiante --------------------------------------
 
 
+----Ejemplo de uso 
+
+insert into Evaluacion_Estudiante values (117950392,'Matemáticas-A1','Matemáticas',1,2020,8,'Tareas');
+insert into Evaluacion_Estudiante values (117950392,'Matemáticas-A1','Matemáticas',1,2020,15,'Cotidiano');
+insert into Evaluacion_Estudiante values (117950392,'Matemáticas-A1','Matemáticas',1,2020,26,'Proyectos');
+insert into Evaluacion_Estudiante values (117950392,'Matemáticas-A1','Matemáticas',1,2020,23,'Examenes');
+
+insert into Evaluacion_Estudiante values (122543102,'Matemáticas-A1','Matemáticas',1,2020,8,'Tareas');
+insert into Evaluacion_Estudiante values (122543102,'Matemáticas-A1','Matemáticas',1,2020,15,'Cotidiano');
+insert into Evaluacion_Estudiante values (122543102,'Matemáticas-A1','Matemáticas',1,2020,26,'Proyectos');
+insert into Evaluacion_Estudiante values (122543102,'Matemáticas-A1','Matemáticas',1,2020,23,'Examenes');
 
 
+insert into Evaluacion_Estudiante values (115150008,'Matemáticas-A1','Matemáticas',1,2020,9,'Tareas');
+insert into Evaluacion_Estudiante values (115150008,'Matemáticas-A1','Matemáticas',1,2020,10,'Cotidiano');
+insert into Evaluacion_Estudiante values (115150008,'Matemáticas-A1','Matemáticas',1,2020,20,'Proyectos');
+insert into Evaluacion_Estudiante values (115150008,'Matemáticas-A1','Matemáticas',1,2020,30,'Examenes');
 
 
+insert into Evaluacion_Estudiante values (125150008,'Matemáticas-A1','Matemáticas',1,2020,10,'Tareas');
+insert into Evaluacion_Estudiante values (125150008,'Matemáticas-A1','Matemáticas',1,2020,15,'Cotidiano');
+insert into Evaluacion_Estudiante values (125150008,'Matemáticas-A1','Matemáticas',1,2020,20,'Proyectos');
+insert into Evaluacion_Estudiante values (125150008,'Matemáticas-A1','Matemáticas',1,2020,30,'Examenes');
+
+
+insert into Evaluacion_Estudiante values (215150008,'Matemáticas-A1','Matemáticas',1,2020,10,'Tareas');
+insert into Evaluacion_Estudiante values (215150008,'Matemáticas-A1','Matemáticas',1,2020,18,'Cotidiano');
+insert into Evaluacion_Estudiante values (215150008,'Matemáticas-A1','Matemáticas',1,2020,23,'Proyectos');
+insert into Evaluacion_Estudiante values (215150008,'Matemáticas-A1','Matemáticas',1,2020,28,'Examenes');
 
 
 
 -------------------------Evalucion nota obtenida final por estudiante por curso --------------------------------
 
+insert into Evaluacion_Grupo_Estudiante values(117950392,'Matemáticas-A1','Matemáticas',1,2020,72, 'Aprobado','Examenes 23%, Proyecto 26%, Cotidiano 15%,Tareas 8% ');
+insert into Evaluacion_Grupo_Estudiante values(122543102,'Matemáticas-A1','Matemáticas',1,2020,72, 'Aprobado','Examenes 23%, Proyecto 26%, Cotidiano 15%,Tareas 8% ');
+insert into Evaluacion_Grupo_Estudiante values(115150008,'Matemáticas-A1','Matemáticas',1,2020,69, 'Reprobado','Examenes 30%, Proyecto 20%, Cotidiano 10%,Tareas 9% ');
+insert into Evaluacion_Grupo_Estudiante values(125150008,'Matemáticas-A1','Matemáticas',1,2020,75, 'Aprobado','Examenes 30%, Proyecto 20%, Cotidiano 15%,Tareas 10% ');
+insert into Evaluacion_Grupo_Estudiante values(215150008,'Matemáticas-A1','Matemáticas',1,2020,79, 'Aprobado','Examenes 28%, Proyecto 23%, Cotidiano 18%,Tareas 10% ');
+
+
+insert into Evaluacion_Grupo_Estudiante values(515150008,'Matemáticas-A2','Matemáticas',1,2020,72, 'Aprobado','Examenes 23%, Proyecto 26%, Cotidiano 15%,Tareas 8% ');
+insert into Evaluacion_Grupo_Estudiante values(615150008,'Matemáticas-A2','Matemáticas',1,2020,72, 'Aprobado','Examenes 23%, Proyecto 26%, Cotidiano 15%,Tareas 8% ');
+insert into Evaluacion_Grupo_Estudiante values(625150008,'Matemáticas-A2','Matemáticas',1,2020,69, 'Reprobado','Examenes 30%, Proyecto 20%, Cotidiano 10%,Tareas 9% ');
+insert into Evaluacion_Grupo_Estudiante values(715150008,'Matemáticas-A2','Matemáticas',1,2020,75, 'Aprobado','Examenes 30%, Proyecto 20%, Cotidiano 15%,Tareas 10% ');
+insert into Evaluacion_Grupo_Estudiante values(725150008,'Matemáticas-A2','Matemáticas',1,2020,59, 'Reprobado','Examenes 28%, Proyecto 23%, Cotidiano 8%,Tareas 0% ');
+
+
+insert into Evaluacion_Grupo_Estudiante values(115150008,'Estudios Sociales-A1','Estudios Sociales',1,2020,72, 'Aprobado','Examenes 23%, Proyecto Final 26%, Cotidiano 15%,Tareas 8% ');
+insert into Evaluacion_Grupo_Estudiante values(117950392,'Estudios Sociales-A1','Estudios Sociales',1,2020,72, 'Aprobado','Examenes 23%, Proyecto Final 26%, Cotidiano 15%,Tareas 8% ');
+insert into Evaluacion_Grupo_Estudiante values(122543102,'Estudios Sociales-A1','Estudios Sociales',1,2020,69, 'Reprobado','Examenes 30%, Proyecto Final 20%, Cotidiano 10%,Tareas 9% ');
+insert into Evaluacion_Grupo_Estudiante values(125150008,'Estudios Sociales-A1','Estudios Sociales',1,2020,75, 'Aprobado','Examenes 30%, Proyecto Final 20%, Cotidiano 15%,Tareas 10% ');
+insert into Evaluacion_Grupo_Estudiante values(215150008,'Estudios Sociales-A1','Estudios Sociales',1,2020,59, 'Reprobado','Examenes 28%, Proyecto Final 23%, Cotidiano 8%,Tareas 0% ');
+
+
+insert into Evaluacion_Grupo_Estudiante values(515150008,'Estudios Sociales-A2','Estudios Sociales',1,2020,52, 'Reprobado','Examenes 13%, Proyecto Final 16%, Cotidiano 15%,Tareas 8% ');
+insert into Evaluacion_Grupo_Estudiante values(615150008,'Estudios Sociales-A2','Estudios Sociales',1,2020,72, 'Aprobado','Examenes 23%, Proyecto Final 26%, Cotidiano 15%,Tareas 8% ');
+insert into Evaluacion_Grupo_Estudiante values(625150008,'Estudios Sociales-A2','Estudios Sociales',1,2020,69, 'Reprobado','Examenes 30%, Proyecto Final 20%, Cotidiano 10%,Tareas 9% ');
+insert into Evaluacion_Grupo_Estudiante values(715150008,'Estudios Sociales-A2','Estudios Sociales',1,2020,75, 'Aprobado','Examenes 30%, Proyecto Final 20%, Cotidiano 15%,Tareas 10% ');
+insert into Evaluacion_Grupo_Estudiante values(725150008,'Estudios Sociales-A2','Estudios Sociales',1,2020,79, 'Aprobado','Examenes 28%, Proyecto Final 23%, Cotidiano 8%,Tareas 20% ');
+
+insert into Evaluacion_Grupo_Estudiante values(225150008,'Biología-A1','Biología',2,2020,79, 'Aprobado','Examenes 52%, Cotidiano 15%,Tareas 12% ');
+insert into Evaluacion_Grupo_Estudiante values(315150008,'Biología-A1','Biología',2,2020,63, 'Reprobado','Examenes 40%, Cotidiano 15%,Tareas 8% ');
+insert into Evaluacion_Grupo_Estudiante values(325150008,'Biología-A1','Biología',2,2020,58, 'Reprobado','Examenes 39%, Cotidiano 10%,Tareas 9% ');
+insert into Evaluacion_Grupo_Estudiante values(525150008,'Biología-A1','Biología',2,2020,65, 'Reprobado','Examenes 30%, Cotidiano 15%,Tareas 20% ');
+insert into Evaluacion_Grupo_Estudiante values(425150008,'Biología-A1','Biología',2,2020,56, 'Reprobado','Examenes 28%, Cotidiano 8%,Tareas 20% ');
+
+insert into Evaluacion_Grupo_Estudiante values(815150008,'Biología-A2','Biología',2,2020,79, 'Aprobado','Examenes 52%, Cotidiano 15%,Tareas 12% ');
+insert into Evaluacion_Grupo_Estudiante values(825150008,'Biología-A2','Biología',2,2020,63, 'Reprobado','Examenes 40%, Cotidiano 15%,Tareas 8% ');
+insert into Evaluacion_Grupo_Estudiante values(415150008,'Biología-A2','Biología',2,2020,58, 'Reprobado','Examenes 39%, Cotidiano 10%,Tareas 9% ');
+insert into Evaluacion_Grupo_Estudiante values(290150018,'Biología-A2','Biología',2,2020,65, 'Reprobado','Examenes 30%, Cotidiano 15%,Tareas 20% ');
+insert into Evaluacion_Grupo_Estudiante values(190150018,'Biología-A2','Biología',2,2020,76, 'Aprobado','Examenes 38%, Cotidiano 18%,Tareas 20% ');
 
 
 
+insert into Evaluacion_Grupo_Estudiante values(815150008,'Español-A2','Español',2,2020,100, 'Aprobado','Examenes 40%, Cotidiano 20%, Redaccion 20%, ExtraClase 20% ');
+insert into Evaluacion_Grupo_Estudiante values(825150008,'Español-A2','Español',2,2020,80, 'Aprobado','Examenes 40%, Cotidiano 10%, Redaccion 10%, ExtraClase 20% ');
+insert into Evaluacion_Grupo_Estudiante values(415150008,'Español-A2','Español',2,2020,81, 'Aprobado','Examenes 40%, Cotidiano 10%, Redaccion 11%, ExtraClase 20% ');
+insert into Evaluacion_Grupo_Estudiante values(290150018,'Español-A2','Español',2,2020,70, 'Aprobado','Examenes 20%, Cotidiano 10%, Redaccion 20%, ExtraClase 20% ');
+insert into Evaluacion_Grupo_Estudiante values(190150018,'Español-A2','Español',2,2020,75, 'Aprobado','Examenes 40%, Cotidiano 20%, Redaccion 5%, ExtraClase 10% ');
 
+
+insert into Evaluacion_Grupo_Estudiante values(225150008,'Español-A1','Español',2,2020,99, 'Aprobado','Examenes 40%, Cotidiano 19%, Redaccion 20%, ExtraClase 20% ');
+insert into Evaluacion_Grupo_Estudiante values(315150008,'Español-A1','Español',2,2020,50, 'Reprobado','Examenes 10%, Cotidiano 10%, Redaccion 10%, ExtraClase 20% ');
+insert into Evaluacion_Grupo_Estudiante values(325150008,'Español-A1','Español',2,2020,81, 'Aprobado','Examenes 40%, Cotidiano 10%, Redaccion 11%, ExtraClase 20% ');
+insert into Evaluacion_Grupo_Estudiante values(525150008,'Español-A1','Español',2,2020,36, 'Reprobado','Examenes 6%, Cotidiano 10%, Redaccion 20%, ExtraClase 0% ');
+insert into Evaluacion_Grupo_Estudiante values(425150008,'Español-A1','Español',2,2020,75, 'Aprobado','Examenes 40%, Cotidiano 20%, Redaccion 5%, ExtraClase 10% ');
+
+
+insert into Evaluacion_Grupo_Estudiante values(115150008,'Informática-A1','Informática',1,2021,58, 'Reprobado','Examenes 15%, Proyectos 28%,Tareas 15% ');
+insert into Evaluacion_Grupo_Estudiante values(117950392,'Informática-A1','Informática',1,2021,75, 'Aprobado','Examenes 4%, Proyectos 52%,Tareas 19% ');
+insert into Evaluacion_Grupo_Estudiante values(122543102,'Informática-A1','Informática',1,2021,58, 'Reprobado','Examenes 19%, Proyectos 25%,Tareas 14% ');
+insert into Evaluacion_Grupo_Estudiante values(125150008,'Informática-A1','Informática',1,2021,100, 'Aprobado','Examenes 20%, Proyectos 60%,Tareas 20% ');
+insert into Evaluacion_Grupo_Estudiante values(215150008,'Informática-A1','Informática',1,2021,66, 'Reprobado','Examenes 20%, Proyectos 36%,Tareas 10% ');
+
+
+insert into Evaluacion_Grupo_Estudiante values(515150008,'Informática-A2','Informática',1,2021,68, 'Reprobado','Examenes 15%, Proyectos 38%,Tareas 15% ');
+insert into Evaluacion_Grupo_Estudiante values(615150008,'Informática-A2','Informática',1,2021,75, 'Aprobado','Examenes 4%, Proyectos 52%,Tareas 19% ');
+insert into Evaluacion_Grupo_Estudiante values(625150008,'Informática-A2','Informática',1,2021,85, 'Aprobado','Examenes 14%, Proyectos 52%,Tareas 19% ');
+insert into Evaluacion_Grupo_Estudiante values(715150008,'Informática-A2','Informática',1,2021,58, 'Reprobado','Examenes 19%, Proyectos 25%,Tareas 14% ');
+insert into Evaluacion_Grupo_Estudiante values(725150008,'Informática-A2','Informática',1,2021,66, 'Reprobado','Examenes 20%, Proyectos 36%,Tareas 10% ');
+
+
+insert into Evaluacion_Grupo_Estudiante values(515150008,'Inglés-A2','Inglés',1,2021,68, 'Reprobado','Listening 15%, Speaking 38%,Writing 15% ');
+insert into Evaluacion_Grupo_Estudiante values(615150008,'Inglés-A2','Inglés',1,2021,75, 'Aprobado','Listening 4%, Speaking 52%,Writing 19% ');
+insert into Evaluacion_Grupo_Estudiante values(625150008,'Inglés-A2','Inglés',1,2021,85, 'Aprobado','Listening 14%, Speaking 52%,Writing 19% ');
+insert into Evaluacion_Grupo_Estudiante values(715150008,'Inglés-A2','Inglés',1,2021,58, 'Reprobado','Listening 19%, Speaking 25%,Writing 14% ');
+insert into Evaluacion_Grupo_Estudiante values(725150008,'Inglés-A2','Inglés',1,2021,66, 'Reprobado','Listening 20%, Speaking 36%,Writing 10% ');
+
+
+insert into Evaluacion_Grupo_Estudiante values(115150008,'Inglés-A1','Inglés',1,2021,100, 'Aprobado','Listening 20%, Speaking 50%,Writing 20% ');
+insert into Evaluacion_Grupo_Estudiante values(117950392,'Inglés-A1','Inglés',1,2021,75, 'Aprobado','Listening 4%, Speaking 52%,Writing 19% ');
+insert into Evaluacion_Grupo_Estudiante values(122543102,'Inglés-A1','Inglés',1,2021,85, 'Aprobado','Listening 14%, Speaking 52%,Writing 19% ');
+insert into Evaluacion_Grupo_Estudiante values(125150008,'Inglés-A1','Inglés',1,2021,78, 'Aprobado','Listening 19%, Speaking 45%,Writing 14% ');
+insert into Evaluacion_Grupo_Estudiante values(215150008,'Inglés-A1','Inglés',1,2021,85, 'Aprobado','Listening 20%, Speaking 45%,Writing 20% ');
+
+
+
+insert into Evaluacion_Grupo_Estudiante values(225150008,'Fisica-A1','Fisica',2,2021,70, 'Aprobado','Laboratorio 50%, Tareas 20% ');
+insert into Evaluacion_Grupo_Estudiante values(315150008,'Fisica-A1','Fisica',2,2021,72, 'Aprobado','Laboratorio 52%, Tareas 20% ');
+insert into Evaluacion_Grupo_Estudiante values(325150008,'Fisica-A1','Fisica',2,2021,81, 'Aprobado','Laboratorio 52%, Tareas 29% ');
+insert into Evaluacion_Grupo_Estudiante values(525150008,'Fisica-A1','Fisica',2,2021,59, 'Reprobado','Laboratorio 45%, Tareas 14% ');
+insert into Evaluacion_Grupo_Estudiante values(425150008,'Fisica-A1','Fisica',2,2021,65, 'Reprobado','Laboratorio 45%, Tareas 20% ');
+
+insert into Evaluacion_Grupo_Estudiante values(815150008,'Fisica-A2','Fisica',2,2021,60, 'Reprobado','Laboratorio 40%, Tareas 20% ');
+insert into Evaluacion_Grupo_Estudiante values(825150008,'Fisica-A2','Fisica',2,2021,69, 'Reprobado','Laboratorio 52%, Tareas 17% ');
+insert into Evaluacion_Grupo_Estudiante values(415150008,'Fisica-A2','Fisica',2,2021,41, 'Reprobado','Laboratorio 22%, Tareas 19% ');
+insert into Evaluacion_Grupo_Estudiante values(290150018,'Fisica-A2','Fisica',2,2021,59, 'Reprobado','Laboratorio 45%, Tareas 14% ');
+insert into Evaluacion_Grupo_Estudiante values(190150018,'Fisica-A2','Fisica',2,2021,65, 'Reprobado','Laboratorio 45%, Tareas 20% ');
+
+
+
+insert into Evaluacion_Grupo_Estudiante values(225150008,'Química-A1','Química',2,2021,70, 'Aprobado','Laboratorio 50%, Tareas 20% ');
+insert into Evaluacion_Grupo_Estudiante values(315150008,'Química-A1','Química',2,2021,72, 'Aprobado','Laboratorio 52%, Tareas 20% ');
+insert into Evaluacion_Grupo_Estudiante values(325150008,'Química-A1','Química',2,2021,81, 'Aprobado','Laboratorio 52%, Tareas 29% ');
+insert into Evaluacion_Grupo_Estudiante values(525150008,'Química-A1','Química',2,2021,59, 'Reprobado','Laboratorio 45%, Tareas 14% ');
+insert into Evaluacion_Grupo_Estudiante values(425150008,'Química-A1','Química',2,2021,98, 'Aprobado','Laboratorio 60%, Tareas 38% ');
+
+insert into Evaluacion_Grupo_Estudiante values(815150008,'Química-A2','Química',2,2021,23, 'Reprobado','Laboratorio 10%, Tareas 13% ');
+insert into Evaluacion_Grupo_Estudiante values(825150008,'Química-A2','Química',2,2021,69, 'Reprobado','Laboratorio 52%, Tareas 17% ');
+insert into Evaluacion_Grupo_Estudiante values(415150008,'Química-A2','Química',2,2021,41, 'Reprobado','Laboratorio 22%, Tareas 19% ');
+insert into Evaluacion_Grupo_Estudiante values(290150018,'Química-A2','Química',2,2021,79, 'Aprobado','Laboratorio 55%, Tareas 24% ');
+insert into Evaluacion_Grupo_Estudiante values(190150018,'Química-A2','Química',2,2021,65, 'Reprobado','Laboratorio 45%, Tareas 20% ');
 
 DECLARE @cnt INT = 5000;
 
