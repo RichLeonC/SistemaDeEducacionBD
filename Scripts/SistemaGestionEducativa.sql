@@ -261,6 +261,48 @@ inner join Usuario on Usuario.cedula = Matricula.cedulaEstudiante
 
 select * from Factura_Vista
 
+
+--------------------FUNCIONES---------------------------------
+--Promedio de aprobación por período por grupo (selecciona un período). Gráfico de barras.
+create function CantidadEstudiantes_F(@numPeriodo int)
+returns table
+as
+return(
+	select Evaluacion_Grupo_Estudiante.codigoGrupo, Evaluacion_Grupo_Estudiante.numPeriodo,anno,
+	avg(Evaluacion_Grupo_Estudiante.notaObtenida)as promedio from Evaluacion_Grupo_Estudiante where numPeriodo=@numPeriodo
+	group by codigoGrupo,numPeriodo,anno
+
+)
+
+
+select * from CantidadEstudiantes_F(1)
+
+--Top 10 de padres con más deudas. Nombre y cantidad
+create view Padre_DeudasVista as 
+select top 10 Estudiante_Vista.nombrePadre,Estudiante_Vista.cedulaPadre, count(Cobros.consecutivo) as cantidad from Estudiante_Vista
+inner join Matricula on Estudiante_Vista.cedula = Matricula.cedulaEstudiante
+inner join Cobros on Cobros.idMatricula = Matricula.idMatricula and Cobros.estado='Pendiente'
+group by nombrePadre,cedulaPadre
+order by count(Cobros.consecutivo) desc
+
+
+select * from Padre_DeudasVista 
+
+--ver el detalle de los cobros pendientes al seleccionar un padre del top 10
+create function DetalleCobrosPadre_F(@cedulaPadre int)
+returns table
+as
+return(
+	select Cobros.consecutivo,Cobros.idMatricula, Matricula.cedulaEstudiante, Matricula.codigoGrupo,
+	Matricula.nombreMateria,Matricula.numPeriodo,Matricula.anno from Cobros 
+	inner join Estudiante_Vista on Estudiante_Vista.cedulaPadre = @cedulaPadre
+	inner join Matricula on Matricula.cedulaEstudiante = Estudiante_Vista.cedula and Matricula.idMatricula = Cobros.idMatricula
+	and Cobros.estado='Pendiente'
+
+
+)
+
+select * from DetalleCobrosPadre_F(114140008)
 --INSERTS
 
 --1
