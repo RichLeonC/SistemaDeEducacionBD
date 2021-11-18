@@ -11,7 +11,7 @@ export default function Admin() {
             <SideBar datos= {SbDataAdmin} nombre = 'Administrador'/>
             <Switch>
 
-            <Route exact path = '/topPadreDeudas' component= {InfoEstudiante}/>
+            {/* <Route exact path = '/topPadreDeudas' component= {InfoEstudiante}/> */}
 
             </Switch>
         </BrowserRouter>
