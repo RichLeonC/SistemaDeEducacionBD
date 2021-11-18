@@ -264,7 +264,7 @@ select * from Factura_Vista
 
 --------------------FUNCIONES---------------------------------
 --Promedio de aprobación por período por grupo (selecciona un período). Gráfico de barras.
-create function CantidadEstudiantes_F(@numPeriodo int)
+create function PromedioEstudiantes_F(@numPeriodo int)
 returns table
 as
 return(
@@ -275,7 +275,7 @@ return(
 )
 
 
-select * from CantidadEstudiantes_F(1)
+
 
 --Top 10 de padres con más deudas. Nombre y cantidad
 create view Padre_DeudasVista as 
