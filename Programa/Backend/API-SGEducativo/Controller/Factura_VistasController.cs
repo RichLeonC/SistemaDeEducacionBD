@@ -36,6 +36,8 @@ namespace API_SGEducativo.Controller
                 "anno,iva,totalPago,totalPagadoIva,fechaPago from Factura_Vista where cedulaEstudiante="+cedulaEstudiante));
         }
 
+        
+
         // POST api/<Factura_VistasController>
         [HttpPost]
         public void Post([FromBody] string value)

@@ -70,6 +70,6 @@ namespace API_SGEducativo.Context
 
         public DbSet<Factura_Vista> Factura_Vistas { get; set; }
 
-
+        public DbSet<DetalleCobrosPadre_F> DetalleCobrosPadre_F { get; set; }
     }
 }
