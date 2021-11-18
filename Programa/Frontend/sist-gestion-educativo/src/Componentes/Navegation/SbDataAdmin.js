@@ -17,8 +17,8 @@ export const SbDataAdmin = [
         iconOpened :<AiIcons.AiFillCaretUp/>,
         subNav:[
             {
-                title:'Top 10',
-                path:'/top',
+                title:'Promedio aprobados',
+                path:'/promAprobados',
                 icon: <IoIcons.IoIosPaper/>
             }
         ]
