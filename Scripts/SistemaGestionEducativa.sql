@@ -818,6 +818,101 @@ insert into Asistencia_Estudiante values(825150008,'Fisica-A2','Fisica',2,2021,'
 insert into Asistencia_Estudiante values(415150008,'Fisica-A2','Fisica',2,2021,'2021/4/2',0);
 
 insert into Asistencia_Estudiante values(290150018,'Fisica-A2','Fisica',2,2021,'2021/4/2',0);
+-------------------------Evalucion por curso -------------------------------------------------------------------
+
+insert into Evaluacion values ('Tarea', 20,'Biología-A1',2,2020,'Biología');
+insert into Evaluacion values ('Cotidiano', 20,'Biología-A1',2,2020,'Biología');
+insert into Evaluacion values ('Examenes', 60,'Biología-A1',2,2020,'Biología');
+
+
+insert into Evaluacion values ('Tarea', 20,'Biología-A2',2,2020,'Biología');
+insert into Evaluacion values ('Cotidiano', 20,'Biología-A2',2,2020,'Biología');
+insert into Evaluacion values ('Examenes', 60,'Biología-A2',2,2020,'Biología');
+
+
+insert into Evaluacion values ('ExtraClase', 20,'Español-A1',2,2020,'Español');
+insert into Evaluacion values ('Cotidiano', 20,'Español-A1',2,2020,'Español');
+insert into Evaluacion values ('Redaccion', 20,'Español-A1',2,2020,'Español');
+insert into Evaluacion values ('Examenes', 40,'Español-A1',2,2020,'Español');
+
+
+insert into Evaluacion values ('ExtraClase', 20,'Español-A2',2,2020,'Español');
+insert into Evaluacion values ('Cotidiano', 20,'Español-A2',2,2020,'Español');
+insert into Evaluacion values ('Redaccion', 20,'Español-A2',2,2020,'Español');
+insert into Evaluacion values ('Examenes', 40,'Español-A2',2,2020,'Español');
+
+
+insert into Evaluacion values ('Proyecto Final', 30,'Estudios Sociales-A1',1,2020,'Estudios Sociales');
+insert into Evaluacion values ('Tareas', 20,'Estudios Sociales-A1',1,2020,'Estudios Sociales');
+insert into Evaluacion values ('Cotidiano', 20,'Estudios Sociales-A1',1,2020,'Estudios Sociales');
+insert into Evaluacion values ('Examenes', 30,'Estudios Sociales-A1',1,2020,'Estudios Sociales');
+
+
+insert into Evaluacion values ('Proyecto Final', 30,'Estudios Sociales-A2',1,2020,'Estudios Sociales');
+insert into Evaluacion values ('Tareas', 20,'Estudios Sociales-A2',1,2020,'Estudios Sociales');
+insert into Evaluacion values ('Cotidiano', 20,'Estudios Sociales-A2',1,2020,'Estudios Sociales');
+insert into Evaluacion values ('Examenes', 30,'Estudios Sociales-A2',1,2020,'Estudios Sociales');
+
+
+insert into Evaluacion values ('Laboratorio', 60,'Fisica-A1',2,2021,'Fisica');
+insert into Evaluacion values ('Tareas', 40,'Fisica-A1',2,2021,'Fisica');
+
+insert into Evaluacion values ('Laboratorio', 60,'Fisica-A2',2,2021,'Fisica');
+insert into Evaluacion values ('Tareas', 40,'Fisica-A2',2,2021,'Fisica');
+
+insert into Evaluacion values ('Proyectos', 60,'Informática-A1',1,2021,'Informática');
+insert into Evaluacion values ('Tareas', 20,'Informática-A1',1,2021,'Informática');
+insert into Evaluacion values ('Examenes', 20,'Informática-A1',1,2021,'Informática');
+
+insert into Evaluacion values ('Proyectos', 60,'Informática-A2',1,2021,'Informática');
+insert into Evaluacion values ('Tareas', 20,'Informática-A2',1,2021,'Informática');
+insert into Evaluacion values ('Examenes', 20,'Informática-A2',1,2021,'Informática');
+
+insert into Evaluacion values ('Speaking', 60,'Inglés-A1',1,2021,'Inglés');
+insert into Evaluacion values ('Listening', 20,'Inglés-A1',1,2021,'Inglés');
+insert into Evaluacion values ('Writing', 20,'Inglés-A1',1,2021,'Inglés');
+
+
+insert into Evaluacion values ('Speaking', 60,'Inglés-A2',1,2021,'Inglés');
+insert into Evaluacion values ('Listening', 20,'Inglés-A2',1,2021,'Inglés');
+insert into Evaluacion values ('Writing', 20,'Inglés-A2',1,2021,'Inglés');
+
+insert into Evaluacion values('Tareas',10,'Matemáticas-A1',1,2020,'Matemáticas')
+insert into Evaluacion values('Cotidiano',20,'Matemáticas-A1',1,2020,'Matemáticas')
+insert into Evaluacion values('Proyectos',30,'Matemáticas-A1',1,2020,'Matemáticas')
+insert into Evaluacion values('Examenes',40,'Matemáticas-A1',1,2020,'Matemáticas')
+
+
+insert into Evaluacion values('Tareas',10,'Matemáticas-A2',1,2020,'Matemáticas')
+insert into Evaluacion values('Cotidiano',20,'Matemáticas-A2',1,2020,'Matemáticas')
+insert into Evaluacion values('Proyectos',30,'Matemáticas-A2',1,2020,'Matemáticas')
+insert into Evaluacion values('Examenes',40,'Matemáticas-A2',1,2020,'Matemáticas')
+
+
+
+insert into Evaluacion values ('Laboratorio', 60,'Quimica-A2',2,2021,'Quimica');
+insert into Evaluacion values ('Tareas', 40,'Quimica-A2',2,2021,'Quimica');
+
+
+insert into Evaluacion values ('Laboratorio', 60,'Quimica-A1',2,2021,'Quimica');
+insert into Evaluacion values ('Tareas', 40,'Quimica-A1',2,2021,'Quimica');
+
+
+-------------------------Evalucion nota obtenida por rubro por estudiante --------------------------------------
+
+
+
+
+
+
+
+
+
+-------------------------Evalucion nota obtenida final por estudiante por curso --------------------------------
+
+
+
+
 
 
 DECLARE @cnt INT = 5000;
@@ -848,14 +943,8 @@ END;
 select * from Matricula 
 select * from Cobros
 
-insert into Evaluacion values('Tareas',10,'Matemáticas-A1',1,2020,'Matemáticas')
-insert into Evaluacion values('Cotidiano',20,'Matemáticas-A1',1,2020,'Matemáticas')
-insert into Evaluacion values('Proyectos',30,'Matemáticas-A1',1,2020,'Matemáticas')
-insert into Evaluacion values('Examenes',40,'Matemáticas-A1',1,2020,'Matemáticas')
 
-insert into Evaluacion values('Biología-A1',1,2020,'Biología','Examenes 60%, Tareas 20%, Cotidiano 20%')
-insert into Evaluacion values('Español-C1',2,2021,'Español','Examenes 60%, Tareas 20%, Comunicación 20%')
-insert into Evaluacion values('Química-B1',3,2021,'Química','Examenes 80%, Tareas 10%')
+
 
 
 
