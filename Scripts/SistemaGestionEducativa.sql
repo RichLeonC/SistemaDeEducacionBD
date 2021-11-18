@@ -268,13 +268,16 @@ create function PromedioEstudiantes_F(@numPeriodo int)
 returns table
 as
 return(
-	select Evaluacion_Grupo_Estudiante.codigoGrupo, Evaluacion_Grupo_Estudiante.numPeriodo,anno,
-	avg(Evaluacion_Grupo_Estudiante.notaObtenida)as promedio from Evaluacion_Grupo_Estudiante where numPeriodo=@numPeriodo
-	group by codigoGrupo,numPeriodo,anno
+	select top 1000 Evaluacion_Grupo_Estudiante.codigoGrupo, Evaluacion_Grupo_Estudiante.numPeriodo,anno,
+	round(avg(Evaluacion_Grupo_Estudiante.notaObtenida),2) as promedio from Evaluacion_Grupo_Estudiante where numPeriodo=@numPeriodo
+	and Evaluacion_Grupo_Estudiante.estado='Aprobado'
+	group by codigoGrupo,numPeriodo,anno 
+	order by avg(Evaluacion_Grupo_Estudiante.notaObtenida) desc
 
 )
 
-select * from  dbo.PromedioEstudiantes_F (1)
+drop function PromedioEstudiantes_F
+select * from  dbo.PromedioEstudiantes_F (2)
 
 
 -----Promedio de Notas por Profesor por Grupo --------------------
@@ -307,10 +310,6 @@ return (
 
 
 select * from dbo.Cantidad_Estudiantes_Pe (1)
-
-
-
-
 
 
 

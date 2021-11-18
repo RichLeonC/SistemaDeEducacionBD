@@ -71,6 +71,21 @@ namespace API_SGEducativo.Controller
 
         }
 
+        [HttpGet("{numPeriodo}/1")]
+        public ActionResult GetProm(int numPeriodo)
+        {
+            try
+            {
+
+                
+                return Ok(_context.PromedioEstudiantes.FromSqlRaw("select codigoGrupo,numPeriodo,anno,promedio from PromedioEstudiantes_F("+numPeriodo+")"));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         // POST api/<GruposController>
         [HttpPost] //AGREGAR
         public ActionResult Post([FromBody] Grupo grupo)

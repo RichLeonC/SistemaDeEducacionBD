@@ -5,6 +5,7 @@ import { SbDataAdmin } from '../Navegation/SbDataAdmin.js';
 import DeudasPadres from '../Administrador/Padres/DeudasPadres.js';
 
 
+
 export default function Admin() {
     return (
         <div>
@@ -12,7 +13,8 @@ export default function Admin() {
             <SideBar datos= {SbDataAdmin} nombre = 'Administrador'/>
             <Switch>
 
-          {  <Route exact path = '/topPadreDeudas' component= {DeudasPadres}/>}
+            <Route exact path = '/topPadreDeudas' component= {DeudasPadres}/>
+            <Route exact path = '/promAprobados' component= {DeudasPadres}/>
 
             </Switch>
         </BrowserRouter>

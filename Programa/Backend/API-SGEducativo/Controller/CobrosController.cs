@@ -54,7 +54,7 @@ namespace API_SGEducativo.Controller
         [HttpGet("{cedulaPadre}/1")]
         public ActionResult GetCobroDeudas(int cedulaPadre)
         {
-            return Ok(_context.DetalleCobrosPadre_F.FromSqlRaw("select consecutivo,idMatricula,cedulaEstudiante,codigoGrupo," +
+            return Ok(_context.DetalleCobrosPadre_F.FromSqlRaw("select consecutivo,idMatricula,cedulaEstudiante,codigoGrupo, " +
                 "nombreMateria,numPeriodo,anno from DetalleCobrosPadre_F(" + cedulaPadre + ")"));
         }
 
