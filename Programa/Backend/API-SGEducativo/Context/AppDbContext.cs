@@ -71,6 +71,7 @@ namespace API_SGEducativo.Context
         public DbSet<Factura_Vista> Factura_Vistas { get; set; }
 
         public DbSet<DetalleCobrosPadre_F> DetalleCobrosPadre_F { get; set; }
-        public DbSet<PromedioEstudiantes_F> PromedioEstudiantes { get; set; }
+
+        public DbSet<Funcion_Promedio_Notas> Funcion_Promedio_Notas { get; set; }
     }
 }
