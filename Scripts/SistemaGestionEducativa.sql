@@ -304,6 +304,8 @@ return(
 
 select * from DetalleCobrosPadre_F(114140008)
 --INSERTS
+insert into Usuario values(111,'Admin','Leon','Chinchilla','0192023a7bbd73250516f069df18b500','Masculino',
+'2001/7/29','Admin','2021/10/19')
 
 --1
 insert into Usuario values(118180009,'Richard','Leon','Chinchilla','0192023a7bbd73250516f069df18b500','Masculino',
