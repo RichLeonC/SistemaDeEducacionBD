@@ -35,8 +35,7 @@ namespace API_SGEducativo.Controller
         [HttpGet("{cedulaProfesor}/2")]
         public ActionResult GetPromedioNota(int cedulaProfesor)
         {
-            return Ok(_context.Funcion_Promedio_Notas.FromSqlRaw("select codigoGrupo,numPeriodo,anno,PromedioNota" +
-                "from Promedio_Notas_P(" + cedulaProfesor + ")"));
+            return Ok(_context.Funcion_Promedio_Notas.FromSqlRaw("select codigoGrupo,numPeriodo,anno,PromedioNota from Promedio_Notas_P(" +cedulaProfesor+ ")"));
         }
 
         // GET api/<Evaluacion_Grupo_EstudianteController>/5

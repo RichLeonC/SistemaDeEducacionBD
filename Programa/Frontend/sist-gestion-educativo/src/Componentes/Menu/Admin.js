@@ -16,7 +16,8 @@ export default function Admin() {
             <Switch>
 
             <Route exact path = '/topPadreDeudas' component= {DeudasPadres}/>
-            <Route exact path = '/promAprobados' component= {DeudasPadres}/>
+            <Route exact path = '/promAprobados' component= {PromedioGrupos}/>
+
             <Route exact path = '/PromedioNotasGProfe' component= {PromediNotas}/>
 
 
