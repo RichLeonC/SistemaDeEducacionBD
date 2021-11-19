@@ -31,8 +31,8 @@ export const SbDataAdmin = [
         iconOpened :<AiIcons.AiFillCaretUp/>,
         subNav:[
             {
-                title: 'TopProfe',
-                path: '/topProfe',
+                title: 'Promedio Notas Grupo',
+                path: '/PromedioNotasGProfe',
                 icon:<IoIcons.IoIosPaper/>
             }
         ]

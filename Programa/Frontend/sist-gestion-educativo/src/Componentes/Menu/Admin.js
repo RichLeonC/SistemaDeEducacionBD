@@ -3,6 +3,7 @@ import SideBar from '../Navegation/Sidebar.js';
 import  {BrowserRouter, Switch , Route} from 'react-router-dom';
 import { SbDataAdmin } from '../Navegation/SbDataAdmin.js';
 import DeudasPadres from '../Administrador/Padres/DeudasPadres.js';
+import PromediNotas from '../Administrador/Profesores/PromedioNotasGrupo.js';
 
 
 
@@ -15,6 +16,8 @@ export default function Admin() {
 
             <Route exact path = '/topPadreDeudas' component= {DeudasPadres}/>
             <Route exact path = '/promAprobados' component= {DeudasPadres}/>
+            <Route exact path = '/PromedioNotasGProfe' component= {PromediNotas}/>
+
 
             </Switch>
         </BrowserRouter>
