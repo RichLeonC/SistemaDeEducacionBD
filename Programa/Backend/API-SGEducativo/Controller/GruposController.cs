@@ -71,14 +71,14 @@ namespace API_SGEducativo.Controller
 
         }
 
-        [HttpGet("{numPeriodo}/1")]
-        public ActionResult GetProm(int numPeriodo)
+        [HttpGet("{numPeriodo}/{anno}/1")]
+        public ActionResult GetProm(int numPeriodo,int anno)
         {
             try
             {
 
                 
-                return Ok(_context.PromedioEstudiantes.FromSqlRaw("select codigoGrupo,numPeriodo,anno,promedio from PromedioEstudiantes_F("+numPeriodo+")"));
+                return Ok(_context.PromedioEstudiantes.FromSqlRaw("select codigoGrupo,numPeriodo,anno,promedio from PromedioEstudiantes_F("+numPeriodo+","+anno+")"));
             }
             catch (Exception e)
             {
