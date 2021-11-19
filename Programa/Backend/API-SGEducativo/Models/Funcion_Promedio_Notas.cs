@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace API_SGEducativo.Models
 {
-    [Table("Promedio_Notas_P")]
+    [Table("Funcion_Promedio_Notas")]
     public class Funcion_Promedio_Notas
     {
         [Key]

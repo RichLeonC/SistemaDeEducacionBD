@@ -298,30 +298,22 @@ return (
 
 )
 
-select * from  dbo.Promedio_Notas_P(118180009)
+select * from  dbo.Promedio_Notas_P(115173422)
 
 
 ---------Cantidad de estudiantes por periodo por grupo----------------------
-create function Cantidad_Estudiantes_Pe(@numeroPeriodo int)
+create function Cantidad_Estudiantes_Pe(@numeroPeriodo int, @annoPeriodo int)
 returns table
 as 
 return (
 		select count(Matricula.idMatricula) as CantidadEstudiantes , Matricula.codigoGrupo, Matricula.anno, Matricula.numPeriodo 
-		from Matricula where Matricula.numPeriodo = @numeroPeriodo
+		from Matricula where Matricula.numPeriodo = @numeroPeriodo and Matricula.anno = @annoPeriodo
 		group by codigoGrupo,anno,numPeriodo
 
 )
 
 
-select * from dbo.Cantidad_Estudiantes_Pe (1)
----------Cantidad de estudiantes por grupo----------------------
-create function CantidadEstudiantesGrupo(@codigoGrupo varchar(25))
-returns table
-as 
-return (
-		select count(Matricula.idMatricula) as CantidadEstudiantes , Matricula.codigoGrupo, Matricula.anno, Matricula.numPeriodo 
-		from Matricula where Matricula.codigoGrupo = @codigoGrupo
-		group by codigoGrupo,anno,numPeriodo
+select * from dbo.Cantidad_Estudiantes_Pe (2, 2021)
 
 )
 
