@@ -49,8 +49,25 @@ export const SbDataAdmin = [
                 title: 'Top 10 Padres endeudados',
                 path: '/topPadreDeudas',
                 icon:<IoIcons.IoIosPaper/>
-            }
+            },
+            
+
         ]
     },
+
+    {
+        title: 'General',
+        path: '/EstadisticasG',
+        icon:<RiIcons.RiBarChartFill/>,
+        iconClosed: <AiIcons.AiFillCaretDown/>,
+        iconOpened :<AiIcons.AiFillCaretUp/>,
+        subNav:[
+            {
+                title: 'Ingresos',
+                path: '/Ingresos',
+                icon: <RiIcons.RiMoneyDollarCircleLine/>
+            }
+        ]
+    }
 
 ]
