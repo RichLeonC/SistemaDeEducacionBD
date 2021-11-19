@@ -15,8 +15,10 @@ export default function PromedioGrupos() {
     const [modalFiltro,setModalFiltro] = useState(true);
 
     const grupos = dataGrupos.filter(grupo=>grupo.codigoGrupo);
+    console.log("Grupos"+dataGrupos);
+    const promedio = dataGrupos.filter(grupo=>grupo.promedio);
     const data={
-        labels: ['España', 'Mexico', 'Costa Rica'],
+        labels: dataGrupos.filter(grupo=>grupo.codigoGrupo),
         datasets:[{
             label : 'Promedio Notas',
             backgroundColor: '#61608E',
@@ -24,7 +26,7 @@ export default function PromedioGrupos() {
             boderWidth: 1,
             hoverBackgroundColor: '#A09BF3',
             hoverBorderColor: '#FFFF',
-            data: [25,63,25]
+            data: dataGrupos.filter(grupo=>grupo.promedio)
 
         }]
     
@@ -74,6 +76,7 @@ export default function PromedioGrupos() {
     const peticionGetGrupos = async()=>{ 
         await axios.get(baseUrlGrupos+"/"+numSeleccionado+"/"+annoSeleccionado+"/1")
         .then(response=>{
+           
             setDataGrupos(response.data);
         }).catch(error=>{
             console.log(error);
@@ -97,7 +100,7 @@ export default function PromedioGrupos() {
     const filtroGrupos=()=>{
         abrirCerrarModalFiltro();
         peticionGetGrupos();
-        console.log(grupos)
+       // console.log(dataGrupos)
     }
 
 
@@ -113,7 +116,7 @@ export default function PromedioGrupos() {
         <div>
             <br/>
             <div style={{width: '90%', height: '500px'}}>
-            <h2 className="offset-md-6 font-weight-bold">Facturas</h2>
+            <h2 className="offset-md-4 font-weight-bold">(%) Promedio de aprobación por grupo: {numSeleccionado} Semestre, {annoSeleccionado}</h2>
             <Bar className="offset-md-2 mt-5" data= {data} options={opciones}/>
             </div>
                 <Modal isOpen={modalFiltro}>
