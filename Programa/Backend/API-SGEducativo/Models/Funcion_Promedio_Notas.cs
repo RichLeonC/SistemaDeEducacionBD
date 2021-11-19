@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace API_SGEducativo.Models
 {
-    [Table("Funcion_Promedio_Notas")]
+    [Table("Promedio_Notas_P")]
     public class Funcion_Promedio_Notas
     {
         [Key]
@@ -15,7 +15,7 @@ namespace API_SGEducativo.Models
         public string codigoGrupo { get; set; }
         public int numPeriodo { get; set; }
         public int anno { get; set; }
-        public decimal PromedioNota { get; set; }
+        public double PromedioNota { get; set; }
         
       
     }

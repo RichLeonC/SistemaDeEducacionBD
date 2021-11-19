@@ -14,8 +14,8 @@ export default function Admin() {
             <Switch>
 
             <Route exact path = '/topPadreDeudas' component= {DeudasPadres}/>
-            <Route exact path = '/promAprobados' component= {DeudasPadres}/>
-
+            <Route exact path = '/promAprobados' component= {PromedioGrupos}/>
+s
             </Switch>
         </BrowserRouter>
         </div>
