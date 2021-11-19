@@ -10,7 +10,7 @@ export default function PromedioNotasGrupos() {
     const [notasPromedio, setNotasPromedio] = useState([]);
     const [dataProfesor,setDataProfesor] = useState([]);
     const [modalProrfesores, setModalProfesores] = useState(false);
-    const [cedula, setCedula] = useState("");
+
     
     const infoP = dataProfesor.find(profe => profe.nombreCompleto == profe);
     var grupos = notasPromedio.map(es=> es.codigoGrupo);
@@ -37,9 +37,6 @@ export default function PromedioNotasGrupos() {
         presponsive: true,
         
     }
-
-
-    const cedulaProfe = 118180009;
 
     const intermedio = nombre =>{
 
