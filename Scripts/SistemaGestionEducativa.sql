@@ -264,22 +264,26 @@ select * from Factura_Vista
 
 --------------------FUNCIONES---------------------------------
 --Promedio de aprobación por período por grupo (selecciona un período). Gráfico de barras.
-create function PromedioEstudiantes_F(@numPeriodo int)
+create function PromedioEstudiantes_F(@numPeriodo int,@anno int)
 returns table
 as
 return(
 	select top 1000 Evaluacion_Grupo_Estudiante.codigoGrupo, Evaluacion_Grupo_Estudiante.numPeriodo,anno,
-	round(avg(Evaluacion_Grupo_Estudiante.notaObtenida),2) as promedio from Evaluacion_Grupo_Estudiante where numPeriodo=@numPeriodo
+	(count(estado)/(select CantidadEstudiantes from CantidadEstudiantesGrupo(codigoGrupo)))*1000
+	as promedio
+	from Evaluacion_Grupo_Estudiante where numPeriodo=@numPeriodo
+	and anno=@anno
 	and Evaluacion_Grupo_Estudiante.estado='Aprobado'
 	group by codigoGrupo,numPeriodo,anno 
-	order by avg(Evaluacion_Grupo_Estudiante.notaObtenida) desc
+	--order by avg(estado) desc
 
 )
 
 drop function PromedioEstudiantes_F
-select * from  dbo.PromedioEstudiantes_F (2)
+select * from  dbo.PromedioEstudiantes_F (2,2020)
 
-
+select count(estado) as cantidad from Evaluacion_Grupo_Estudiante where estado='Aprobado'
+--group by codigoGrupo
 -----Promedio de Notas por Profesor por Grupo --------------------
 create function Promedio_Notas_P (@cedulaProfesor int)
 returns table 
@@ -311,7 +315,9 @@ return (
 
 select * from dbo.Cantidad_Estudiantes_Pe (2, 2021)
 
+)
 
+select * from CantidadEstudiantesGrupo('Español-A1')
 
 --Top 10 de padres con más deudas. Nombre y cantidad
 create view Padre_DeudasVista as 

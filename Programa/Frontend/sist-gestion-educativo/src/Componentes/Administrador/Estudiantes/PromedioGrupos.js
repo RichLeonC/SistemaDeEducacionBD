@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import { ModalHeader,Modal,ModalBody,Button,Form,Select,ModalFooter} from 'reactstrap'
+import {Bar} from 'react-chartjs-2';
 import { FloatingLabel } from 'react-bootstrap';
 import axios from 'axios';
 
@@ -8,14 +9,75 @@ export default function PromedioGrupos() {
     const baseUrlPeriodos = "https://localhost:44329/api/periodos";
 
     const [dataGrupos,setDataGrupos] = useState([]);
-    const [dataHorarios,setDataHorarios] = useState([]);
+    const [dataPeriodos,setDataPeriodos] = useState([]);
+    const [numSeleccionado, setNumSeleccionado] = useState([]);
+    const [annoSeleccionado, setAnnoSeleccionado] = useState([]);
+    const [modalFiltro,setModalFiltro] = useState(true);
 
-    const [modalFiltro,setModalFiltro] = useState(false);
+    const grupos = dataGrupos.filter(grupo=>grupo.codigoGrupo);
+    console.log("Grupos"+dataGrupos);
+    const promedio = dataGrupos.filter(grupo=>grupo.promedio);
+    const data={
+        labels: dataGrupos.filter(grupo=>grupo.codigoGrupo),
+        datasets:[{
+            label : 'Promedio Notas',
+            backgroundColor: '#61608E',
+            boderColor: 'black',
+            boderWidth: 1,
+            hoverBackgroundColor: '#A09BF3',
+            hoverBorderColor: '#FFFF',
+            data: dataGrupos.filter(grupo=>grupo.promedio)
+
+        }]
+    
+    };
+
+    const opciones ={
+        maintainAspectRatio: false,
+        presponsive: true,
+    }
+    const abrirCerrarModalFiltro=()=>{
+        setModalFiltro(!modalFiltro);
+
+    }
+
+    const handlerOpcionNum=e=>{  //Handler para guardar en el estado el numero de periodo escogido
+        const opcion = e.target.value;
+        setNumSeleccionado(opcion);
+        console.log(opcion);
+    }
+    const handlerOpcionAnno=e=>{  //Handler para guardar en el estado el numero de periodo escogidp
+        const opcion = e.target.value;
+        setAnnoSeleccionado(opcion);
+        console.log(opcion);
+    }
+
+    function filtroAnnosPeriodo(){ //Omite los numeros de año duplicados
+        let filtradosA = [];
+
+        for(let periodo of dataPeriodos){
+            if(!filtradosA.includes(periodo.anno)){
+                filtradosA.push(periodo.anno);
+            }
+            
+        }
+        return filtradosA;
+    }
 
     const peticionGetPeriodos = async()=>{ //Realiza peticiones Get al backend Periodos
         await axios.get(baseUrlPeriodos)
         .then(response=>{
             setDataPeriodos(response.data);
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+
+    const peticionGetGrupos = async()=>{ 
+        await axios.get(baseUrlGrupos+"/"+numSeleccionado+"/"+annoSeleccionado+"/1")
+        .then(response=>{
+           
+            setDataGrupos(response.data);
         }).catch(error=>{
             console.log(error);
         })
@@ -34,6 +96,15 @@ export default function PromedioGrupos() {
 
     }
 
+
+    const filtroGrupos=()=>{
+        abrirCerrarModalFiltro();
+        peticionGetGrupos();
+       // console.log(dataGrupos)
+    }
+
+
+
     useEffect(() => { //Hace efecto la peticion
 
         peticionGetPeriodos();
@@ -43,8 +114,13 @@ export default function PromedioGrupos() {
 
     return (
         <div>
+            <br/>
+            <div style={{width: '90%', height: '500px'}}>
+            <h2 className="offset-md-4 font-weight-bold">(%) Promedio de aprobación por grupo: {numSeleccionado} Semestre, {annoSeleccionado}</h2>
+            <Bar className="offset-md-2 mt-5" data= {data} options={opciones}/>
+            </div>
                 <Modal isOpen={modalFiltro}>
-                      <ModalHeader>Filtrar Grupos</ModalHeader>
+                      <ModalHeader>Filtrar Período</ModalHeader>
 
                       <ModalBody>
                           <Form>                       
@@ -59,12 +135,24 @@ export default function PromedioGrupos() {
                                 </select> 
                                 <br/>
                             </FloatingLabel>
+
+                            <FloatingLabel controlId="floatingSelect" label="Año">
+                                <select id="role" name="annos" className="form-control" onChange={handlerOpcionAnno}>
+                                    <option value ={-1} selected disabled>Opciones</option>
+                                     {
+                                         filtroAnnosPeriodo().map((item,i)=>(
+                                             <option key={"anno"+i} value={item}>{item}</option>
+                                         ))
+                                     }
+                                </select> 
+                                   
+                            </FloatingLabel>
                               
                           </Form>
                       </ModalBody>
 
                       <ModalFooter>
-                        <Button className="btn btn-primary"size="sm" onClick={()=>gruposFiltrados()}>Aceptar</Button>
+                        <Button className="btn btn-primary"size="sm" onClick={()=>filtroGrupos()}>Aceptar</Button>
                         <Button className="btn btn-danger" size="sm" onClick={()=>abrirCerrarModalFiltro()}
                         >Cancelar</Button>
                       </ModalFooter>
