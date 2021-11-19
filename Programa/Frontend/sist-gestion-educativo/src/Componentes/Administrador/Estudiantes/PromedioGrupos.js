@@ -14,19 +14,20 @@ export default function PromedioGrupos() {
     const [annoSeleccionado, setAnnoSeleccionado] = useState([]);
     const [modalFiltro,setModalFiltro] = useState(true);
 
-    const grupos = dataGrupos.filter(grupo=>grupo.codigoGrupo);
-    console.log("Grupos"+dataGrupos);
-    const promedio = dataGrupos.filter(grupo=>grupo.promedio);
+    const grupos = dataGrupos.map(grupo=>grupo.codigoGrupo);
+    console.log("Gruposs")
+    console.log(grupos);
+    const promedio = dataGrupos.map(grupo=>grupo.promedio);
     const data={
-        labels: dataGrupos.filter(grupo=>grupo.codigoGrupo),
+        labels: grupos,
         datasets:[{
-            label : 'Promedio Notas',
+            label : '(%) Promedio de Aprobados',
             backgroundColor: '#61608E',
             boderColor: 'black',
             boderWidth: 1,
             hoverBackgroundColor: '#A09BF3',
             hoverBorderColor: '#FFFF',
-            data: dataGrupos.filter(grupo=>grupo.promedio)
+            data: promedio
 
         }]
     
@@ -117,6 +118,7 @@ export default function PromedioGrupos() {
             <br/>
             <div style={{width: '90%', height: '500px'}}>
             <h2 className="offset-md-4 font-weight-bold">(%) Promedio de aprobación por grupo: {numSeleccionado} Semestre, {annoSeleccionado}</h2>
+            <Button className="btn btn-primary mt-4 offset-md-3 " onClick={()=>abrirCerrarModalFiltro()}>Filtrar</Button>
             <Bar className="offset-md-2 mt-5" data= {data} options={opciones}/>
             </div>
                 <Modal isOpen={modalFiltro}>

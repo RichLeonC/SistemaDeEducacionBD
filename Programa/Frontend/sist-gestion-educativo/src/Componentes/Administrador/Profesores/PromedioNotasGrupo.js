@@ -10,9 +10,7 @@ export default function PromedioNotasGrupos() {
     const [notasPromedio, setNotasPromedio] = useState([]);
     const [dataProfesor,setDataProfesor] = useState([]);
     const [modalProrfesores, setModalProfesores] = useState(false);
-
     
-    const infoP = dataProfesor.find(profe => profe.nombreCompleto == profe);
     var grupos = notasPromedio.map(es=> es.codigoGrupo);
     var promedio = notasPromedio.map(nota=> nota.promedioNota);
   
