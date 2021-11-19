@@ -5,6 +5,7 @@ import { SbDataAdmin } from '../Navegation/SbDataAdmin.js';
 import DeudasPadres from '../Administrador/Padres/DeudasPadres.js';
 import PromediNotas from '../Administrador/Profesores/PromedioNotasGrupo.js';
 
+import PromedioGrupos from '../Administrador/Estudiantes/PromedioGrupos.js';
 
 
 export default function Admin() {
