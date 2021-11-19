@@ -4,7 +4,7 @@ import  {BrowserRouter, Switch , Route} from 'react-router-dom';
 import { SbDataAdmin } from '../Navegation/SbDataAdmin.js';
 import DeudasPadres from '../Administrador/Padres/DeudasPadres.js';
 import PromediNotas from '../Administrador/Profesores/PromedioNotasGrupo.js';
-
+import CantidadGrupo from '../Administrador/Estudiantes/CantidadEstGruPe.js';
 import PromedioGrupos from '../Administrador/Estudiantes/PromedioGrupos.js';
 import Ingresos from '../Administrador/Padres/Ingresos.js';
 
@@ -20,6 +20,8 @@ export default function Admin() {
 
             <Route exact path = '/PromedioNotasGProfe' component= {PromediNotas}/>
             <Route exact path = '/Ingresos' component= {Ingresos}/>
+            <Route exact path = '/CantidadEstudiantes' component= {CantidadGrupo}/>
+
 
             </Switch>
         </BrowserRouter>

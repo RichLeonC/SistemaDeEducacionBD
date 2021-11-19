@@ -20,7 +20,14 @@ export const SbDataAdmin = [
                 title:'Promedio aprobados',
                 path:'/promAprobados',
                 icon: <IoIcons.IoIosPaper/>
+            },
+            {
+                title:'Cantidad Estudiantes Periodo',
+                path:'/CantidadEstudiantes',
+                icon: <IoIcons.IoIosPaper/>
             }
+
+
         ]
     },
     {

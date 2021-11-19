@@ -36,9 +36,6 @@ export default function PromedioNotasGrupos() {
         
     }
 
-
-
-
     const intermedio = nombre =>{
 
         const infoP = dataProfesor.find(profe => profe.nombreCompleto == nombre);
