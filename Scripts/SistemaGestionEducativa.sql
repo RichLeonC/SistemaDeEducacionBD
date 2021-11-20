@@ -259,11 +259,14 @@ inner join Matricula on Matricula.idMatricula = Cobros.idMatricula
 inner join Usuario on Usuario.cedula = Matricula.cedulaEstudiante
 
 
+
 select * from Factura_Vista
+select * from Factura
+select * from Matricula
 
 
 --------------------FUNCIONES---------------------------------
---Promedio de aprobación por período por grupo (selecciona un período). Gráfico de barras.
+--2. Promedio de aprobación por período por grupo (selecciona un período). Gráfico de barras.
 create function PromedioEstudiantes_F(@numPeriodo int,@anno int)
 returns table
 as
@@ -284,7 +287,7 @@ select * from  dbo.PromedioEstudiantes_F (2,2020)
 
 select count(estado) as cantidad from Evaluacion_Grupo_Estudiante where estado='Aprobado'
 --group by codigoGrupo
------Promedio de Notas por Profesor por Grupo --------------------
+-----1. Promedio de Notas por Profesor por Grupo --------------------
 create function Promedio_Notas_P (@cedulaProfesor int)
 returns table 
 as 
@@ -301,7 +304,7 @@ return (
 select * from  dbo.Promedio_Notas_P(115173422)
 
 
----------Cantidad de estudiantes por periodo por grupo----------------------
+---------3. Cantidad de estudiantes por periodo por grupo----------------------
 create function Cantidad_Estudiantes_Pe(@numeroPeriodo int, @annoPeriodo int)
 returns table
 as 
@@ -315,11 +318,19 @@ return (
 
 select * from dbo.Cantidad_Estudiantes_Pe (2, 2021)
 
+create function CantidadEstudiantesGrupo(@codigoGrupo varchar(25))
+returns table
+as 
+return (
+		select count(Matricula.idMatricula) as CantidadEstudiantes , Matricula.codigoGrupo, Matricula.anno, Matricula.numPeriodo 
+		from Matricula where Matricula.codigoGrupo = @codigoGrupo
+		group by codigoGrupo,anno,numPeriodo
+
 )
 
 select * from CantidadEstudiantesGrupo('Español-A1')
 
---Top 10 de padres con más deudas. Nombre y cantidad
+--4. Top 10 de padres con más deudas. Nombre y cantidad
 create view Padre_DeudasVista as 
 select top 10 Estudiante_Vista.nombrePadre,Estudiante_Vista.cedulaPadre, count(Cobros.consecutivo) as cantidad from Estudiante_Vista
 inner join Matricula on Estudiante_Vista.cedula = Matricula.cedulaEstudiante
@@ -330,7 +341,7 @@ order by count(Cobros.consecutivo) desc
 
 select * from Padre_DeudasVista 
 
---ver el detalle de los cobros pendientes al seleccionar un padre del top 10
+--4,5. ver el detalle de los cobros pendientes al seleccionar un padre del top 10
 create function DetalleCobrosPadre_F(@cedulaPadre int)
 returns table
 as
@@ -344,6 +355,22 @@ return(
 
 )
 
+--5. Ingresos por grado por período. Gráfico circular (porcentual). Seleccionar un periodo
+
+create function Ingresos(@numPeriodo int,@anno int) 
+returns table
+as
+return(
+	select Grupo.grado, Grupo.numeroPeriodo,Grupo.anno,sum(totalPago) as ingreso, count(Matricula.idMatricula) as matriculas from Factura
+	inner join Grupo on Grupo.numeroPeriodo = @numPeriodo and Grupo.anno = @anno
+	inner join Matricula on Matricula.numPeriodo = @numPeriodo and Matricula.anno =@anno
+	inner join Cobros on Matricula.idMatricula = Cobros.idMatricula and Factura.consecutivo = Cobros.consecutivo
+	and Cobros.estado = 'Pagado'
+	group by grado,numeroPeriodo,Grupo.anno
+)
+
+select * from Ingresos(2,2020)
+drop function Ingresos
 select * from DetalleCobrosPadre_F(114140008)
 --INSERTS
 insert into Usuario values(111,'Admin','Leon','Chinchilla','0192023a7bbd73250516f069df18b500','Masculino',
