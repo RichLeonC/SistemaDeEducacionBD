@@ -376,6 +376,16 @@ select sum(totalPago) as total from Factura, Cobros,Matricula where Factura.cons
 and Cobros.idMatricula = Matricula.idMatricula and Cobros.estado = 'Pagado'
 
 select * from TotalIngresos
+--------6 Cantidad de grupos por periodo. Periodo y cantidad.
+
+create view Cantidad_Grupos_Periodo as
+	select Periodo.numero , Periodo.anno , count (Grupo.codigoNombre) as CantidadGrupos from Periodo
+	inner join Grupo on Grupo.anno = Periodo.anno and Grupo.numeroPeriodo = Periodo.numero
+	group by Periodo.numero, Periodo.anno
+
+
+select * from Cantidad_Grupos_Periodo
+drop view Cantidad_Grupos_Periodo
 
 select * from Cobros where estado = 'Pagado' order by idMatricula asc
 
