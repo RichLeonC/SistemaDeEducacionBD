@@ -371,6 +371,16 @@ return(
 select * from Ingresos(2,2021)
 drop function Ingresos
 
+--------6 Cantidad de grupos por periodo. Periodo y cantidad.
+
+create view Cantidad_Grupos_Periodo as
+	select Periodo.numero , Periodo.anno , count (Grupo.codigoNombre) as CantidadGrupos from Periodo
+	inner join Grupo on Grupo.anno = Periodo.anno and Grupo.numeroPeriodo = Periodo.numero
+	group by Periodo.numero, Periodo.anno
+
+
+select * from Cantidad_Grupos_Periodo
+drop view Cantidad_Grupos_Periodo
 
 
 --INSERTS
