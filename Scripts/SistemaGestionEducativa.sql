@@ -272,7 +272,7 @@ returns table
 as
 return(
 	select top 1000 Evaluacion_Grupo_Estudiante.codigoGrupo, Evaluacion_Grupo_Estudiante.numPeriodo,anno,
-	(count(estado)/(select CantidadEstudiantes from CantidadEstudiantesGrupo(codigoGrupo)))*1000
+	(cast(count(estado)as float)/(select CantidadEstudiantes from CantidadEstudiantesGrupo(codigoGrupo)))*100
 	as promedio
 	from Evaluacion_Grupo_Estudiante where numPeriodo=@numPeriodo
 	and anno=@anno
@@ -368,10 +368,16 @@ return(
 	group by grado,numeroPeriodo,Grupo.anno
 )
 
-select * from Ingresos(2,2021)
+select * from Ingresos(2,2020)
 drop function Ingresos
+--Total de ingresos percibidos, se cuentan los cobros pagados
+create view TotalIngresos as
+select sum(totalPago) as total from Factura, Cobros,Matricula where Factura.consecutivo = Cobros.consecutivo
+and Cobros.idMatricula = Matricula.idMatricula and Cobros.estado = 'Pagado'
 
+select * from TotalIngresos
 
+select * from Cobros where estado = 'Pagado' order by idMatricula asc
 
 --INSERTS
 insert into Usuario values(111,'Admin','Leon','Chinchilla','0192023a7bbd73250516f069df18b500','Masculino',
