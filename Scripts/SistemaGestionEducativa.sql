@@ -400,14 +400,27 @@ from Asistencia_Estudiante
 inner join Estudiante_Vista on Estudiante_Vista.cedula= Asistencia_Estudiante.cedulaEstudiante
 group by asistencia, nombreCompleto
 order by count(Asistencia_Estudiante.cedulaEstudiante) desc
- 
- select * from Top_10_Ausencias
 
+select * from Top_10_Ausencias
+----7.5 Opcional filtrado por periodo
+
+create function Top_10_Ausencias_Filtrar(@numPeriodo int,@anno int)
+returns table 
+as 
+return (
+	select top 10  Estudiante_Vista.nombreCompleto, count(Asistencia_Estudiante.cedulaEstudiante)as CantidadAusencias 
+	from Asistencia_Estudiante
+	inner join Estudiante_Vista on Estudiante_Vista.cedula= Asistencia_Estudiante.cedulaEstudiante and 
+	Asistencia_Estudiante.anno = @anno and Asistencia_Estudiante.numPeriodo= @numPeriodo
+	group by asistencia, nombreCompleto
+)
+ 
+ select  * from Top_10_Ausencias_Filtrar(2,2021)
 
 --Borrar todos los planes de memoria caché
 DBCC FREEPROCCACHE WITH NO_INFOMSGS
 
---- Vaciar la chache  de datos 
+--- Vaciar la cache  de datos 
 DBCC DROPCLEANBUFFERS WITH NO_INFOMSGS
 
 
