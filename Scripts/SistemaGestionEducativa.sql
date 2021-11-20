@@ -417,6 +417,28 @@ return (
  
  select  * from Top_10_Ausencias_Filtrar(2,2021)
 
+
+---- 8 Cantidad de grupos por estudiante por periodo, ordenado por grado. Seleccionar un periodo
+
+create function Cantidad_Grupos_Estudiante(@numPeriodo int,@anno int)
+returns table
+as
+return (
+	select Estudiante_Vista.cedula, Estudiante_Vista.nombreCompleto, Matricula.numPeriodo, Matricula.anno , 
+	count(Matricula.codigoGrupo) as  CantidadGrupos from Matricula
+	inner join Estudiante_Vista on Estudiante_Vista.cedula = Matricula.cedulaEstudiante and
+	Matricula.numPeriodo = @numPeriodo and Matricula.anno = @anno
+	group by cedula, nombreCompleto, numPeriodo, anno
+
+)
+
+select * from Cantidad_Grupos_Estudiante(2,2020)
+
+
+
+
+
+
 --Borrar todos los planes de memoria caché
 DBCC FREEPROCCACHE WITH NO_INFOMSGS
 
