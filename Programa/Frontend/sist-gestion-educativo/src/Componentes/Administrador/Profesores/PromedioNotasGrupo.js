@@ -19,7 +19,7 @@ export default function PromedioNotasGrupos() {
         labels: grupos,
         datasets:[{
             label : 'Promedio Notas',
-            backgroundColor: '#61608E',
+            backgroundColor: ['#6C63FF', '#5757AF', '#8F8FC3', '#BAB8EF'],
             boderColor: 'black',
             boderWidth: 1,
             hoverBackgroundColor: '#A09BF3',
