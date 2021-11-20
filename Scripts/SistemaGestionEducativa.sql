@@ -360,7 +360,7 @@ create function Ingresos(@numPeriodo int,@anno int)
 returns table
 as
 return(
-	select distinct Grupo.grado, Grupo.numeroPeriodo,Grupo.anno,sum(totalPago) as ingreso, count(Matricula.idMatricula) as matriculas from Factura
+	select distinct Grupo.grado, Grupo.numeroPeriodo,Grupo.anno,round((cast(sum(totalPago) as float)/(select total from TotalIngresos)*100),2)as ingreso, count(Matricula.idMatricula) as matriculas from Factura
 	inner join Grupo on Grupo.numeroPeriodo = @numPeriodo and Grupo.anno = @anno
 	inner join Matricula on Matricula.numPeriodo = @numPeriodo and Matricula.anno =@anno and Matricula.codigoGrupo=Grupo.codigoNombre
 	inner join Cobros on Matricula.idMatricula = Cobros.idMatricula and Factura.consecutivo = Cobros.consecutivo
@@ -368,8 +368,9 @@ return(
 	group by grado,numeroPeriodo,Grupo.anno
 )
 
-select * from Ingresos(2,2020)
-drop function Ingresos
+select * from Ingresos(2,2021)
+
+
 --Total de ingresos percibidos, se cuentan los cobros pagados
 create view TotalIngresos as
 select sum(totalPago) as total from Factura, Cobros,Matricula where Factura.consecutivo = Cobros.consecutivo
