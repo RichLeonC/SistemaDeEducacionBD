@@ -404,6 +404,14 @@ order by count(Asistencia_Estudiante.cedulaEstudiante) desc
  select * from Top_10_Ausencias
 
 
+ --9. Porcentaje de estudiantes por género por período. Género y porcentaje. Gráfico circular.
+create view Generos as
+select  count(Femenino.sexo)as femenino, count(Masculino.sexo) as masculino from Estudiante_Vista 
+inner join Estudiante_Vista as Femenino on Femenino.sexo = 'Femenino' 
+inner join Estudiante_Vista as Masculino on Masculino.sexo = 'Masculino'
+
+--inner join Estudiante_Vista as Masculino on Masculino.sexo = 'Masculino' and Masculino.cedula = Estudiante_Vista.cedula
+
 --Borrar todos los planes de memoria caché
 DBCC FREEPROCCACHE WITH NO_INFOMSGS
 
