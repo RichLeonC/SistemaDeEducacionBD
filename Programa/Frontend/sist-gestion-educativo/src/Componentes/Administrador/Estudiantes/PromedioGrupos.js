@@ -15,6 +15,8 @@ export default function PromedioGrupos() {
     const [modalFiltro,setModalFiltro] = useState(true);
 
     const grupos = dataGrupos.map(grupo=>grupo.codigoGrupo);
+    console.log("Gruposs")
+    console.log(grupos);
     const promedio = dataGrupos.map(grupo=>grupo.promedio);
     const data={
         labels: grupos,
