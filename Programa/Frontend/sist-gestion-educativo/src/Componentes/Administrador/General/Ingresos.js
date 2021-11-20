@@ -105,6 +105,16 @@ export default function Ingresos() {
         return grados;
     }
 
+    function totalIngreso(){
+        let total = [];
+        for(let ingreso of dataIngresos){
+            if(!total.includes(ingreso.totalPeriodo)){
+                total.push(ingreso.totalPeriodo);
+            }
+        }
+        return total[0];
+    }
+
     const filtroIngresos =()=>{
         abrirCerrarModalFiltro();
         peticionGetIngresos();
@@ -115,6 +125,9 @@ export default function Ingresos() {
             <h2 className="offset-md-4 font-weight-bold">(%) Ingresos por grado por período: {numSeleccionado} Semestre, {annoSeleccionado}</h2>
             <Button className="btn btn-primary mt-4 offset-md-3 " onClick={()=>abrirCerrarModalFiltro()}>Filtrar</Button>
             <Pie  data={data} options={opciones}/>
+            </div>
+            <div className="offset-md-7 font-weight-bold">
+                <h3>Total de ingresos del período: ₡{totalIngreso()}</h3>
             </div>
              <Modal isOpen={modalFiltro}>
                       <ModalHeader>Filtrar Período</ModalHeader>

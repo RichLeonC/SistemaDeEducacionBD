@@ -17,6 +17,7 @@ namespace API_SGEducativo.Models
         [Key]
         public int anno { get; set; }
         public double ingreso { get; set; }
+        public decimal totalPeriodo { get; set; }
         public int matriculas { get; set; }
     }
 }

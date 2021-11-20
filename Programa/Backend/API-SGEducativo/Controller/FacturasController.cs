@@ -41,7 +41,7 @@ namespace API_SGEducativo.Controller
         {
             try
             {
-                return Ok(_context.Ingresos.FromSqlRaw("select grado,numeroPeriodo,anno,ingreso,matriculas from Ingresos("+numeroPeriodo+","+anno+")"));
+                return Ok(_context.Ingresos.FromSqlRaw("select grado,numeroPeriodo,anno,ingreso,totalPeriodo,matriculas from Ingresos("+numeroPeriodo+","+anno+")"));
             }
             catch (Exception e)
             {
