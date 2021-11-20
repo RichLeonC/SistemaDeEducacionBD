@@ -35,6 +35,14 @@ namespace API_SGEducativo.Controller
             }
         }
 
+
+
+        [HttpGet("{numPeriodo}/{anno}/4")]
+        public ActionResult GetEstudiantes(int numPeriodo, int anno)
+        {
+            return Ok(_context.CantidadEstuPeriodo.FromSqlRaw("select CantidadEstudiantes,codigoGrupo, anno, numPeriodo from Cantidad_Estudiantes_Pe(" + numPeriodo + "," + anno + ")"));
+        }
+
         // GET api/<MatriculasController>/5
         [HttpGet("{idMatricula}",Name ="GetMatricula")] //Devuelve solo un registro
         public ActionResult Get(int idMatricula)
