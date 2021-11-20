@@ -6,7 +6,7 @@ import DeudasPadres from '../Administrador/Padres/DeudasPadres.js';
 import PromediNotas from '../Administrador/Profesores/PromedioNotasGrupo.js';
 import CantidadGrupo from '../Administrador/Estudiantes/CantidadEstGruPe.js';
 import PromedioGrupos from '../Administrador/Estudiantes/PromedioGrupos.js';
-import Ingresos from '../Administrador/Padres/Ingresos.js';
+import Ingresos from '../Administrador/General/Ingresos.js';
 import CantidadGruPeriodo from '../Administrador/General/CantidadGruposPe.js';
 
 export default function Admin() {
