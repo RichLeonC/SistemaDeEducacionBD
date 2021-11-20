@@ -8,13 +8,11 @@ export default function CantidadEstGruPe() {
 
     const baseUrlMatriculas = "https://localhost:44307/api/matriculas";
     const baseUrlPeriodos = "https://localhost:44307/api/periodos";
-    const baseUrlGrupos = "https://localhost:44307/api/Grupos";
-    const [dataGrupos,setDataGrupos] = useState([]);
     const [dataMatricula, setDataMatricula]= useState([]);
     const [dataPeriodos,setDataPeriodos] = useState([]);
     var grupos = dataMatricula.map(es=> es.codigoGrupo);
     var cantidad= dataMatricula.map(cantidad=> cantidad.cantidadEstudiantes);
-    const [modalFiltro,setModalFiltro] = useState(true);
+    const [modalFiltro,setModalFiltro] = useState(false);
     const [numSeleccionado, setNumSeleccionado] = useState([]);
     const [annoSeleccionado, setAnnoSeleccionado] = useState([]);
     
@@ -44,7 +42,7 @@ export default function CantidadEstGruPe() {
 
 
     const peticionGetMatricula= async()=>{ //Realiza peticiones Get al backend de las matriculas
-        await axios.get(baseUrlMatriculas+"/"+ 2 + "/" + 2021 + "/4")
+        await axios.get(baseUrlMatriculas+"/"+ numSeleccionado + "/" + annoSeleccionado + "/4")
         .then(response=>{
             setDataMatricula(response.data);
             console.log(dataMatricula);
@@ -73,7 +71,7 @@ export default function CantidadEstGruPe() {
 
     useEffect(() => { //Hace efecto la peticion
         
-        peticionGetMatricula();
+      
         peticionGetPeriodos();
 
     }, [])
@@ -107,7 +105,7 @@ export default function CantidadEstGruPe() {
 
     const filtroGrupos=()=>{
         abrirCerrarModalFiltro();
-        peticionGetGrupos();
+        peticionGetMatricula();
        // console.log(dataGrupos)
     }
     const abrirCerrarModalFiltro=()=>{
@@ -115,25 +113,12 @@ export default function CantidadEstGruPe() {
 
     }
 
-    const peticionGetGrupos = async()=>{ 
-        await axios.get(baseUrlGrupos+"/"+numSeleccionado+"/"+annoSeleccionado+"/1")
-        .then(response=>{
-           
-            setDataGrupos(response.data);
-        }).catch(error=>{
-            console.log(error);
-        })
-    }
-
 
 
     return (
         <div style={{width: '90%', height: '500px'}}>
-            
-        <Pie  data={data} options={opciones}/>
-
         <Button className="btn btn-primary mt-4 offset-md-3 "size="sm" onClick={()=>abrirCerrarModalFiltro()} >Periodos</Button>
-
+        <Pie  data={data} options={opciones}/>
         <Modal isOpen={modalFiltro}>
                       <ModalHeader>Filtrar Período</ModalHeader>
 
