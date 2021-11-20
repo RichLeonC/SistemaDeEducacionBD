@@ -356,22 +356,23 @@ return(
 )
 
 --5. Ingresos por grado por período. Gráfico circular (porcentual). Seleccionar un periodo
-
 create function Ingresos(@numPeriodo int,@anno int) 
 returns table
 as
 return(
-	select Grupo.grado, Grupo.numeroPeriodo,Grupo.anno,sum(totalPago) as ingreso, count(Matricula.idMatricula) as matriculas from Factura
+	select distinct Grupo.grado, Grupo.numeroPeriodo,Grupo.anno,sum(totalPago) as ingreso, count(Matricula.idMatricula) as matriculas from Factura
 	inner join Grupo on Grupo.numeroPeriodo = @numPeriodo and Grupo.anno = @anno
-	inner join Matricula on Matricula.numPeriodo = @numPeriodo and Matricula.anno =@anno
+	inner join Matricula on Matricula.numPeriodo = @numPeriodo and Matricula.anno =@anno and Matricula.codigoGrupo=Grupo.codigoNombre
 	inner join Cobros on Matricula.idMatricula = Cobros.idMatricula and Factura.consecutivo = Cobros.consecutivo
 	and Cobros.estado = 'Pagado'
 	group by grado,numeroPeriodo,Grupo.anno
 )
 
-select * from Ingresos(2,2020)
+select * from Ingresos(2,2021)
 drop function Ingresos
-select * from DetalleCobrosPadre_F(114140008)
+
+
+
 --INSERTS
 insert into Usuario values(111,'Admin','Leon','Chinchilla','0192023a7bbd73250516f069df18b500','Masculino',
 '2001/7/29','Admin','2021/10/19')
