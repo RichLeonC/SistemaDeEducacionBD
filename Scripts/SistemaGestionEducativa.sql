@@ -398,10 +398,12 @@ create view Top_10_Ausencias as
 select top 10  Estudiante_Vista.nombreCompleto, count(Asistencia_Estudiante.cedulaEstudiante)as CantidadAusencias 
 from Asistencia_Estudiante
 inner join Estudiante_Vista on Estudiante_Vista.cedula= Asistencia_Estudiante.cedulaEstudiante
-group by asistencia, nombreCompleto
+group by  nombreCompleto
 order by count(Asistencia_Estudiante.cedulaEstudiante) desc
 
 select * from Top_10_Ausencias
+
+drop view Top_10_Ausencias
 ----7.5 Opcional filtrado por periodo
 
 create function Top_10_Ausencias_Filtrar(@numPeriodo int,@anno int)
@@ -412,10 +414,12 @@ return (
 	from Asistencia_Estudiante
 	inner join Estudiante_Vista on Estudiante_Vista.cedula= Asistencia_Estudiante.cedulaEstudiante and 
 	Asistencia_Estudiante.anno = @anno and Asistencia_Estudiante.numPeriodo= @numPeriodo
-	group by asistencia, nombreCompleto
+	group by  nombreCompleto
 )
  
  select  * from Top_10_Ausencias_Filtrar(2,2021)
+
+ drop function Top_10_Ausencias_Filtrar
 
 
 ---- 8 Cantidad de grupos por estudiante por periodo, ordenado por grado. Seleccionar un periodo
@@ -441,9 +445,14 @@ select * from Cantidad_Grupos_Estudiante(2,2020)
 
  --9. Porcentaje de estudiantes por género por período. Género y porcentaje. Gráfico circular.
 create view Generos as
-select  count(Femenino.sexo)as femenino, count(Masculino.sexo) as masculino from Estudiante_Vista 
-inner join Estudiante_Vista as Femenino on Femenino.sexo = 'Femenino' 
-inner join Estudiante_Vista as Masculino on Masculino.sexo = 'Masculino'
+select  count(case when Estudiante_Vista.sexo = 'Femenino' then 1 else null end)as femenino , 
+count (case when Estudiante_Vista.sexo = 'Masculino'then 1 else null end) as masculino from Estudiante_Vista 
+
+
+
+drop view Generos 
+
+select * from Generos
 
 --inner join Estudiante_Vista as Masculino on Masculino.sexo = 'Masculino' and Masculino.cedula = Estudiante_Vista.cedula
 
