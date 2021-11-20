@@ -1,6 +1,7 @@
 ﻿using API_SGEducativo.Context;
 using API_SGEducativo.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,20 @@ namespace API_SGEducativo.Controller
             }
         }
 
-        
+        [HttpGet("{numeroPeriodo}/{anno}")]
+        public ActionResult GetIngresos(int numeroPeriodo,int anno)
+        {
+            try
+            {
+                return Ok(_context.Ingresos.FromSqlRaw("select grado,numeroPeriodo,anno,ingreso,matriculas from Ingresos("+numeroPeriodo+","+anno+")"));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
 
         // POST api/<FacturasController>
         [HttpPost]

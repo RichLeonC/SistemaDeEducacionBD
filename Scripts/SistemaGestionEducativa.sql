@@ -368,8 +368,6 @@ return(
 	group by grado,numeroPeriodo,Grupo.anno
 )
 
-select * from Ingresos(2,2021)
-
 
 --Total de ingresos percibidos, se cuentan los cobros pagados
 create view TotalIngresos as
