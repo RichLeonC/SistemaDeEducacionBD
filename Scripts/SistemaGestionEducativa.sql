@@ -6,7 +6,7 @@ use SistemaGestionEducativa
 go
 
 --Tabla que guarda la información para cada usuario existente
-create table Usuario(
+create table (
 	cedula int not null primary key,
 	nombre varchar(100) not null,
 	apellido1 varchar(100) not null,
@@ -369,22 +369,17 @@ return(
 	group by grado,numeroPeriodo,Grupo.anno
 )
 
-select * from Ingresos(2,2020)
-drop function Ingresos
---Total de ingresos percibidos, se cuentan los cobros pagados
-create function TotalIngresos(@numPeriodo int, @anno int)
-returns table
-as
-return(
-		select sum(totalPago) as total from Factura
-			inner join Grupo on Grupo.numeroPeriodo = @numPeriodo and Grupo.anno = @anno
-			inner join Matricula on Matricula.numPeriodo = @numPeriodo and Matricula.anno =@anno and Matricula.codigoGrupo=Grupo.codigoNombre
-			inner join Cobros on Matricula.idMatricula = Cobros.idMatricula and Factura.consecutivo = Cobros.consecutivo
-			and Cobros.estado = 'Pagado'
-)
-select * from TotalIngresos(2,2021)
-drop view TotalIngresos
+select * from Ingresos(2,2021)
 
+
+
+
+--Total de ingresos percibidos, se cuentan los cobros pagados
+create view TotalIngresos as
+select sum(totalPago) as total from Factura, Cobros,Matricula where Factura.consecutivo = Cobros.consecutivo
+and Cobros.idMatricula = Matricula.idMatricula and Cobros.estado = 'Pagado'
+
+select * from TotalIngresos
 --------6 Cantidad de grupos por periodo. Periodo y cantidad.
 
 create view Cantidad_Grupos_Periodo as
@@ -395,6 +390,37 @@ create view Cantidad_Grupos_Periodo as
 
 select * from Cantidad_Grupos_Periodo
 drop view Cantidad_Grupos_Periodo
+
+------7 - Top 10 de estudiantes con más ausencias. Nombre y cantidad. Puedo opcionalmente filtrar por período.
+
+create view Top_10_Ausencias as
+
+select top 10  Estudiante_Vista.nombreCompleto, count(Asistencia_Estudiante.cedulaEstudiante)as CantidadAusencias 
+from Asistencia_Estudiante
+inner join Estudiante_Vista on Estudiante_Vista.cedula= Asistencia_Estudiante.cedulaEstudiante
+group by asistencia, nombreCompleto
+order by count(Asistencia_Estudiante.cedulaEstudiante) desc
+ 
+ select * from Top_10_Ausencias
+
+
+--Borrar todos los planes de memoria caché
+DBCC FREEPROCCACHE WITH NO_INFOMSGS
+
+--- Vaciar la chache  de datos 
+DBCC DROPCLEANBUFFERS WITH NO_INFOMSGS
+
+
+ execute sp_helpindex Asistencia_Estudiante
+
+ --create clustered index IDX_nombres
+ --on Usuario (nombre)
+
+ drop view Top_10_Ausencias
+
+ --drop index Usuario.IDX_nombres
+
+-- select * from Usuario
 
 select * from Cobros where estado = 'Pagado' order by idMatricula asc
 
