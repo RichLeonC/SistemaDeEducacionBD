@@ -64,7 +64,6 @@ const SideBar = (props) => {
         cookies.remove('fechaNacimiento', {path: '/'});
         this.props.history.push('./');
     }
-
     return (
     <div >
        <Nav >
