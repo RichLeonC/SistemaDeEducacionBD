@@ -458,6 +458,22 @@ group by numPeriodo,anno
 
 select * from Generos
 
+----10 Cantidad de Aprobados y Reprobados por grupo por periodo. Comparativo. Gráfico de barras. Selecciona uno o más períodos.
+
+create function CantidadAR (@numPeriodo int,@anno int)
+returns table
+as
+return (
+	select Grupo.codigoNombre, (case when Evaluacion_Grupo_Estudiante.estado = 'Aprobado' then 1 else null end ) as CantidadAprobados,
+	count(case when Evaluacion_Grupo_Estudiante.estado = 'Reprobado' then 1 else null end ) as CantidadReprobados from Evaluacion_Grupo_Estudiante
+	inner join Grupo on  Grupo.anno = @anno and Grupo.numeroPeriodo = @numPeriodo
+	inner join Evaluacion_Grupo_Estudiante es on  es.anno =@anno and es.numPeriodo= @numPeriodo and Grupo.codigoNombre = es.codigoGrupo
+	group by codigoNombre, Evaluacion_Grupo_Estudiante.estado
+)
+
+select * from CantidadAR(1,2020)
+
+drop function CantidadAR
 --11. Ventas por periodo (cobros). Gráfico circular (porcentual). Seleccionar rango de períodos.
 
 

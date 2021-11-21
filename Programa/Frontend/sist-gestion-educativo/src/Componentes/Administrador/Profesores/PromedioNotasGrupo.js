@@ -26,7 +26,9 @@ export default function PromedioNotasGrupos() {
             hoverBorderColor: '#FFFF',
             data: promedio
 
-        }]
+        }
+                           
+        ]
     
     };
 
@@ -93,7 +95,7 @@ export default function PromedioNotasGrupos() {
 
 
     return (
-        <div style={{width: '100%', height: '500px'}}>
+        <div style={{width: '90%', height: '500px'}}>
             <Button className="btn btn-primary mt-4 offset-md-3 "size="sm" onClick={()=>cerrarAbrirModalProfesores()} >Profesores</Button>
             <Bar  data= {data} options={opciones}/>
 
