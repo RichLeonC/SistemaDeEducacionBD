@@ -82,7 +82,10 @@ namespace API_SGEducativo.Context
         public DbSet<CantidadEstuPeriodo> CantidadEstuPeriodo { get; set; }
 
         //public DbSet<CantidadGrupoPeriodo> CantidadGrupoPeriodo { get; set; }
+
         public DbSet<Ingresos> Ingresos;
+
+        public DbSet<TopAusencias> TopAusencias { get; set; }
 
 
     }
