@@ -1,7 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { ModalHeader,Modal,ModalBody,Button,Form,Select,ModalFooter} from 'reactstrap'
 import {Pie , Doughnut} from 'react-chartjs-2';
-import { FloatingLabel } from 'react-bootstrap';
 import axios from 'axios';
 
 
@@ -10,12 +8,11 @@ export default function CantidadGruposPe(){
     const [dataPeriodos,setDataPeriodos] = useState([]);
     var periodo = dataPeriodos.map(es=> es.numero);
     var cantidad= dataPeriodos.map(cantidad=> cantidad.cantidadGrupos);
-    var anno = dataPeriodos.map(año=> año.anno);
-
+  
 
     
     const data={
-        labels: periodo,
+        labels: PeriodosAnno(),
       
         datasets:[{
             backgroundColor: ['#6C63FF', '#5757AF', '#8F8FC3', '#BAB8EF'],
@@ -24,6 +21,16 @@ export default function CantidadGruposPe(){
         }]
        
     };
+
+    
+    function PeriodosAnno(){
+        let grados =[];
+
+        for(let grado of dataPeriodos){
+            grados.push("Periodo "+grado.numero + " Año " + grado.anno);
+        }
+        return grados;
+    }
 
     const opciones ={
         presponsive: true,

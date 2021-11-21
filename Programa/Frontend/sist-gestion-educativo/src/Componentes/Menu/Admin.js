@@ -8,6 +8,7 @@ import CantidadGrupo from '../Administrador/Estudiantes/CantidadEstGruPe.js';
 import PromedioGrupos from '../Administrador/Estudiantes/PromedioGrupos.js';
 import Ingresos from '../Administrador/Padres/Ingresos.js';
 import CantidadGruPeriodo from '../Administrador/General/CantidadGruposPe.js';
+import TopAusencias from '../Administrador/General/TopAusencias.js';
 
 export default function Admin() {
     return (
@@ -23,6 +24,7 @@ export default function Admin() {
             <Route exact path = '/Ingresos' component= {Ingresos}/>
             <Route exact path = '/CantidadEstudiantes' component= {CantidadGrupo}/>
             <Route exact path = '/CantidadGrupos' component= {CantidadGruPeriodo}/>
+            <Route exact path = '/TopAusencias' component= {TopAusencias}/>
 
 
             </Switch>
