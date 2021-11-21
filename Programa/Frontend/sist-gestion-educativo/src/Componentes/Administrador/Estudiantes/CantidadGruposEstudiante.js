@@ -1,38 +1,18 @@
 import React,{useState,useEffect} from 'react';
-import { ModalHeader,Modal,ModalBody,Button,Form,Select,ModalFooter} from 'reactstrap'
-import {Pie , Doughnut} from 'react-chartjs-2';
+import { ModalHeader,Modal,ModalBody,Button,Form,Select,ModalFooter} from 'reactstrap';
 import { FloatingLabel } from 'react-bootstrap';
 import axios from 'axios';
 
-export default function TopAusencias(){
-
-    const baseUrlTopAusencias = "https://localhost:44307/api/TopAusenciaVista";
+export default function CantidadGruposEstudiante(){
+    const baseUrlCantidadEstudiante = "https://localhost:44307/api/CantidadGruposEstudiante";
     const baseUrlPeriodos = "https://localhost:44307/api/periodos";
-    const[dataTop, setDataTop]=useState([]);
+    const [dataCantidad, setDataCantidad] = useState([]);
     const [dataPeriodos,setDataPeriodos] = useState([]);
     const [modalFiltro,setModalFiltro] = useState(false);
     const [numSeleccionado, setNumSeleccionado] = useState([]);
     const [annoSeleccionado, setAnnoSeleccionado] = useState([]);
-    
 
 
-    const peticionGetAusencias = async()=>{ //Realiza peticiones Get al backend ausencias sin filtro
-        await axios.get(baseUrlTopAusencias)
-        .then(response=>{
-            setDataTop(response.data);
-        }).catch(error=>{
-            console.log(error);
-        })
-    }
-
-    const peticionGetAusenciasFiltro = async()=>{ //Realiza peticiones Get al backend ausencias con filtro
-        await axios.get(baseUrlTopAusencias+"/"+ numSeleccionado + "/" + annoSeleccionado)
-        .then(response=>{
-            setDataTop(response.data);
-        }).catch(error=>{
-            console.log(error);
-        })
-    }
     const peticionGetPeriodos = async()=>{ //Realiza peticiones Get al backend Periodos
         await axios.get(baseUrlPeriodos)
         .then(response=>{
@@ -43,15 +23,22 @@ export default function TopAusencias(){
     }
 
 
+    const peticionGetCantidadFiltro = async()=>{ //Realiza peticiones Get al backend ausencias con filtro
+        await axios.get(baseUrlCantidadEstudiante+"/"+ numSeleccionado + "/" + annoSeleccionado)
+        .then(response=>{
+            setDataCantidad(response.data);
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
 
     useEffect(() => { //Hace efecto la peticion
- 
-        peticionGetAusencias();
+  
         peticionGetPeriodos();
 
     }, [])
 
-
+    
     function filtroAnnosPeriodo(){ //Omite los numeros de año duplicados
         let filtradosA = [];
 
@@ -91,7 +78,7 @@ export default function TopAusencias(){
 
     const filtroGrupos=()=>{
         abrirCerrarModalFiltro();
-        peticionGetAusenciasFiltro();
+        peticionGetCantidadFiltro();
        // console.log(dataGrupos)
     }
     const abrirCerrarModalFiltro=()=>{
@@ -99,30 +86,36 @@ export default function TopAusencias(){
 
     }
 
-
-
     return (
         <div className="col-sm-8"> 
         <Button className="btn btn-primary mt-4 offset-md-2 "size="sm" onClick={()=>abrirCerrarModalFiltro()} >Periodos</Button>
         <table className="table table-hover mt-4 offset-md-3"striped bordered hover variant="light">
         <thead>
             <tr>
+            <th>Grado</th>
             <th>Nombre Completo</th>
-            <th>Cantidad de ausencias</th>
+            <th>Número Periodo</th>
+            <th>Año</th>
+            <th>Cantidad Grupos</th>
             </tr>
         </thead>
         <tbody>
             {
-                dataTop.map(est=>(
+                dataCantidad.map(est=>(
                     <tr>
+                     <td>{est.grado}</td>
                     <td>{est.nombreCompleto}</td>
-                    <td>{est.cantidadAusencias}</td>
+                    <td>{est.numPeriodo}</td>
+                    <td>{est.anno}</td>
+                    <td>{est.cantidadGrupos}</td>
                     </tr>
                 ))
             }
   
         </tbody>
         </table>
+
+
 
         <Modal isOpen={modalFiltro}>
             <ModalHeader>Filtrar Período</ModalHeader>
@@ -163,12 +156,17 @@ export default function TopAusencias(){
                     </ModalFooter>
         </Modal>
 
+
+
+
+
+
+
+
+
+
         </div>
 
-
-
-
     )
-
 
 }

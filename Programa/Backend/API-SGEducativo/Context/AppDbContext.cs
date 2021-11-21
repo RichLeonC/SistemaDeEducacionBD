@@ -89,6 +89,8 @@ namespace API_SGEducativo.Context
         public DbSet<TopAusencias> TopAusencias { get; set; }
 
         public DbSet<Generos> Generos { get; set; }
+        public DbSet<CantidadGruposEstudiante> CantidadGruposEstudiante { get; set; }
+
 
         public DbSet<CobrosVsFacturas_Grado_Periodo> CobrosVsFacturas_Grado_Periodos { get; set; }
     }

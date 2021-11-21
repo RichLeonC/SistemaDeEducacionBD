@@ -428,19 +428,22 @@ create function Cantidad_Grupos_Estudiante(@numPeriodo int,@anno int)
 returns table
 as
 return (
-	select Estudiante_Vista.cedula, Estudiante_Vista.nombreCompleto, Matricula.numPeriodo, Matricula.anno , 
+	select Estudiante.grado, Estudiante_Vista.nombreCompleto, Matricula.numPeriodo, Matricula.anno , 
 	count(Matricula.codigoGrupo) as  CantidadGrupos from Matricula
+	inner join Estudiante on  Estudiante.cedula = Matricula.cedulaEstudiante 
 	inner join Estudiante_Vista on Estudiante_Vista.cedula = Matricula.cedulaEstudiante and
 	Matricula.numPeriodo = @numPeriodo and Matricula.anno = @anno
-	group by cedula, nombreCompleto, numPeriodo, anno
+	group by  nombreCompleto, numPeriodo, anno, Estudiante.grado
+	
 
 )
 
-select * from Cantidad_Grupos_Estudiante(2,2020)
+select * from Cantidad_Grupos_Estudiante(1,2020)
+
+drop function  Cantidad_Grupos_Estudiante
 
 
-
-
+execute sp_helpindex Estudiante
 
 
  --9. Porcentaje de estudiantes por género por período. Género y porcentaje. Gráfico circular.
