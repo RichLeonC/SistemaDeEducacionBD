@@ -11,15 +11,26 @@ export default function CobrosFacturas() {
 
     const data={
         labels: dataCVS.map(cvs=>cvs.gradoPeriodo),
-        datasets:[{
+        datasets:[
+        {
             label : 'Cobros',
             backgroundColor: '#61608E',
             boderColor: 'black',
             boderWidth: 1,
             hoverBackgroundColor: '#A09BF3',
             hoverBorderColor: '#FFFF',
-            data: dataCVS.map(cvs=>cvs.cobros),
-        }]
+            data: dataCVS.map(cvs=>cvs.cobros)
+        },
+        {
+            label : 'Facturas',
+            backgroundColor: '#8F8FC3',
+            boderColor: 'black',
+            boderWidth: 1,
+            hoverBackgroundColor: '#A09BF3',
+            hoverBorderColor: '#FFFF',
+            data: dataCVS.map(cvs=>cvs.facturas)
+        },
+    ]
     
     };
 
@@ -66,7 +77,7 @@ export default function CobrosFacturas() {
         <h2 className="offset-md-5 font-weight-bold">Cobros vs facturados por grado, por período</h2>
         <Bar className="offset-md-2 mt-5" data= {data} options={opciones}/>
         <br/>
-        <Bar className="offset-md-2 mt-5" data= {data2} options={opciones}/>
+       
         <br/>
         </div>
     )
