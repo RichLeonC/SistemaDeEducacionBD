@@ -102,10 +102,9 @@ export default function TopAusencias(){
 
 
     return (
-        <div>
-           
-        <Button className="btn btn-primary mt-4 offset-md-1 "size="sm" onClick={()=>abrirCerrarModalFiltro()} >Periodos</Button>
-        <table className="table table-hover mt-5 offset-md-1"striped bordered hover variant="light">
+        <div className="col-sm-8"> 
+        <Button className="btn btn-primary mt-4 offset-md-2 "size="sm" onClick={()=>abrirCerrarModalFiltro()} >Periodos</Button>
+        <table className="table table-hover mt-4 offset-md-3"striped bordered hover variant="light">
         <thead>
             <tr>
             <th>Nombre Completo</th>
