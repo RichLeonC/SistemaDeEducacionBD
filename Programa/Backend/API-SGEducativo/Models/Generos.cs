@@ -10,7 +10,8 @@ namespace API_SGEducativo.Models
     [Table("Generos")]
     public class Generos
     {
-        public string porcentajeGenero { get; set; }
+        public double femenino { get; set; }
+        public double masculino { get; set; }
         [Key]
         public string periodo { get; set; }
     }

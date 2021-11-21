@@ -1,41 +1,23 @@
+
 import React,{useState,useEffect} from 'react';
-import { ModalHeader,Modal,ModalBody,Button,Form,ModalFooter} from 'reactstrap'
-import {Pie} from 'react-chartjs-2';
-import { FloatingLabel } from 'react-bootstrap';
 import axios from 'axios';
+import {Doughnut} from 'react-chartjs-2';
+import { FloatingLabel } from 'react-bootstrap';
+import { ModalHeader,Modal,ModalBody,Button,Form,ModalFooter} from 'reactstrap'
 
-export default function Ingresos() {
+export default function Generos() {
+    const baseUrlGeneros = "https://localhost:44329/api/periodos";
 
-    const baseUrlIngresos = "https://localhost:44329/api/Facturas";
-    const baseUrlPeriodos = "https://localhost:44329/api/periodos";
-
-    const [dataIngresos,setDataIngresos] = useState([]);
-    const [dataPeriodos,setDataPeriodos] = useState([]);
-    const [numSeleccionado, setNumSeleccionado] = useState([]);
+    const [dataGeneros,setDataGeneros] = useState([]);
+    const [numSeleccionado, setNumSeleccionado] = useState([])
+    const [dataPeriodos,setDataPeriodos] = useState([]);;
     const [annoSeleccionado, setAnnoSeleccionado] = useState([]);
     const [modalFiltro,setModalFiltro] = useState(true);
 
-
-    const cantidad = dataIngresos.map(ingreso=>ingreso.ingreso)
-    const data={
-        labels: Grados(),
-        datasets:[{
-            backgroundColor: ['#6C63FF', '#5757AF', '#8F8FC3', '#BAB8EF'],
-            data: cantidad
-
-        }]
     
-    };
-    const opciones ={
-        presponsive: true,
-        maintainAspectRatio: false
-        
-    }
-
     const abrirCerrarModalFiltro=()=>{
         setModalFiltro(!modalFiltro);
     }
-
     const handlerOpcionNum=e=>{  //Handler para guardar en el estado el numero de periodo escogido
         const opcion = e.target.value;
         setNumSeleccionado(opcion);
@@ -46,31 +28,23 @@ export default function Ingresos() {
         setAnnoSeleccionado(opcion);
         console.log(opcion);
     }
+    console.log(dataGeneros)
+    const data={
+        labels: ['Femenino','Masculino'],
+      
+        datasets:[{
+            backgroundColor: ['#6C63FF', '#5757AF', '#8F8FC3', '#BAB8EF'],
+            data: [dataGeneros.map(genero=>genero.femenino),dataGeneros.map(genero=>genero.masculino)]
 
-    const peticionGetPeriodos = async()=>{ //Realiza peticiones Get al backend Periodos
-        await axios.get(baseUrlPeriodos)
-        .then(response=>{
-            setDataPeriodos(response.data);
-        }).catch(error=>{
-            console.log(error);
-        })
-    }
-    const peticionGetIngresos = async()=>{ 
-        await axios.get(baseUrlIngresos+"/"+numSeleccionado+"/"+annoSeleccionado)
-        .then(response=>{
-            setDataIngresos(response.data);
-        }).catch(error=>{
-            console.log(error);
-        })
-    }
+        }]
+       
+    };
 
-    useEffect(() => { //Hace efecto la peticion
-
-        peticionGetPeriodos();
-
+    const opciones ={
+        presponsive: true,
+        maintainAspectRatio: false
         
-    }, [])
-
+    }
     function filtroAnnosPeriodo(){ //Omite los numeros de año duplicados
         let filtradosA = [];
 
@@ -95,41 +69,42 @@ export default function Ingresos() {
         return filtradosP;
 
     }
-
-    function Grados(){
-        let grados =[];
-
-        for(let grado of dataIngresos){
-            grados.push("Grado "+grado.grado);
-        }
-        return grados;
-    }
-
-    function totalIngreso(){
-        let total = [];
-        for(let ingreso of dataIngresos){
-            if(!total.includes(ingreso.totalPeriodo)){
-                total.push(ingreso.totalPeriodo);
-            }
-        }
-        return total[0];
-    }
-
-    const filtroIngresos =()=>{
+    const filtroGeneros =()=>{
         abrirCerrarModalFiltro();
-        peticionGetIngresos();
+        peticionGetGeneros();
     }
+
+    const peticionGetPeriodos = async()=>{ //Realiza peticiones Get al backend Periodos
+        await axios.get(baseUrlGeneros)
+        .then(response=>{
+            setDataPeriodos(response.data);
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+
+    const peticionGetGeneros = async()=>{ //Realiza peticiones Get al backend Periodos
+        await axios.get(baseUrlGeneros+"/"+numSeleccionado+"/"+annoSeleccionado)
+        .then(response=>{
+            setDataGeneros(response.data);
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+    useEffect(() => { //Hace efecto la peticion
+        
+        peticionGetPeriodos();
+
+    }, [])
     return (
         <div>
-            <div style={{width: '90%', height: '500px'}}>
-            <h2 className="offset-md-4 font-weight-bold">(%) Ingresos por grado por período: {numSeleccionado} Semestre, {annoSeleccionado}</h2>
+            <div  style={{width: '90%', height: '500px'}}>
+                <br/>
+            <h2 className="offset-md-3 font-weight-bold">(%) Porcentaje de estudiantes por género por período : {numSeleccionado} Semestre, {annoSeleccionado}</h2>
             <Button className="btn btn-primary mt-4 offset-md-3 " onClick={()=>abrirCerrarModalFiltro()}>Filtrar</Button>
-            <Pie  data={data} options={opciones}/>
+            <Doughnut  data={data} options={opciones}/>
             </div>
-            <div className="offset-md-7 font-weight-bold">
-                <h3>Total de ingresos del período: ₡{totalIngreso()}</h3>
-            </div>
-             <Modal isOpen={modalFiltro}>
+            <Modal isOpen={modalFiltro}>
                       <ModalHeader>Filtrar Período</ModalHeader>
 
                       <ModalBody>
@@ -162,7 +137,7 @@ export default function Ingresos() {
                       </ModalBody>
 
                       <ModalFooter>
-                        <Button className="btn btn-primary"size="sm" onClick={()=>filtroIngresos()}>Aceptar</Button>
+                        <Button className="btn btn-primary"size="sm" onClick={()=>filtroGeneros()}>Aceptar</Button>
                         <Button className="btn btn-danger" size="sm" onClick={()=>abrirCerrarModalFiltro()}
                         >Cancelar</Button>
                       </ModalFooter>

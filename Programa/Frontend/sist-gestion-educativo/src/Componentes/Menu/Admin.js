@@ -6,10 +6,12 @@ import DeudasPadres from '../Administrador/Padres/DeudasPadres.js';
 import PromediNotas from '../Administrador/Profesores/PromedioNotasGrupo.js';
 import CantidadGrupo from '../Administrador/Estudiantes/CantidadEstGruPe.js';
 import PromedioGrupos from '../Administrador/Estudiantes/PromedioGrupos.js';
-import Ingresos from '../Administrador/Padres/Ingresos.js';
+import Ingresos from '../Administrador/General/Ingresos.js';
 import CantidadGruPeriodo from '../Administrador/General/CantidadGruposPe.js';
 import TopAusencias from '../Administrador/General/TopAusencias.js';
 import CantidadGruposEstudiante from '../Administrador/Estudiantes/CantidadGruposEstudiante.js';
+import Generos from '../Administrador/Estudiantes/Generos.js';
+import CobrosFacturas from '../Administrador/General/CobrosFacturas.js';
 
 export default function Admin() {
     return (
@@ -26,7 +28,8 @@ export default function Admin() {
             <Route exact path = '/CantidadGrupos' component= {CantidadGruPeriodo}/>
             <Route exact path = '/TopAusencias' component= {TopAusencias}/>
             <Route exact path = '/CantidadGruposEstudiante' component= {CantidadGruposEstudiante}/>
-
+            <Route exact path = '/Generos' component= {Generos}/>
+            <Route exact path = '/CobrosVsFacturas' component= {CobrosFacturas}/>
 
             </Switch>
         </BrowserRouter>

@@ -35,6 +35,12 @@ export const SbDataAdmin = [
                 title:'Cantidad Grupos Estudiante',
                 path:'/CantidadGruposEstudiante',
                 icon: <IoIcons.IoIosPaper/>
+            },
+
+            {
+                title: 'Generos',
+                path: '/Generos',
+                icon: <IoIcons.IoIosPaper/>
             }
 
 
@@ -88,6 +94,12 @@ export const SbDataAdmin = [
             {
                 title: 'Cantidad Grupos',
                 path: '/CantidadGrupos',
+                icon: <RiIcons.RiMoneyDollarCircleLine/>
+            },
+            
+            {
+                title:'Cobros Vs Facturas',
+                path: '/CobrosVsFacturas',
                 icon: <RiIcons.RiMoneyDollarCircleLine/>
             }
 
