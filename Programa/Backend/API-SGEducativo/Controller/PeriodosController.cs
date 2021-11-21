@@ -1,5 +1,6 @@
 ﻿using API_SGEducativo.Context;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,10 +35,10 @@ namespace API_SGEducativo.Controller
         }
 
         // GET api/<PeriodosController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("/1")]
+        public ActionResult GetGeneros()
         {
-            return "value";
+            return Ok(_context.Generos.FromSqlRaw("select porcentajeGenero,periodo from Generos"));
         }
 
         // POST api/<PeriodosController>

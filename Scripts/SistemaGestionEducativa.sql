@@ -446,19 +446,19 @@ select * from Cantidad_Grupos_Estudiante(2,2020)
  --9. Porcentaje de estudiantes por género por período. Género y porcentaje. Gráfico circular.
 
 create view Generos as
-select  cast(count(case when Estudiante_Vista.sexo = 'Femenino' then 1 else null end)as float) /(select count(sexo) from Estudiante_Vista 
-where sexo='Femenino' or sexo='Masculino')*100 as femenino, 
-cast(count (case when Estudiante_Vista.sexo = 'Masculino'then 1 else null end)as float)/ (select count(sexo) from Estudiante_Vista 
-where sexo='Femenino' or sexo='Masculino')*100 as masculino,numPeriodo,anno from Estudiante_Vista 
+select  Concat ('Femenino: ',cast(count(case when Estudiante_Vista.sexo = 'Femenino' then 1 else null end)as float) /(select count(sexo) from Estudiante_Vista 
+where sexo='Femenino' or sexo='Masculino')*100,'% - Masculino: ',cast(count (case when Estudiante_Vista.sexo = 'Masculino'then 1 else null end)as float)/ (select count(sexo) from Estudiante_Vista 
+where sexo='Femenino' or sexo='Masculino')*100,'%') as porcentajeGenero,
+concat(numPeriodo,' ',anno) as periodo from Estudiante_Vista 
 inner join Matricula ma on ma.cedulaEstudiante = Estudiante_Vista.cedula
 group by numPeriodo,anno
 
+select * from Generos
+
+--11. Ventas por periodo (cobros). Gráfico circular (porcentual). Seleccionar rango de períodos.
 
 
---10. Ventas por periodo (cobros). Gráfico circular (porcentual). Seleccionar rango de períodos.
-
-
---11. Cobros vs facturados por grado, por período. Gráfico de barras
+--12. Cobros vs facturados por grado, por período. Gráfico de barras
 --Vista que muestra el total de cobros pendientes por grado por periodo
 create view Cobros_Grado_Periodo as
 select count(c.consecutivo) as cobros, concat('Grado: ',Grupo.grado,' Período: ',numeroPeriodo,' ',grupo.anno ) as gradoPeriodo from Grupo

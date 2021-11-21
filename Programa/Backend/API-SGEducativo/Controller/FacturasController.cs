@@ -49,8 +49,21 @@ namespace API_SGEducativo.Controller
             }
         }
 
+        [HttpGet("{cedula}/1")]
 
+        public ActionResult GetCVS(int cedula)
+        {
+            try
+            {
+                return Ok(_context.CobrosVsFacturas_Grado_Periodos.FromSqlRaw("select cobros,facturas,gradoPeriodo from CobrosVsFacturas_Grado_Periodo"));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
+        
         // POST api/<FacturasController>
         [HttpPost]
         public ActionResult Post([FromBody] Factura factura)
@@ -68,16 +81,6 @@ namespace API_SGEducativo.Controller
             }
         }
 
-        // PUT api/<FacturasController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
 
-        // DELETE api/<FacturasController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

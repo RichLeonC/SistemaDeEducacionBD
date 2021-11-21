@@ -28,8 +28,9 @@ namespace API_SGEducativo.Context
             modelBuilder.Entity<Evaluacion_Grupo_Estudiante>().HasKey(e => new { e.numPeriodo, e.anno, e.codigoGrupo, e.nombreMateria, e.cedulaEstudiante });
             modelBuilder.Entity<Profesor_HistorialSalario>().HasKey(e => new { e.cedula, e.inicio, e.fin });
             modelBuilder.Entity<CantidadEstuPeriodo>().HasKey(e => new { e.anno, e.numPeriodo, e.CantidadEstudiantes, e.codigoGrupo });
-            //modelBuilder.Entity<CantidadGrupoPeriodo>().HasKey(e => new { e.anno, e.numero, e.CantidadGrupos });
-
+            modelBuilder.Entity<Ingresos>().HasKey(e => new { e.grado, e.anno, e.numeroPeriodo });
+            modelBuilder.Entity<CantidadGrupoPeriodo>().HasKey(e => new { e.anno, e.numero, e.CantidadGrupos });
+            modelBuilder.Entity<CobrosVsFacturas_Grado_Periodo>().HasKey(e => new { e.cobros,e.facturas,e.gradoPeriodo});
 
         }
 
@@ -81,12 +82,14 @@ namespace API_SGEducativo.Context
 
         public DbSet<CantidadEstuPeriodo> CantidadEstuPeriodo { get; set; }
 
-        //public DbSet<CantidadGrupoPeriodo> CantidadGrupoPeriodo { get; set; }
+        public DbSet<CantidadGrupoPeriodo> CantidadGrupoPeriodo { get; set; }
 
-        public DbSet<Ingresos> Ingresos;
+        public DbSet<Ingresos> Ingresos { get; set; }
 
         public DbSet<TopAusencias> TopAusencias { get; set; }
 
+        public DbSet<Generos> Generos { get; set; }
 
+        public DbSet<CobrosVsFacturas_Grado_Periodo> CobrosVsFacturas_Grado_Periodos { get; set; }
     }
 }
