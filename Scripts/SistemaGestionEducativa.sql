@@ -449,12 +449,13 @@ execute sp_helpindex Estudiante
  --9. Porcentaje de estudiantes por género por período. Género y porcentaje. Gráfico circular.
 
 create view Generos as
-select  Concat ('Femenino: ',cast(count(case when Estudiante_Vista.sexo = 'Femenino' then 1 else null end)as float) /(select count(sexo) from Estudiante_Vista 
-where sexo='Femenino' or sexo='Masculino')*100,'% - Masculino: ',cast(count (case when Estudiante_Vista.sexo = 'Masculino'then 1 else null end)as float)/ (select count(sexo) from Estudiante_Vista 
-where sexo='Femenino' or sexo='Masculino')*100,'%') as porcentajeGenero,
+select cast(count(case when Estudiante_Vista.sexo = 'Femenino' then 1 else null end)as float) /(select count(sexo) from Estudiante_Vista 
+where sexo='Femenino' or sexo='Masculino')*100 as femenino,cast(count (case when Estudiante_Vista.sexo = 'Masculino'then 1 else null end)as float)/ (select count(sexo) from Estudiante_Vista 
+where sexo='Femenino' or sexo='Masculino')*100 as masculino,
 concat(numPeriodo,' ',anno) as periodo from Estudiante_Vista 
 inner join Matricula ma on ma.cedulaEstudiante = Estudiante_Vista.cedula
 group by numPeriodo,anno
+
 
 select * from Generos
 

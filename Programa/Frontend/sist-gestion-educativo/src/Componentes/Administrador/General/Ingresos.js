@@ -15,7 +15,7 @@ export default function Ingresos() {
     const [annoSeleccionado, setAnnoSeleccionado] = useState([]);
     const [modalFiltro,setModalFiltro] = useState(true);
 
-    const grados = dataIngresos.map(ingreso=>ingreso.grado);
+
     const cantidad = dataIngresos.map(ingreso=>ingreso.ingreso)
     const data={
         labels: Grados(),

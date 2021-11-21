@@ -35,10 +35,10 @@ namespace API_SGEducativo.Controller
         }
 
         // GET api/<PeriodosController>/5
-        [HttpGet("/1")]
-        public ActionResult GetGeneros()
+        [HttpGet("{numPeriodo}/{anno}")]
+        public ActionResult GetGeneros(int numPeriodo,int anno)
         {
-            return Ok(_context.Generos.FromSqlRaw("select porcentajeGenero,periodo from Generos"));
+            return Ok(_context.Generos.FromSqlRaw("select femenino,masculino,periodo from Generos("+numPeriodo+","+anno+")"));
         }
 
         // POST api/<PeriodosController>
