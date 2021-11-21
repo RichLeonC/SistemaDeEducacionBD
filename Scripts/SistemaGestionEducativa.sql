@@ -398,10 +398,12 @@ create view Top_10_Ausencias as
 select top 10  Estudiante_Vista.nombreCompleto, count(Asistencia_Estudiante.cedulaEstudiante)as CantidadAusencias 
 from Asistencia_Estudiante
 inner join Estudiante_Vista on Estudiante_Vista.cedula= Asistencia_Estudiante.cedulaEstudiante
-group by asistencia, nombreCompleto
+group by  nombreCompleto
 order by count(Asistencia_Estudiante.cedulaEstudiante) desc
 
 select * from Top_10_Ausencias
+
+drop view Top_10_Ausencias
 ----7.5 Opcional filtrado por periodo
 
 create function Top_10_Ausencias_Filtrar(@numPeriodo int,@anno int)
@@ -412,10 +414,12 @@ return (
 	from Asistencia_Estudiante
 	inner join Estudiante_Vista on Estudiante_Vista.cedula= Asistencia_Estudiante.cedulaEstudiante and 
 	Asistencia_Estudiante.anno = @anno and Asistencia_Estudiante.numPeriodo= @numPeriodo
-	group by asistencia, nombreCompleto
+	group by  nombreCompleto
 )
  
  select  * from Top_10_Ausencias_Filtrar(2,2021)
+
+ drop function Top_10_Ausencias_Filtrar
 
 
 ---- 8 Cantidad de grupos por estudiante por periodo, ordenado por grado. Seleccionar un periodo
@@ -445,7 +449,7 @@ create view Generos as
 select  cast(count(case when Estudiante_Vista.sexo = 'Femenino' then 1 else null end)as float) /(select count(sexo) from Estudiante_Vista 
 where sexo='Femenino' or sexo='Masculino')*100 as femenino, 
 cast(count (case when Estudiante_Vista.sexo = 'Masculino'then 1 else null end)as float)/ (select count(sexo) from Estudiante_Vista 
-where sexo='Femenino' or sexo='Masculino')*100as masculino,numPeriodo,anno from Estudiante_Vista 
+where sexo='Femenino' or sexo='Masculino')*100 as masculino,numPeriodo,anno from Estudiante_Vista 
 inner join Matricula ma on ma.cedulaEstudiante = Estudiante_Vista.cedula
 group by numPeriodo,anno
 

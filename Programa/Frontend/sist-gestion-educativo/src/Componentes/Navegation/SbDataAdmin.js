@@ -25,6 +25,11 @@ export const SbDataAdmin = [
                 title:'Cantidad Estudiantes Periodo',
                 path:'/CantidadEstudiantes',
                 icon: <IoIcons.IoIosPaper/>
+            },
+            {
+                title:'Top Ausencias',
+                path:'/TopAusencias',
+                icon: <IoIcons.IoIosPaper/>
             }
 
 
