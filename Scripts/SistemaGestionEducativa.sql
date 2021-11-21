@@ -440,12 +440,40 @@ select * from Cantidad_Grupos_Estudiante(2,2020)
 
 
  --9. Porcentaje de estudiantes por género por período. Género y porcentaje. Gráfico circular.
-create view Generos as
-select  count(Femenino.sexo)as femenino, count(Masculino.sexo) as masculino from Estudiante_Vista 
-inner join Estudiante_Vista as Femenino on Femenino.sexo = 'Femenino' 
-inner join Estudiante_Vista as Masculino on Masculino.sexo = 'Masculino'
 
---inner join Estudiante_Vista as Masculino on Masculino.sexo = 'Masculino' and Masculino.cedula = Estudiante_Vista.cedula
+create view Generos as
+select  cast(count(case when Estudiante_Vista.sexo = 'Femenino' then 1 else null end)as float) /(select count(sexo) from Estudiante_Vista 
+where sexo='Femenino' or sexo='Masculino')*100 as femenino, 
+cast(count (case when Estudiante_Vista.sexo = 'Masculino'then 1 else null end)as float)/ (select count(sexo) from Estudiante_Vista 
+where sexo='Femenino' or sexo='Masculino')*100as masculino,numPeriodo,anno from Estudiante_Vista 
+inner join Matricula ma on ma.cedulaEstudiante = Estudiante_Vista.cedula
+group by numPeriodo,anno
+
+
+
+--10. Ventas por periodo (cobros). Gráfico circular (porcentual). Seleccionar rango de períodos.
+
+
+--11. Cobros vs facturados por grado, por período. Gráfico de barras
+--Vista que muestra el total de cobros pendientes por grado por periodo
+create view Cobros_Grado_Periodo as
+select count(c.consecutivo) as cobros, concat('Grado: ',Grupo.grado,' Período: ',numeroPeriodo,' ',grupo.anno ) as gradoPeriodo from Grupo
+inner join Matricula m on m.codigoGrupo = Grupo.codigoNombre and m.numPeriodo = Grupo.numeroPeriodo and m.anno = grupo.anno
+inner join Cobros c on c.idMatricula = m.idMatricula and c.estado = 'Pendiente'
+group by grado,numeroPeriodo,Grupo.anno
+
+--Vista que muestra el total de cobros pagados por grado por periodo
+create view Facturas_Grado_Periodo as
+select count(c.consecutivo) as facturas, concat('Grado: ',Grupo.grado,' Período: ',numeroPeriodo,' ',grupo.anno ) as gradoPeriodo from Grupo
+inner join Matricula m on m.codigoGrupo = Grupo.codigoNombre and m.numPeriodo = Grupo.numeroPeriodo and m.anno = grupo.anno
+inner join Cobros c on c.idMatricula = m.idMatricula and c.estado = 'Pagado'
+group by grado,numeroPeriodo,Grupo.anno
+
+
+--Une las dos vistas anteriores
+create view CobrosVsFacturas_Grado_Periodo as
+select cobros,facturas,c.gradoPeriodo from Cobros_Grado_Periodo c
+inner join Facturas_Grado_Periodo f on f.gradoPeriodo = c.gradoPeriodo
 
 --Borrar todos los planes de memoria caché
 DBCC FREEPROCCACHE WITH NO_INFOMSGS
