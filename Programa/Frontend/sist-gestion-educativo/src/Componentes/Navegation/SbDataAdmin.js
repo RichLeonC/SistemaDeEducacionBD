@@ -95,6 +95,12 @@ export const SbDataAdmin = [
                 title: 'Cantidad Grupos',
                 path: '/CantidadGrupos',
                 icon: <RiIcons.RiMoneyDollarCircleLine/>
+            },
+            
+            {
+                title:'Cobros Vs Facturas',
+                path: '/CobrosVsFacturas',
+                icon: <RiIcons.RiMoneyDollarCircleLine/>
             }
 
         ]
