@@ -465,14 +465,14 @@ create function CantidadAR (@numPeriodo int,@anno int)
 returns table
 as
 return (
-	select Grupo.codigoNombre, (case when Evaluacion_Grupo_Estudiante.estado = 'Aprobado' then 1 else null end ) as CantidadAprobados,
-	count(case when Evaluacion_Grupo_Estudiante.estado = 'Reprobado' then 1 else null end ) as CantidadReprobados from Evaluacion_Grupo_Estudiante
-	inner join Grupo on  Grupo.anno = @anno and Grupo.numeroPeriodo = @numPeriodo
-	inner join Evaluacion_Grupo_Estudiante es on  es.anno =@anno and es.numPeriodo= @numPeriodo and Grupo.codigoNombre = es.codigoGrupo
-	group by codigoNombre, Evaluacion_Grupo_Estudiante.estado
+	select Grupo.codigoNombre, count(case when Evaluacion_Grupo_Estudiante.estado = 'Aprobado' then 1 else null end ) as CantidadAprobados,
+	count(case when Evaluacion_Grupo_Estudiante.estado = 'Reprobado' then 1 else null end ) as CantidadReprobados from Grupo
+	inner join Evaluacion_Grupo_Estudiante  on Evaluacion_Grupo_Estudiante.anno =@anno and Evaluacion_Grupo_Estudiante.numPeriodo= @numPeriodo 
+	and Grupo.codigoNombre = Evaluacion_Grupo_Estudiante.codigoGrupo
+	group by codigoNombre
 )
 
-select * from CantidadAR(1,2020)
+select * from CantidadAR(2,2021)
 
 drop function CantidadAR
 --11. Ventas por periodo (cobros). Gráfico circular (porcentual). Seleccionar rango de períodos.
