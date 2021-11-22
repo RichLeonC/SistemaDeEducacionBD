@@ -131,6 +131,8 @@ export default function CantidadAR(){
             <h2 className="offset-md-3 font-weight-bold"> Grupos Reprobados y Aprobados : {numSeleccionado} Semestre, {annoSeleccionado}</h2>
             <Button className="btn btn-primary mt-4 offset-md-3 "size="sm" onClick={()=>abrirCerrarModalFiltro()} >Periodos</Button>
             <Bar  data= {data} options={opciones}/> 
+
+            
             <Modal isOpen={modalFiltro}>
                       <ModalHeader>Filtrar Período</ModalHeader>
 
