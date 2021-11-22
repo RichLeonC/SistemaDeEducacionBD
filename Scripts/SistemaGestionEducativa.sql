@@ -549,12 +549,15 @@ as
 return (
 	select avg(Evaluacion_Grupo_Estudiante.notaObtenida) as Ponderado, count (Evaluacion_Grupo_Estudiante.codigoGrupo) as CantidadGrupos,
 	count(case when Evaluacion_Grupo_Estudiante.estado = 'Aprobado' then 1 else null end ) as CantidadAprobados,
-	count(case when Evaluacion_Grupo_Estudiante.estado = 'Reprobado' then 1 else null end ) as CantidadReprobados from Evaluacion_Grupo_Estudiante
+	count(case when Evaluacion_Grupo_Estudiante.estado = 'Reprobado' then 1 else null end ) as CantidadReprobados,
+	avg(case when Evaluacion_Grupo_Estudiante.estado = 'Aprobado' then Evaluacion_Grupo_Estudiante.notaObtenida else null end ) as PromedioAprobadas,
+	avg(case when Evaluacion_Grupo_Estudiante.estado = 'Reprobado' then Evaluacion_Grupo_Estudiante.notaObtenida else null end ) as PromedioReprobadas
+	from Evaluacion_Grupo_Estudiante
 	where Evaluacion_Grupo_Estudiante.cedulaEstudiante = @cedula
 
 )
 
-select * from infoAcademica (117950392)
+select * from infoAcademica (325150008)
 
 drop function infoAcademica
 
@@ -568,7 +571,7 @@ return (
 )
 
 
-select * from listadoGrupos(117950392)
+select * from listadoGrupos(325150008)
 
 drop function listadoGrupos 
 
@@ -578,12 +581,15 @@ drop function listadoGrupos
 create view top15Grupos as
 	select top 15 Evaluacion_Grupo_Estudiante.codigoGrupo, Evaluacion_Grupo_Estudiante.numPeriodo,anno,
 	(cast(count(estado)as float)/(select CantidadEstudiantes from CantidadEstudiantesGrupo(codigoGrupo)))*100
-	as promedio , dbo.ProfesorImparte( Evaluacion_Grupo_Estudiante.codigoGrupo,  Evaluacion_Grupo_Estudiante.numPeriodo, anno)
+	as porcentajeAprobado , dbo.ProfesorImparte( Evaluacion_Grupo_Estudiante.codigoGrupo,  Evaluacion_Grupo_Estudiante.numPeriodo, anno)
 	as ProfesorImparte, dbo.grado(Evaluacion_Grupo_Estudiante.codigoGrupo) as Grado
 	from Evaluacion_Grupo_Estudiante where Evaluacion_Grupo_Estudiante.estado='Aprobado'
 	group by codigoGrupo,numPeriodo,anno 
-	order by  promedio desc
+	order by  porcentajeAprobado desc
 
+drop view top15Grupos
+
+select * from top15Grupos
 
 create function grado (@codigoGrupo varchar(60)) returns int
 as
@@ -607,7 +613,24 @@ end
 ------17 Porcentaje de reprobación por grupo. Ordenados ascendente y descendente.
 --Muestra toda la información incluyendo el profesor que imparte. Permite filtrar rango de período.
 
+create function PorcentajeReprobados (@numPeriodo int , @anno int)
+returns table
+as
+return(
+	select  Evaluacion_Grupo_Estudiante.codigoGrupo, Evaluacion_Grupo_Estudiante.numPeriodo,anno,
+	(cast(count(estado)as float)/(select CantidadEstudiantes from CantidadEstudiantesGrupo(codigoGrupo)))*100 
+	as porcentajeReprobado, dbo.ProfesorImparte( Evaluacion_Grupo_Estudiante.codigoGrupo, 
+	Evaluacion_Grupo_Estudiante.numPeriodo, anno)as ProfesorImparte,dbo.grado(Evaluacion_Grupo_Estudiante.codigoGrupo)
+	as Grado from Evaluacion_Grupo_Estudiante where Evaluacion_Grupo_Estudiante.estado='Reprobado'and
+	Evaluacion_Grupo_Estudiante.anno = @anno and Evaluacion_Grupo_Estudiante.numPeriodo = @numPeriodo
+	group by codigoGrupo,numPeriodo,anno 
+	--order by  promedio desc
 
+)
+
+select * from PorcentajeReprobados(2,2020)
+
+drop function PorcentajeReprobados
 
 --Borrar todos los planes de memoria caché
 DBCC FREEPROCCACHE WITH NO_INFOMSGS
