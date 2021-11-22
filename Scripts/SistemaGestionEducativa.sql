@@ -480,14 +480,18 @@ drop function CantidadAR
 create function VentasPeriodo(@fecha1 date,@fecha2 date)
 returns table
 as 
-
 return(
 
-	select count(Cobros.consecutivo) as ventas from Cobros
+	select cast(count(Cobros.consecutivo) as float)/(select count(Cobros.consecutivo) from Cobros)*100 as ventas, 
+	concat('Inicio: ',@fecha1,' - Fin: ',@fecha2) as rango, 
+	cast((select count(Cobros.consecutivo) from Cobros)-count(Cobros.consecutivo)as float)/(select count(Cobros.consecutivo) from Cobros)*100
+	as otrosPeriodos from Cobros
 	inner join Periodo on Periodo.fechaInicio = @fecha1 or (Periodo.fechaFinal between @fecha1 and @fecha2)
 	inner join Matricula m on m.anno = Periodo.anno and m.numPeriodo = Periodo.numero and m.idMatricula = Cobros.idMatricula
 
 )
+
+
 
 drop function VentasPeriodo
 select * from VentasPeriodo('2021-02-02','2021-07-28')

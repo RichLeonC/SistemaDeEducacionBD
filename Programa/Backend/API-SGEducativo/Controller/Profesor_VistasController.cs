@@ -36,6 +36,12 @@ namespace API_SGEducativo.Controller
                 "canton,distrito,localidad,salario from Profesor_Vista where cedula="+cedula));
         }
 
+        [HttpGet("{n}/1")]
+        public ActionResult GetTop()
+        {
+            return Ok(_context.TopProfesores.FromSqlRaw("select * from TopProfesores"));
+        }
+
         // POST api/<Profesor_VistasController>
         [HttpPost]
         public void Post([FromBody] string value)
