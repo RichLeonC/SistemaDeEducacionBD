@@ -58,6 +58,13 @@ namespace API_SGEducativo.Controller
                 "nombreMateria,numPeriodo,anno from DetalleCobrosPadre_F(" + cedulaPadre + ")"));
         }
 
+        [HttpGet("{fecha1}/{fecha2}")]
+        public ActionResult GetVentasPeriodo(DateTime fecha1,DateTime fecha2)
+        {
+
+            return Ok(_context.VentaPeriodos.FromSqlRaw("select * from VentasPeriodo("+fecha1+","+fecha2+")"));
+        }
+
         // POST api/<CobrosController>
         [HttpPost]
         public ActionResult Post([FromBody] Cobros cobro)

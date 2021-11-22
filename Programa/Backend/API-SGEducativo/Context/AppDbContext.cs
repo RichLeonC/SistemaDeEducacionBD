@@ -95,5 +95,8 @@ namespace API_SGEducativo.Context
         public DbSet<CobrosVsFacturas_Grado_Periodo> CobrosVsFacturas_Grado_Periodos { get; set; }
 
         public DbSet<CantidadAR> CantidadAR { get; set; }
+        public DbSet<VentasPeriodo> VentaPeriodos { get; set; }
+        public DbSet<TopProfesores> TopProfesores { get; set; }
     }
+
 }

@@ -57,6 +57,11 @@ export const SbDataAdmin = [
                 title: 'Promedio Notas Grupo',
                 path: '/PromedioNotasGProfe',
                 icon:<IoIcons.IoIosPaper/>
+            },
+            {
+                title: 'Top Profesores',
+                path: '/TopProfesores',
+                icon:<IoIcons.IoIosPaper/>
             }
         ]
     },
