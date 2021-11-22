@@ -499,6 +499,18 @@ create view CobrosVsFacturas_Grado_Periodo as
 select cobros,facturas,c.gradoPeriodo from Cobros_Grado_Periodo c
 inner join Facturas_Grado_Periodo f on f.gradoPeriodo = c.gradoPeriodo
 
+
+
+--13. Top 10 de profesores con más aumento salarial. Nombre y monto. Compara salario inicial contra actual.
+
+create view TopProfesores as
+select top 10 nombreCompleto, (p.monto) as salarioInicial, salario as salarioActual,
+salario - p.monto as aumento from Profesor_Vista
+inner join Profesor_HistorialSalario p on p.cedula = Profesor_Vista.cedula
+order by aumento desc
+
+
+
 --Borrar todos los planes de memoria caché
 DBCC FREEPROCCACHE WITH NO_INFOMSGS
 
