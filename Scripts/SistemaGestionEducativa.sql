@@ -477,22 +477,20 @@ select * from CantidadAR(2,2021)
 drop function CantidadAR
 
 --11. Ventas por periodo (cobros). Gráfico circular (porcentual). Seleccionar rango de períodos.
-create function VentasPeriodo(@numPeriodoI int, @annoI int, @numPeriodoF int,@annoF int)
+create function VentasPeriodo(@fecha1 date,@fecha2 date)
 returns table
 as 
 
-/*return(
+return(
 
-	select @numPeriodoI as periodoInicial ,@annoI as annoInicial,@numPeriodoF as periodoFinal,@annoF as annoFinal, 
-	count(Cobros.consecutivo) as ventas from Cobros
-													--2                --2                               --2020    --2021
-	inner join Matricula m on  ( m.numPeriodo between @numPeriodoI and @numPeriodoF) and (m.anno between @annoI and @annoF)
-	and m.idMatricula = Cobros.idMatricula
+	select count(Cobros.consecutivo) as ventas from Cobros
+	inner join Periodo on Periodo.fechaInicio = @fecha1 or (Periodo.fechaFinal between @fecha1 and @fecha2)
+	inner join Matricula m on m.anno = Periodo.anno and m.numPeriodo = Periodo.numero and m.idMatricula = Cobros.idMatricula
 
-)*/
+)
 
 drop function VentasPeriodo
-select * from VentasPeriodo(2,2020,2,2021)
+select * from VentasPeriodo('2021-02-02','2021-07-28')
 
 select idMatricula,numPeriodo,anno from Matricula where (anno between 2020 and 2021) and (numPeriodo between 1 and 1)
 --12. Cobros vs facturados por grado, por período. Gráfico de barras
