@@ -509,7 +509,51 @@ salario - p.monto as aumento from Profesor_Vista
 inner join Profesor_HistorialSalario p on p.cedula = Profesor_Vista.cedula
 order by aumento desc
 
+---- 14 Promedio ponderado por estudiante. Cantidad de grupos, cantidad de grupos aprobados y reprobados,
+--promedio de aprobados y promedio de reprobados. Lista de grupos con nota. Filtra por estudiante
 
+create function CedulaEstudiante(@NombreCompleto varchar(60)) returns int
+as 
+begin
+declare @cedula int
+select @cedula = Estudiante_Vista.cedula from Estudiante_Vista where Estudiante_Vista.nombreCompleto=@NombreCompleto
+return @cedula
+end
+
+select dbo.CedulaEstudiante('Shermie Madrid Orellana')
+drop function CedulaEstudiante
+
+
+create function infoAcademica(@cedula int)
+returns table 
+as
+return (
+	select avg(Evaluacion_Grupo_Estudiante.notaObtenida) as Ponderado, count (Evaluacion_Grupo_Estudiante.codigoGrupo) as CantidadGrupos,
+	count(case when Evaluacion_Grupo_Estudiante.estado = 'Aprobado' then 1 else null end ) as CantidadAprobados,
+	count(case when Evaluacion_Grupo_Estudiante.estado = 'Reprobado' then 1 else null end ) as CantidadReprobados from Evaluacion_Grupo_Estudiante
+	where Evaluacion_Grupo_Estudiante.cedulaEstudiante = @cedula
+
+)
+
+select * from infoAcademica (117950392)
+
+drop function infoAcademica
+
+create function listadoGrupos(@cedula int)
+returns table
+as
+return (
+	
+	select Evaluacion_Grupo_Estudiante.codigoGrupo, Evaluacion_Grupo_Estudiante.notaObtenida from Evaluacion_Grupo_Estudiante
+	where Evaluacion_Grupo_Estudiante.cedulaEstudiante = @cedula
+)
+
+
+select * from listadoGrupos(117950392)
+
+drop function listadoGrupos
+
+----
 
 --Borrar todos los planes de memoria caché
 DBCC FREEPROCCACHE WITH NO_INFOMSGS
