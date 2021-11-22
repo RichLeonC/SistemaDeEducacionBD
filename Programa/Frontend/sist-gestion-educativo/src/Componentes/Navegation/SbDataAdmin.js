@@ -62,6 +62,11 @@ export const SbDataAdmin = [
                 title: 'Top Profesores',
                 path: '/TopProfesores',
                 icon:<IoIcons.IoIosPaper/>
+            },
+            {
+                title: 'Grupos Reprobados y Aprobados',
+                path: '/CantidadAR',
+                icon:<IoIcons.IoIosPaper/>
             }
         ]
     },
