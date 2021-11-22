@@ -551,9 +551,44 @@ return (
 
 select * from listadoGrupos(117950392)
 
-drop function listadoGrupos
+drop function listadoGrupos 
 
-----
+----16--- Top 15 de grupos con mayor porcentaje aprobación histórico.
+--Muestra toda la información incluyendo el profesor que imparte.
+
+create view top15Grupos as
+	select top 15 Evaluacion_Grupo_Estudiante.codigoGrupo, Evaluacion_Grupo_Estudiante.numPeriodo,anno,
+	(cast(count(estado)as float)/(select CantidadEstudiantes from CantidadEstudiantesGrupo(codigoGrupo)))*100
+	as promedio , dbo.ProfesorImparte( Evaluacion_Grupo_Estudiante.codigoGrupo,  Evaluacion_Grupo_Estudiante.numPeriodo, anno)
+	as ProfesorImparte, dbo.grado(Evaluacion_Grupo_Estudiante.codigoGrupo) as Grado
+	from Evaluacion_Grupo_Estudiante where Evaluacion_Grupo_Estudiante.estado='Aprobado'
+	group by codigoGrupo,numPeriodo,anno 
+	order by  promedio desc
+
+
+create function grado (@codigoGrupo varchar(60)) returns int
+as
+begin
+declare @grado int
+select @grado = Grupo.grado  from Grupo where Grupo.codigoNombre = @codigoGrupo
+return @grado
+end
+
+create function ProfesorImparte(@codigoGrupo varchar(60), @numPeriodo int , @anno int) 
+returns varchar(60)
+as 
+begin
+declare @nombreCompleto varchar(60)
+select @nombreCompleto = Profesor_Vista.nombreCompleto from Profesor_Vista
+inner join Grupo on Grupo.codigoNombre= @codigoGrupo and 
+Grupo.numeroPeriodo=@numPeriodo and Grupo.anno = @anno and Profesor_Vista.cedula = Grupo.cedulaProfesor
+return @nombreCompleto
+end
+
+------17 Porcentaje de reprobación por grupo. Ordenados ascendente y descendente.
+--Muestra toda la información incluyendo el profesor que imparte. Permite filtrar rango de período.
+
+
 
 --Borrar todos los planes de memoria caché
 DBCC FREEPROCCACHE WITH NO_INFOMSGS
