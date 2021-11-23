@@ -5,8 +5,8 @@ import { ModalHeader,Modal,ModalBody,Button,Form,Select,ModalFooter} from 'react
 import { FloatingLabel, Row } from 'react-bootstrap';
 
 export default function PromedioNotasGrupos() {
-    const baseUrlEvaluciones = "https://localhost:44307/api/Evaluacion_Grupo_Estudiante";
-    const baseUrlProfesores= "https://localhost:44307/api/Profesor_Vistas";
+    const baseUrlEvaluciones = "https://localhost:44329/api/Evaluacion_Grupo_Estudiante";
+    const baseUrlProfesores= "https://localhost:44329/api/Profesor_Vistas";
     const [notasPromedio, setNotasPromedio] = useState([]);
     const [dataProfesor,setDataProfesor] = useState([]);
     const [modalProrfesores, setModalProfesores] = useState(false);
@@ -95,12 +95,15 @@ export default function PromedioNotasGrupos() {
 
 
     return (
+        <div  className="col-sm-8">
+
+        
         <div style={{width: '90%', height: '500px'}}>
             <br/>
-            <h2 className="offset-md-5 font-weight-bold"> Promedio de notas por profesor por grupo</h2>
-            <Button className="btn btn-primary mt-4 offset-md-3 "size="sm" onClick={()=>cerrarAbrirModalProfesores()} >Profesores</Button>
-            <Bar  data= {data} options={opciones}/>
-
+            <h2 className="offset-md-6 font-weight-bold"> Promedio de notas por profesor por grupo</h2>
+            <Button className="btn btn-primary mt-4 offset-md-3 " onClick={()=>cerrarAbrirModalProfesores()} >Profesores</Button>
+            <Bar className="offset-md-4 mt-5" data= {data} options={opciones}/>
+        </div>
             <Modal isOpen={modalProrfesores}>
                       <ModalHeader>Profesores</ModalHeader>
 
@@ -127,14 +130,6 @@ export default function PromedioNotasGrupos() {
                         <Button className="btn btn-primary"size="sm" onClick={()=>cerrarAbrirModalProfesores()}>Aceptar</Button>
                       </ModalFooter>
             </Modal>
-        
-        
-
-
-
-
-
-        
 
         </div>
     )

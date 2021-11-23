@@ -34,7 +34,7 @@ namespace API_SGEducativo.Controller
         [HttpGet("{cedula}/2")]
         public ActionResult GetListado(int cedula)
         {
-            return Ok(_context.ListadoGrupos.FromSqlRaw("select codigoGrupo, notaObtenida from listadoGrupos(" + cedula + ")"));
+            return Ok(_context.ListadoGrupos.FromSqlRaw("select codigoGrupo, notaObtenida from listaintoGrupos(" + cedula + ")"));
         }
 
 
