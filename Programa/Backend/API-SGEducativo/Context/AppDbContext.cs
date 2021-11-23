@@ -32,6 +32,7 @@ namespace API_SGEducativo.Context
             modelBuilder.Entity<CantidadGrupoPeriodo>().HasKey(e => new { e.anno, e.numero, e.CantidadGrupos });
             modelBuilder.Entity<CobrosVsFacturas_Grado_Periodo>().HasKey(e => new { e.cobros,e.facturas,e.gradoPeriodo});
             modelBuilder.Entity<PorcentajeReprobrados>().HasKey(e => new { e.anno, e.codigoGrupo, e.numPeriodo });
+            modelBuilder.Entity<InfoAcademica>().HasKey(e => new { e.ponderado, e.cantidadGrupos, e.CantidadAprobados });
         }
 
 

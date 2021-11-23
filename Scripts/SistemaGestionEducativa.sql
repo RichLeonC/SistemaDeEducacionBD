@@ -557,7 +557,7 @@ create function PorcentajeReprobados (@fecha1 date , @fecha2 date)
 returns table
 as
 return(
-	select  e.codigoGrupo, e.numPeriodo,e.anno,
+	select top 1000 e.codigoGrupo, e.numPeriodo,e.anno,
 	(cast(count(estado)as float)/(select CantidadEstudiantes from CantidadEstudiantesGrupo(codigoGrupo)))*100 
 	as porcentajeReprobado, (select * from ProfesorImparte( e.codigoGrupo, 
 	e.numPeriodo, e.anno))as ProfesorImparte,(select * from Grado(e.codigoGrupo)) as grado
@@ -565,6 +565,7 @@ return(
 	inner join Periodo on (Periodo.fechaInicio = @fecha1 or (fechaFinal between @fecha1 and @fecha2))
 	and e.anno = Periodo.anno and e.numPeriodo = Periodo.numero and e.estado = 'Reprobado'
 	group by e.codigoGrupo, e.numPeriodo,e.anno
+
 
 )
 

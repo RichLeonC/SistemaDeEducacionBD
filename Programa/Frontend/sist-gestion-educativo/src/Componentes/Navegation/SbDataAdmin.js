@@ -47,6 +47,12 @@ export const SbDataAdmin = [
                 title: 'Información Academica',
                 path: '/InformaciónAcademica',
                 icon: <IoIcons.IoIosPaper/>
+            },
+
+            {
+                title: 'Reprobación por grupo',
+                path: '/ReprobacionGrupo',
+                icon: <IoIcons.IoIosPaper/>
             }
 
 
