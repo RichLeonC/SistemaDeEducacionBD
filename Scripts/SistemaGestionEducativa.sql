@@ -1399,14 +1399,7 @@ select * from Grupo
 
 execute ActualizarCerrado'Química-B1', 3, 2021, 'Química', 'Abierto' 
 
----------DROPS DE LAS TABLAS -------------------
 
-
-drop table Evaluacion
-drop table Periodo
-drop table Materia
-drop table GrupoHorario
-drop table Grupo 
 
 
 

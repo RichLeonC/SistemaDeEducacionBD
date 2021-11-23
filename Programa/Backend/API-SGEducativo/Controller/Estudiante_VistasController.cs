@@ -43,6 +43,21 @@ namespace API_SGEducativo.Controller
                "canton,distrito,localidad,grado,cedulaPadre,nombrePadre from Estudiante_Vista where cedulaPadre=" + cedulaPadre));
         }
 
+        [HttpGet("{fecha1}/{fecha2}/3")]
+        public ActionResult GetPorcentajeR(string fecha1, string fecha2)
+        {
+            try
+            {
+
+                // return Ok(_context.PorcentajeReprobrados.FromSqlRaw("select codigoGrupo,numPeriodo,anno,porcentajeReprobado,ProfesorImparte,grado from PorcentajeReprobados('" + fecha1 + "','" + fecha2 + "')"));
+                return Ok(_context.PorcentajeReprobrados.FromSqlRaw("select * from PorcentajeReprobados('2020-02-02','2021-07-28')"));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         // POST api/<Usuarios_CompletosVController>
         [HttpPost]
         public void Post([FromBody] string value)
