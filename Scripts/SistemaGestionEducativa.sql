@@ -224,7 +224,6 @@ Padre.profesion, Padre.conyugeNombre,Padre.telefonoConyugue from Usuario
 inner join Usuario_Ubicacion on Usuario_Ubicacion.cedula = Usuario.cedula
 inner join Padre on Padre.cedula = Usuario.cedula
 
-select * from Padre_Vista
 
 --Vista que lista la información personaL de los estudiantes completa
 create view Estudiante_Vista as
@@ -235,9 +234,6 @@ inner join Estudiante on Estudiante.cedula = Usuario.cedula
 inner join Usuario as Padres on Padres.cedula = Estudiante.cedulaPadre
 
 
-
-select * from Estudiante_Vista
-
 --Vista que lista la información personaL de los profesores completa
 
 create view Profesor_Vista as
@@ -246,7 +242,6 @@ Profesor.salario from Usuario
 inner join Usuario_Ubicacion on Usuario.cedula = Usuario_Ubicacion.cedula
 inner join Profesor on Profesor.cedula = Usuario.cedula
 
-select * from Profesor_Vista
 
 --Vista que muestra todo el desglose de la factura del cobro por matricula
 create view Factura_Vista as
@@ -259,10 +254,6 @@ inner join Matricula on Matricula.idMatricula = Cobros.idMatricula
 inner join Usuario on Usuario.cedula = Matricula.cedulaEstudiante
 
 
-
-select * from Factura_Vista
-select * from Factura
-select * from Matricula
 
 
 --------------------FUNCIONES---------------------------------
@@ -282,10 +273,7 @@ return(
 
 )
 
-drop function PromedioEstudiantes_F
-select * from  dbo.PromedioEstudiantes_F (2,2020)
 
-select count(estado) as cantidad from Evaluacion_Grupo_Estudiante where estado='Aprobado'
 --group by codigoGrupo
 -----1. Promedio de Notas por Profesor por Grupo --------------------
 create function Promedio_Notas_P (@cedulaProfesor int)
@@ -301,7 +289,6 @@ return (
 
 )
 
-select * from  dbo.Promedio_Notas_P(115173422)
 
 
 ---------3. Cantidad de estudiantes por periodo por grupo----------------------
@@ -316,7 +303,6 @@ return (
 )
 
 
-select * from dbo.Cantidad_Estudiantes_Pe (2, 2021)
 
 create function CantidadEstudiantesGrupo(@codigoGrupo varchar(25))
 returns table
@@ -328,7 +314,6 @@ return (
 
 )
 
-select * from CantidadEstudiantesGrupo('Español-A1')
 
 --4. Top 10 de padres con más deudas. Nombre y cantidad
 create view Padre_DeudasVista as 
@@ -339,7 +324,6 @@ group by nombrePadre,cedulaPadre
 order by count(Cobros.consecutivo) desc
 
 
-select * from Padre_DeudasVista 
 
 --4,5. ver el detalle de los cobros pendientes al seleccionar un padre del top 10
 create function DetalleCobrosPadre_F(@cedulaPadre int)
@@ -369,17 +353,12 @@ return(
 	group by grado,numeroPeriodo,Grupo.anno
 )
 
-select * from Ingresos(2,2021)
-
-
-
 
 --Total de ingresos percibidos, se cuentan los cobros pagados
 create view TotalIngresos as
 select sum(totalPago) as total from Factura, Cobros,Matricula where Factura.consecutivo = Cobros.consecutivo
 and Cobros.idMatricula = Matricula.idMatricula and Cobros.estado = 'Pagado'
 
-select * from TotalIngresos
 --------6 Cantidad de grupos por periodo. Periodo y cantidad.
 
 create view Cantidad_Grupos_Periodo as
@@ -387,9 +366,6 @@ create view Cantidad_Grupos_Periodo as
 	inner join Grupo on Grupo.anno = Periodo.anno and Grupo.numeroPeriodo = Periodo.numero
 	group by Periodo.numero, Periodo.anno
 
-
-select * from Cantidad_Grupos_Periodo
-drop view Cantidad_Grupos_Periodo
 
 ------7 - Top 10 de estudiantes con más ausencias. Nombre y cantidad. Puedo opcionalmente filtrar por período.
 
@@ -401,9 +377,6 @@ inner join Estudiante_Vista on Estudiante_Vista.cedula= Asistencia_Estudiante.ce
 group by  nombreCompleto
 order by count(Asistencia_Estudiante.cedulaEstudiante) desc
 
-select * from Top_10_Ausencias
-
-drop view Top_10_Ausencias
 ----7.5 Opcional filtrado por periodo
 
 create function Top_10_Ausencias_Filtrar(@numPeriodo int,@anno int)
@@ -417,9 +390,6 @@ return (
 	group by  nombreCompleto
 )
  
- select  * from Top_10_Ausencias_Filtrar(2,2021)
-
- drop function Top_10_Ausencias_Filtrar
 
 
 ---- 8 Cantidad de grupos por estudiante por periodo, ordenado por grado. Seleccionar un periodo
@@ -438,9 +408,6 @@ return (
 
 )
 
-select * from Cantidad_Grupos_Estudiante(1,2020)
-
-drop function  Cantidad_Grupos_Estudiante
 
 
 execute sp_helpindex Estudiante
@@ -457,7 +424,6 @@ inner join Matricula ma on ma.cedulaEstudiante = Estudiante_Vista.cedula
 group by numPeriodo,anno
 
 
-select * from Generos
 
 ----10 Cantidad de Aprobados y Reprobados por grupo por periodo. Comparativo. Gráfico de barras. Selecciona uno o más períodos.
 
@@ -472,9 +438,6 @@ return (
 	group by codigoNombre
 )
 
-select * from CantidadAR(2,2021)
-
-drop function CantidadAR
 
 --11. Ventas por periodo (cobros). Gráfico circular (porcentual). Seleccionar rango de períodos.
 create function VentasPeriodo(@fecha1 date,@fecha2 date)
@@ -491,10 +454,6 @@ return(
 
 )
 
-
-
-drop function VentasPeriodo
-select * from VentasPeriodo('2021-02-02','2021-07-28')
 
 select idMatricula,numPeriodo,anno from Matricula where (anno between 2020 and 2021) and (numPeriodo between 1 and 1)
 --12. Cobros vs facturados por grado, por período. Gráfico de barras
@@ -546,9 +505,7 @@ return (
 
 )
 
-select * from infoAcademica (325150008)
 
-drop function infoAcademica
 
 create function listaintoGrupos(@cedula int)
 returns table
@@ -560,11 +517,7 @@ return (
 )
 
 
-select * from listadoGrupos(325150008)
 
-drop function listadoGrupos 
-
-select * from Estudiante_Vista
 
 ----16--- Top 15 de grupos con mayor porcentaje aprobación histórico.
 --Muestra toda la información incluyendo el profesor que imparte.
@@ -572,57 +525,52 @@ select * from Estudiante_Vista
 create view top15Grupos as
 	select top 15 Evaluacion_Grupo_Estudiante.codigoGrupo, Evaluacion_Grupo_Estudiante.numPeriodo,anno,
 	(cast(count(estado)as float)/(select CantidadEstudiantes from CantidadEstudiantesGrupo(codigoGrupo)))*100
-	as porcentajeAprobado , dbo.ProfesorImparte( Evaluacion_Grupo_Estudiante.codigoGrupo,  Evaluacion_Grupo_Estudiante.numPeriodo, anno)
-	as ProfesorImparte, dbo.grado(Evaluacion_Grupo_Estudiante.codigoGrupo) as Grado
+	as porcentajeAprobado , (select * from ProfesorImparte( Evaluacion_Grupo_Estudiante.codigoGrupo,  Evaluacion_Grupo_Estudiante.numPeriodo, anno))
+	as ProfesorImparte, (select * from Grado(Evaluacion_Grupo_Estudiante.codigoGrupo)) as Grado
 	from Evaluacion_Grupo_Estudiante where Evaluacion_Grupo_Estudiante.estado='Aprobado'
 	group by codigoGrupo,numPeriodo,anno 
 	order by  porcentajeAprobado desc
 
-drop view top15Grupos
 
-select * from top15Grupos
 
-create function grado (@codigoGrupo varchar(60)) returns int
+create function Grado (@codigoGrupo varchar(60)) returns table
 as
-begin
-declare @grado int
-select @grado = Grupo.grado  from Grupo where Grupo.codigoNombre = @codigoGrupo
-return @grado
-end
+return(
+select Grupo.grado  from Grupo where Grupo.codigoNombre = @codigoGrupo
+)
+
 
 create function ProfesorImparte(@codigoGrupo varchar(60), @numPeriodo int , @anno int) 
-returns varchar(60)
+returns table
 as 
-begin
-declare @nombreCompleto varchar(60)
-select @nombreCompleto = Profesor_Vista.nombreCompleto from Profesor_Vista
+return(
+select Profesor_Vista.nombreCompleto from Profesor_Vista
 inner join Grupo on Grupo.codigoNombre= @codigoGrupo and 
 Grupo.numeroPeriodo=@numPeriodo and Grupo.anno = @anno and Profesor_Vista.cedula = Grupo.cedulaProfesor
-return @nombreCompleto
-end
+
+)
 
 ------17 Porcentaje de reprobación por grupo. Ordenados ascendente y descendente.
 --Muestra toda la información incluyendo el profesor que imparte. Permite filtrar rango de período.
 
-create function PorcentajeReprobados (@numPeriodo int , @anno int)
+create function PorcentajeReprobados (@fecha1 date , @fecha2 date)
 returns table
 as
 return(
-	select  Evaluacion_Grupo_Estudiante.codigoGrupo, Evaluacion_Grupo_Estudiante.numPeriodo,anno,
+	select  e.codigoGrupo, e.numPeriodo,e.anno,
 	(cast(count(estado)as float)/(select CantidadEstudiantes from CantidadEstudiantesGrupo(codigoGrupo)))*100 
-	as porcentajeReprobado, dbo.ProfesorImparte( Evaluacion_Grupo_Estudiante.codigoGrupo, 
-	Evaluacion_Grupo_Estudiante.numPeriodo, anno)as ProfesorImparte,dbo.grado(Evaluacion_Grupo_Estudiante.codigoGrupo)
-	as Grado from Evaluacion_Grupo_Estudiante where Evaluacion_Grupo_Estudiante.estado='Reprobado'and
-	Evaluacion_Grupo_Estudiante.anno = @anno and Evaluacion_Grupo_Estudiante.numPeriodo = @numPeriodo
-	group by codigoGrupo,numPeriodo,anno 
-	--order by  promedio desc
+	as porcentajeReprobado, (select * from ProfesorImparte( e.codigoGrupo, 
+	e.numPeriodo, e.anno))as ProfesorImparte,(select * from Grado(e.codigoGrupo)) as grado
+	from Evaluacion_Grupo_Estudiante e 
+	inner join Periodo on (Periodo.fechaInicio = @fecha1 or (fechaFinal between @fecha1 and @fecha2))
+	and e.anno = Periodo.anno and e.numPeriodo = Periodo.numero and e.estado = 'Reprobado'
+	group by e.codigoGrupo, e.numPeriodo,e.anno
 
 )
 
-select * from PorcentajeReprobados(2,2020)
 
 drop function PorcentajeReprobados
-
+select * from PorcentajeReprobados('2020-02-02','2021-07-28')
 --Borrar todos los planes de memoria caché
 DBCC FREEPROCCACHE WITH NO_INFOMSGS
 
