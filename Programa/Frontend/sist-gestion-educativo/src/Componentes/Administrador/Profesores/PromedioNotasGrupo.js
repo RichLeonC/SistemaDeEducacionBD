@@ -96,11 +96,10 @@ export default function PromedioNotasGrupos() {
 
     return (
         <div style={{width: '90%', height: '500px'}}>
+            <br/>
+            <h2 className="offset-md-5 font-weight-bold"> Promedio de notas por profesor por grupo</h2>
             <Button className="btn btn-primary mt-4 offset-md-3 "size="sm" onClick={()=>cerrarAbrirModalProfesores()} >Profesores</Button>
             <Bar  data= {data} options={opciones}/>
-
-            
-
 
             <Modal isOpen={modalProrfesores}>
                       <ModalHeader>Profesores</ModalHeader>

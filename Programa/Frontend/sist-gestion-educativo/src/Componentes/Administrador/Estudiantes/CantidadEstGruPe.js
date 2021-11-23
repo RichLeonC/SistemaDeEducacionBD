@@ -117,6 +117,10 @@ export default function CantidadEstGruPe() {
 
     return (
         <div style={{width: '90%', height: '500px'}}>
+            <br/>
+            <h2 className="offset-md-4 font-weight-bold">Cantidad de estudiantes por periodo por grupo</h2>
+            <br/>
+            <h2 className=" offset-md-5 font-weight-bold">{numSeleccionado} Semestre, {annoSeleccionado}</h2>
         <Button className="btn btn-primary mt-4 offset-md-3 "size="sm" onClick={()=>abrirCerrarModalFiltro()} >Periodos</Button>
         <Pie  data={data} options={opciones}/>
         <Modal isOpen={modalFiltro}>

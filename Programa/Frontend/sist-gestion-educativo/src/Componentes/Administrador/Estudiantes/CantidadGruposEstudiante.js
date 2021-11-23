@@ -88,6 +88,10 @@ export default function CantidadGruposEstudiante(){
 
     return (
         <div className="col-sm-8"> 
+        <br/>
+         <h2 className="offset-md-6 font-weight-bold"> Cantidad de grupos por estudiante por periodo</h2>
+         <br/>
+        <h2 className=" offset-md-7 font-weight-bold">{numSeleccionado} Semestre, {annoSeleccionado}</h2>
         <Button className="btn btn-primary mt-4 offset-md-2 "size="sm" onClick={()=>abrirCerrarModalFiltro()} >Periodos</Button>
         <table className="table table-hover mt-4 offset-md-3"striped bordered hover variant="light">
         <thead>

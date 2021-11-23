@@ -8,7 +8,7 @@ import CantidadGrupo from '../Administrador/Estudiantes/CantidadEstGruPe.js';
 import PromedioGrupos from '../Administrador/Estudiantes/PromedioGrupos.js';
 import Ingresos from '../Administrador/General/Ingresos.js';
 import CantidadGruPeriodo from '../Administrador/General/CantidadGruposPe.js';
-import TopAusencias from '../Administrador/General/TopAusencias.js';
+import TopAusencias from '../Administrador/Estudiantes/TopAusencias.js';
 import CantidadGruposEstudiante from '../Administrador/Estudiantes/CantidadGruposEstudiante.js';
 import Generos from '../Administrador/Estudiantes/Generos.js';
 import CobrosFacturas from '../Administrador/General/CobrosFacturas.js';
