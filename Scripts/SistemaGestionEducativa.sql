@@ -415,16 +415,19 @@ return (
 
  --9. Porcentaje de estudiantes por género por período. Género y porcentaje. Gráfico circular.
 
-create view Generos as
+create function Generos(@numPeriodo int,@anno int)
+returns table
+as
+return(
 select cast(count(case when Estudiante_Vista.sexo = 'Femenino' then 1 else null end)as float) /(select count(sexo) from Estudiante_Vista 
 where sexo='Femenino' or sexo='Masculino')*100 as femenino,cast(count (case when Estudiante_Vista.sexo = 'Masculino'then 1 else null end)as float)/ (select count(sexo) from Estudiante_Vista 
 where sexo='Femenino' or sexo='Masculino')*100 as masculino,
 concat(numPeriodo,' ',anno) as periodo from Estudiante_Vista 
-inner join Matricula ma on ma.cedulaEstudiante = Estudiante_Vista.cedula
+inner join Matricula ma on ma.cedulaEstudiante = Estudiante_Vista.cedula and numPeriodo = @numPeriodo and anno = @anno
 group by numPeriodo,anno
-
-
-
+)
+select * from Generos(2,2020)
+drop view Generos
 ----10 Cantidad de Aprobados y Reprobados por grupo por periodo. Comparativo. Gráfico de barras. Selecciona uno o más períodos.
 
 create function CantidadAR (@numPeriodo int,@anno int)
