@@ -41,7 +41,14 @@ export const SbDataAdmin = [
                 title: 'Generos',
                 path: '/Generos',
                 icon: <IoIcons.IoIosPaper/>
+            },
+
+            {
+                title: 'Información Academica',
+                path: '/InformaciónAcademica',
+                icon: <IoIcons.IoIosPaper/>
             }
+
 
 
         ]

@@ -531,17 +531,6 @@ order by aumento desc
 ---- 14 Promedio ponderado por estudiante. Cantidad de grupos, cantidad de grupos aprobados y reprobados,
 --promedio de aprobados y promedio de reprobados. Lista de grupos con nota. Filtra por estudiante
 
-create function CedulaEstudiante(@NombreCompleto varchar(60)) returns int
-as 
-begin
-declare @cedula int
-select @cedula = Estudiante_Vista.cedula from Estudiante_Vista where Estudiante_Vista.nombreCompleto=@NombreCompleto
-return @cedula
-end
-
-select dbo.CedulaEstudiante('Shermie Madrid Orellana')
-drop function CedulaEstudiante
-
 
 create function infoAcademica(@cedula int)
 returns table 
@@ -561,7 +550,7 @@ select * from infoAcademica (325150008)
 
 drop function infoAcademica
 
-create function listadoGrupos(@cedula int)
+create function listaintoGrupos(@cedula int)
 returns table
 as
 return (
@@ -574,6 +563,8 @@ return (
 select * from listadoGrupos(325150008)
 
 drop function listadoGrupos 
+
+select * from Estudiante_Vista
 
 ----16--- Top 15 de grupos con mayor porcentaje aprobación histórico.
 --Muestra toda la información incluyendo el profesor que imparte.

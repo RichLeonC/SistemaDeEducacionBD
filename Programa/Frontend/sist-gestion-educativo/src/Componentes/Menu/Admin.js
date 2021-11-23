@@ -13,6 +13,8 @@ import CantidadGruposEstudiante from '../Administrador/Estudiantes/CantidadGrupo
 import Generos from '../Administrador/Estudiantes/Generos.js';
 import CobrosFacturas from '../Administrador/General/CobrosFacturas.js';
 import TopProfesores from '../Administrador/Profesores/TopProfesores.js';
+import CantidadAR from '../Administrador/Profesores/CantidadAR.js';
+import InfoAcademica from '../Administrador/Estudiantes/InfoAcademica.js';
 
 export default function Admin() {
     return (
@@ -32,6 +34,8 @@ export default function Admin() {
             <Route exact path = '/Generos' component= {Generos}/>
             <Route exact path = '/CobrosVsFacturas' component= {CobrosFacturas}/>
             <Route exact path = '/TopProfesores' component= {TopProfesores}/>
+            <Route exact path = '/CantidadAR' component= {CantidadAR}/>
+            <Route exact path = '/InformaciónAcademica' component= {InfoAcademica}/>
             </Switch>
         </BrowserRouter>
         </div>

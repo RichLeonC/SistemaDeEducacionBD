@@ -104,7 +104,7 @@ export default function CantidadAR(){
         },
         {
             label : 'Reprobados',
-            backgroundColor: ['#BE65F5', '#A66ECB', '#B091C9', '#5B3D73'],
+            backgroundColor: ['#BE65F5', '#A66ECB', '#B091C9', '#9F91AA'],
             boderColor: 'black',
             boderWidth: 1,
             hoverBackgroundColor: '#A09BF3',
@@ -132,7 +132,7 @@ export default function CantidadAR(){
             <Button className="btn btn-primary mt-4 offset-md-3 "size="sm" onClick={()=>abrirCerrarModalFiltro()} >Periodos</Button>
             <Bar  data= {data} options={opciones}/> 
 
-            
+
             <Modal isOpen={modalFiltro}>
                       <ModalHeader>Filtrar Período</ModalHeader>
 
