@@ -6,7 +6,7 @@ use SistemaGestionEducativa
 go
 
 --Tabla que guarda la información para cada usuario existente
-create table (
+create table Usuario(
 	cedula int not null primary key,
 	nombre varchar(100) not null,
 	apellido1 varchar(100) not null,
@@ -257,24 +257,7 @@ inner join Usuario on Usuario.cedula = Matricula.cedulaEstudiante
 
 
 --------------------FUNCIONES---------------------------------
---2. Promedio de aprobación por período por grupo (selecciona un período). Gráfico de barras.
-create function PromedioEstudiantes_F(@numPeriodo int,@anno int)
-returns table
-as
-return(
-	select top 1000 Evaluacion_Grupo_Estudiante.codigoGrupo, Evaluacion_Grupo_Estudiante.numPeriodo,anno,
-	(cast(count(estado)as float)/(select CantidadEstudiantes from CantidadEstudiantesGrupo(codigoGrupo)))*100
-	as promedio
-	from Evaluacion_Grupo_Estudiante where numPeriodo=@numPeriodo
-	and anno=@anno
-	and Evaluacion_Grupo_Estudiante.estado='Aprobado'
-	group by codigoGrupo,numPeriodo,anno 
-	--order by avg(estado) desc
 
-)
-
-
---group by codigoGrupo
 -----1. Promedio de Notas por Profesor por Grupo --------------------
 create function Promedio_Notas_P (@cedulaProfesor int)
 returns table 
@@ -289,8 +272,32 @@ return (
 
 )
 
+-----2. Promedio de aprobación por período por grupo (selecciona un período). Gráfico de barras.------------
+create function PromedioEstudiantes_F(@numPeriodo int,@anno int)
+returns table
+as
+return(
+	select top 1000 Evaluacion_Grupo_Estudiante.codigoGrupo, Evaluacion_Grupo_Estudiante.numPeriodo,anno,
+	(cast(count(estado)as float)/(select CantidadEstudiantes from CantidadEstudiantesGrupo(codigoGrupo)))*100
+	as promedio
+	from Evaluacion_Grupo_Estudiante where numPeriodo=@numPeriodo
+	and anno=@anno
+	and Evaluacion_Grupo_Estudiante.estado='Aprobado'
+	group by codigoGrupo,numPeriodo,anno 
+	
+
+)
 
 
+create function CantidadEstudiantesGrupo(@codigoGrupo varchar(25)) ---retorna la cantidad de estudiantes por grupos funcion aux
+returns table
+as 
+return (
+		select count(Matricula.idMatricula) as CantidadEstudiantes , Matricula.codigoGrupo, Matricula.anno, Matricula.numPeriodo 
+		from Matricula where Matricula.codigoGrupo = @codigoGrupo
+		group by codigoGrupo,anno,numPeriodo
+
+)
 ---------3. Cantidad de estudiantes por periodo por grupo----------------------
 create function Cantidad_Estudiantes_Pe(@numeroPeriodo int, @annoPeriodo int)
 returns table
@@ -304,15 +311,6 @@ return (
 
 
 
-create function CantidadEstudiantesGrupo(@codigoGrupo varchar(25))
-returns table
-as 
-return (
-		select count(Matricula.idMatricula) as CantidadEstudiantes , Matricula.codigoGrupo, Matricula.anno, Matricula.numPeriodo 
-		from Matricula where Matricula.codigoGrupo = @codigoGrupo
-		group by codigoGrupo,anno,numPeriodo
-
-)
 
 
 --4. Top 10 de padres con más deudas. Nombre y cantidad
@@ -325,7 +323,7 @@ order by count(Cobros.consecutivo) desc
 
 
 
---4,5. ver el detalle de los cobros pendientes al seleccionar un padre del top 10
+--4.5. ver el detalle de los cobros pendientes al seleccionar un padre del top 10--------
 create function DetalleCobrosPadre_F(@cedulaPadre int)
 returns table
 as
@@ -355,9 +353,16 @@ return(
 
 
 --Total de ingresos percibidos, se cuentan los cobros pagados
-create view TotalIngresos as
-select sum(totalPago) as total from Factura, Cobros,Matricula where Factura.consecutivo = Cobros.consecutivo
-and Cobros.idMatricula = Matricula.idMatricula and Cobros.estado = 'Pagado'
+create function TotalIngresos(@numPeriodo int, @anno int)
+returns table
+as
+return(
+		select sum(totalPago) as total from Factura
+			inner join Grupo on Grupo.numeroPeriodo = @numPeriodo and Grupo.anno = @anno
+			inner join Matricula on Matricula.numPeriodo = @numPeriodo and Matricula.anno =@anno and Matricula.codigoGrupo=Grupo.codigoNombre
+			inner join Cobros on Matricula.idMatricula = Cobros.idMatricula and Factura.consecutivo = Cobros.consecutivo
+			and Cobros.estado = 'Pagado'
+)
 
 --------6 Cantidad de grupos por periodo. Periodo y cantidad.
 
@@ -408,11 +413,6 @@ return (
 
 )
 
-
-
-execute sp_helpindex Estudiante
-
-
  --9. Porcentaje de estudiantes por género por período. Género y porcentaje. Gráfico circular.
 
 create view Generos as
@@ -455,7 +455,6 @@ return(
 )
 
 
-select idMatricula,numPeriodo,anno from Matricula where (anno between 2020 and 2021) and (numPeriodo between 1 and 1)
 --12. Cobros vs facturados por grado, por período. Gráfico de barras
 --Vista que muestra el total de cobros pendientes por grado por periodo
 create view Cobros_Grado_Periodo as
@@ -507,7 +506,7 @@ return (
 
 
 
-create function listaintoGrupos(@cedula int)
+create function listaintoGrupos(@cedula int) -----funcion que lista los grupos del estudiante
 returns table
 as
 return (
@@ -533,14 +532,14 @@ create view top15Grupos as
 
 
 
-create function Grado (@codigoGrupo varchar(60)) returns table
+create function Grado (@codigoGrupo varchar(60)) returns table ---retorna el grado de un grupo funcion Aux
 as
 return(
 select Grupo.grado  from Grupo where Grupo.codigoNombre = @codigoGrupo
 )
 
 
-create function ProfesorImparte(@codigoGrupo varchar(60), @numPeriodo int , @anno int) 
+create function ProfesorImparte(@codigoGrupo varchar(60), @numPeriodo int , @anno int) ---retorna el profesor de un grupo funcion aux
 returns table
 as 
 return(
@@ -569,30 +568,8 @@ return(
 
 )
 
+--INSERTS---------------------------------------------------
 
-drop function PorcentajeReprobados
-select * from PorcentajeReprobados('2020-02-02','2021-07-28')
---Borrar todos los planes de memoria caché
-DBCC FREEPROCCACHE WITH NO_INFOMSGS
-
---- Vaciar la cache  de datos 
-DBCC DROPCLEANBUFFERS WITH NO_INFOMSGS
-
-
- execute sp_helpindex Asistencia_Estudiante
-
- --create clustered index IDX_nombres
- --on Usuario (nombre)
-
- drop view Top_10_Ausencias
-
- --drop index Usuario.IDX_nombres
-
--- select * from Usuario
-
-select * from Cobros where estado = 'Pagado' order by idMatricula asc
-
---INSERTS
 insert into Usuario values(111,'Admin','Leon','Chinchilla','0192023a7bbd73250516f069df18b500','Masculino',
 '2001/7/29','Admin','2021/10/19')
 
@@ -1358,14 +1335,6 @@ BEGIN
 SET @consecutivo = @consecutivo + 1;
 END;
 
---insert into Grupo_Horario values('Matemáticas-A1','Matemáticas',1,2020,
---'Martes y Jueves','15:00','16:50');
-
-select * from Matricula 
-select * from Cobros
-
-
-
 
 
 
@@ -1395,10 +1364,6 @@ where codigoNombre=@codigoNombre and numeroPeriodo=@numeroPeriodo and nombreMate
 end 
 go
 
-select * from Grupo
-
-
-execute ActualizarCerrado'Química-B1', 3, 2021, 'Química', 'Abierto' 
 
 
 

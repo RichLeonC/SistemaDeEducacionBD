@@ -102,6 +102,7 @@ namespace API_SGEducativo.Context
         public DbSet<InfoAcademica> InfoAcademica { get; set; }
 
         public DbSet<ListadoGrupos> ListadoGrupos { get; set; }
+        public DbSet<Top15Grupos> Top15Grupos { get; set; }
     }
 
 }
