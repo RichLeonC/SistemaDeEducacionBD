@@ -118,6 +118,11 @@ export const SbDataAdmin = [
                 title:'Cobros Vs Facturas',
                 path: '/CobrosVsFacturas',
                 icon: <RiIcons.RiMoneyDollarCircleLine/>
+            },
+            {
+                title: 'Ventas por Período',
+                path: '/VentasPeriodo',
+                icon: <RiIcons.RiMoneyDollarCircleLine/>
             }
 
         ]

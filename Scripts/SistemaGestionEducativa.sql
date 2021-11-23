@@ -976,8 +976,8 @@ insert into Periodo values(1,2020,'2020/2/2','2020/4/28');
 insert into Periodo values(2,2020,'2020/4/30','2020/7/28');
 --insert into Periodo values(3,2020,'2020/8/1','2020/10/28');
 
-insert into Periodo values(1,2021,'2020/2/2','2020/4/28');
-insert into Periodo values(2,2021,'2020/4/30','2020/7/28');
+insert into Periodo values(1,2021,'2021/2/2','2021/4/28');
+insert into Periodo values(2,2021,'2021/4/30','2021/7/28');
 --insert into Periodo values(3,2021,'2020/8/1','2020/10/28');
 
 --1 2020
