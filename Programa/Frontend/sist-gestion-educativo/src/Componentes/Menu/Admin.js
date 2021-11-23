@@ -17,6 +17,7 @@ import CantidadAR from '../Administrador/Profesores/CantidadAR.js';
 import InfoAcademica from '../Administrador/Estudiantes/InfoAcademica.js';
 import VentasPeriodo from '../Administrador/General/VentasPeriodo.js';
 import Top15Grupos from '../Administrador/Profesores/Top15Grupos.js';
+import educImg from '../../Imagenes/programmers.svg';
 
 export default function Admin() {
     return (
@@ -40,6 +41,7 @@ export default function Admin() {
             <Route exact path = '/InformaciónAcademica' component= {InfoAcademica}/>
             <Route exact path = '/VentasPeriodo' component= {VentasPeriodo}/>
             <Route exact path = '/Top15Grupos' component= {Top15Grupos}/>
+            <img className ="w-100 educ-img" src={educImg}/>
             </Switch>
         </BrowserRouter>
         </div>
