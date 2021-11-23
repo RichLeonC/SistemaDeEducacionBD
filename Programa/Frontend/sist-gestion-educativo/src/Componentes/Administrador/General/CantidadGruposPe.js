@@ -64,7 +64,8 @@ export default function CantidadGruposPe(){
 
     return (
         <div style={{width: '90%', height: '500px'}}>
-           
+           <br/>
+            <h2 className="offset-md-5 font-weight-bold">Cantidad de grupos por periodo</h2>
             <Doughnut  data={data} options={opciones}/>
 
         </div>
