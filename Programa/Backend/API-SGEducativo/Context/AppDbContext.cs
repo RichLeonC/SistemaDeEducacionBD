@@ -98,6 +98,9 @@ namespace API_SGEducativo.Context
         public DbSet<VentasPeriodo> VentaPeriodos { get; set; }
         public DbSet<TopProfesores> TopProfesores { get; set; }
         public DbSet<PorcentajeReprobrados> PorcentajeReprobrados { get; set; }
+        public DbSet<InfoAcademica> InfoAcademica { get; set; }
+
+        public DbSet<ListadoGrupos> ListadoGrupos { get; set; }
     }
 
 }

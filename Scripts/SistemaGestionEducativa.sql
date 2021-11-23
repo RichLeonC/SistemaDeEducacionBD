@@ -498,8 +498,8 @@ return (
 	select avg(Evaluacion_Grupo_Estudiante.notaObtenida) as Ponderado, count (Evaluacion_Grupo_Estudiante.codigoGrupo) as CantidadGrupos,
 	count(case when Evaluacion_Grupo_Estudiante.estado = 'Aprobado' then 1 else null end ) as CantidadAprobados,
 	count(case when Evaluacion_Grupo_Estudiante.estado = 'Reprobado' then 1 else null end ) as CantidadReprobados,
-	avg(case when Evaluacion_Grupo_Estudiante.estado = 'Aprobado' then Evaluacion_Grupo_Estudiante.notaObtenida else null end ) as PromedioAprobadas,
-	avg(case when Evaluacion_Grupo_Estudiante.estado = 'Reprobado' then Evaluacion_Grupo_Estudiante.notaObtenida else null end ) as PromedioReprobadas
+	isnull (avg(case when Evaluacion_Grupo_Estudiante.estado = 'Aprobado' then Evaluacion_Grupo_Estudiante.notaObtenida else null end ),0 )as PromedioAprobadas,
+	isnull(avg(case when Evaluacion_Grupo_Estudiante.estado = 'Reprobado' then Evaluacion_Grupo_Estudiante.notaObtenida else null end ),0 )as PromedioReprobadas
 	from Evaluacion_Grupo_Estudiante
 	where Evaluacion_Grupo_Estudiante.cedulaEstudiante = @cedula
 
