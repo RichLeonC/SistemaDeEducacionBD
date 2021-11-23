@@ -74,6 +74,11 @@ export const SbDataAdmin = [
                 title: 'Grupos Reprobados y Aprobados',
                 path: '/CantidadAR',
                 icon:<IoIcons.IoIosPaper/>
+            },
+            {
+                title: 'Top 15 Grupos',
+                path: '/Top15Grupos',
+                icon:<IoIcons.IoIosPaper/>
             }
         ]
     },

@@ -16,6 +16,7 @@ import TopProfesores from '../Administrador/Profesores/TopProfesores.js';
 import CantidadAR from '../Administrador/Profesores/CantidadAR.js';
 import InfoAcademica from '../Administrador/Estudiantes/InfoAcademica.js';
 import VentasPeriodo from '../Administrador/General/VentasPeriodo.js';
+import Top15Grupos from '../Administrador/Profesores/Top15Grupos.js';
 
 export default function Admin() {
     return (
@@ -38,6 +39,7 @@ export default function Admin() {
             <Route exact path = '/CantidadAR' component= {CantidadAR}/>
             <Route exact path = '/InformaciónAcademica' component= {InfoAcademica}/>
             <Route exact path = '/VentasPeriodo' component= {VentasPeriodo}/>
+            <Route exact path = '/Top15Grupos' component= {Top15Grupos}/>
             </Switch>
         </BrowserRouter>
         </div>
