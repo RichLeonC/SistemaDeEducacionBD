@@ -86,6 +86,8 @@ namespace API_SGEducativo.Controller
             }
         }
 
+
+
         // POST api/<GruposController>
         [HttpPost] //AGREGAR
         public ActionResult Post([FromBody] Grupo grupo)

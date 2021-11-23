@@ -31,7 +31,7 @@ namespace API_SGEducativo.Context
             modelBuilder.Entity<Ingresos>().HasKey(e => new { e.grado, e.anno, e.numeroPeriodo });
             modelBuilder.Entity<CantidadGrupoPeriodo>().HasKey(e => new { e.anno, e.numero, e.CantidadGrupos });
             modelBuilder.Entity<CobrosVsFacturas_Grado_Periodo>().HasKey(e => new { e.cobros,e.facturas,e.gradoPeriodo});
-
+            modelBuilder.Entity<PorcentajeReprobrados>().HasKey(e => new { e.anno, e.codigoGrupo, e.numPeriodo });
         }
 
 
@@ -97,6 +97,7 @@ namespace API_SGEducativo.Context
         public DbSet<CantidadAR> CantidadAR { get; set; }
         public DbSet<VentasPeriodo> VentaPeriodos { get; set; }
         public DbSet<TopProfesores> TopProfesores { get; set; }
+        public DbSet<PorcentajeReprobrados> PorcentajeReprobrados { get; set; }
     }
 
 }
