@@ -43,6 +43,7 @@ create table Padre(
 
 
 --Tabla para usuario con rol de estudiante, contiene su padre también
+create nonclustered index IndexEstudiante on Estudiante (cedula)
 create table Estudiante(
 	cedula int not null foreign key references Usuario(cedula),
 	cedulaPadre int not null foreign key references Padre(cedula),
@@ -88,6 +89,7 @@ create table Periodo(
 
 );
 --Tabla que almecena toda la información respecto a cada Grupo
+create nonclustered index IndexGrupo on Grupo (codigoNombre,nombreMateria,numeroPeriodo,anno)
 create table Grupo (
   codigoNombre varchar(25) not null,
   nombreMateria varchar(100) foreign key references Materia(nombre),
@@ -181,6 +183,7 @@ create table Evaluacion_Estudiante(
 
 
 --Tabla  que guarda la informacion de cada matricula que se realiza
+create nonclustered index CL_Matricula on Matricula (idMatricula)
 create table Matricula(
 	idMatricula int not null IDENTITY(5000,1) primary key,
 	costeMatricula float not null,
@@ -198,6 +201,7 @@ create table Matricula(
 
 
 --Tabla que guarda la informacion del cobro de una matriucla efectuada
+create nonclustered index IndexCobros on Cobros (consecutivo)
 create table Cobros(
 	consecutivo int not null IDENTITY(1,1) primary key,
 	--numFactura int foreign key references Factura(numFactura),
@@ -207,6 +211,7 @@ create table Cobros(
 )
 
 --Tabla que almacena una factura cuando un cobro se realizó
+create nonclustered index IndexFacturas on Factura (consecutivo)
 create table Factura(
 	consecutivo int foreign key references Cobros(consecutivo),
 	totalPago decimal,
@@ -218,6 +223,7 @@ create table Factura(
 
 
 --Vista que lista la información personaL de los padres completa
+
 create view Padre_Vista as
 select Usuario.cedula,concat(nombre,' ',apellido1,' ',apellido2) as nombreCompleto,sexo,fechaNacimiento,provincia,canton,distrito,localidad,
 Padre.profesion, Padre.conyugeNombre,Padre.telefonoConyugue from Usuario
@@ -259,6 +265,10 @@ inner join Usuario on Usuario.cedula = Matricula.cedulaEstudiante
 --------------------FUNCIONES---------------------------------
 
 -----1. Promedio de Notas por Profesor por Grupo --------------------
+
+
+
+
 create function Promedio_Notas_P (@cedulaProfesor int)
 returns table 
 as 
@@ -314,12 +324,15 @@ return (
 
 
 --4. Top 10 de padres con más deudas. Nombre y cantidad
+
+--create nonclustered index PadreD on dbo.Padre_DeudasVista(cedulaPadre)
 create view Padre_DeudasVista as 
 select top 10 Estudiante_Vista.nombrePadre,Estudiante_Vista.cedulaPadre, count(Cobros.consecutivo) as cantidad from Estudiante_Vista
 inner join Matricula on Estudiante_Vista.cedula = Matricula.cedulaEstudiante
 inner join Cobros on Cobros.idMatricula = Matricula.idMatricula and Cobros.estado='Pendiente'
 group by nombrePadre,cedulaPadre
 order by count(Cobros.consecutivo) desc
+
 
 
 
