@@ -426,8 +426,7 @@ concat(numPeriodo,' ',anno) as periodo from Estudiante_Vista
 inner join Matricula ma on ma.cedulaEstudiante = Estudiante_Vista.cedula and numPeriodo = @numPeriodo and anno = @anno
 group by numPeriodo,anno
 )
-select * from Generos(2,2020)
-drop view Generos
+
 ----10 Cantidad de Aprobados y Reprobados por grupo por periodo. Comparativo. Gráfico de barras. Selecciona uno o más períodos.
 
 create function CantidadAR (@numPeriodo int,@anno int)
